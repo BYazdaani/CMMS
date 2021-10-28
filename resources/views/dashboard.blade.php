@@ -15,7 +15,7 @@
 										<i class="notika-icon notika-house"></i>
 									</div>
 									<div class="breadcomb-ctn">
-										<h2>Analytics</h2>
+										<h2>GMAO</h2>
 										<p>Welcome to Notika <span class="bread-ntd">Admin Template</span></p>
 									</div>
 								</div>

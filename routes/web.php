@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+  SuperAdminController,
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +24,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::resource('superadmins', SuperAdminController::class)->middleware(['auth']);
+
+
+
 require __DIR__.'/auth.php';
+
+
