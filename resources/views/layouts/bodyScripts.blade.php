@@ -1,3 +1,7 @@
+<!-- main JS
+    ============================================ -->
+<script src="{{asset('../theme/js/main.js')}}"></script>
+
 <!-- jquery
 		============================================ -->
 <script src="{{asset('../theme/js/vendor/jquery-1.12.4.min.js')}}"></script>
@@ -61,9 +65,47 @@
     ============================================ -->
 <script src="{{asset('../theme/js/chat/moment.min.js')}}"></script>
 <script src="{{asset('../theme/js/chat/jquery.chat.js')}}"></script>
-<!-- main JS
+
+<!--  Data Table
     ============================================ -->
-<script src="{{asset('../theme/js/main.js')}}"></script>
+<script src="{{asset('../theme/js/data-table/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('../theme/js/data-table/data-table-act.js')}}"></script>
+
+<script src="{{asset('../theme/js/bootstrap-select/bootstrap-select.js')}}"></script>
+
+
+<!--  Data Table FR
+    ============================================ -->
+<script>
+    dTable = $('#data-table-basic').DataTable({
+        "language": {
+            "sProcessing": "Traitement en cours ...",
+            "sLengthMenu": "Afficher _MENU_ lignes",
+            "sZeroRecords": "Aucun résultat trouvé",
+            "sEmptyTable": "Aucune donnée disponible",
+            "sInfo": "Ligne _START_ à _END_ sur _TOTAL_",
+            "sInfoEmpty": "Aucune ligne affichée",
+            "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+            "sInfoPostFix": "",
+            "sSearch": "Rechercher:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Chargement...",
+            "oPaginate": {
+                "sFirst": "Premier", "sLast": "Dernier", "sNext": "Suivant", "sPrevious": "Précédent"
+            },
+            "oAria": {
+                "sSortAscending": ": Trier par ordre croissant", "sSortDescending": ": Trier par ordre décroissant"
+            }
+        },
+    });
+
+    $('#searchBar').keyup(function () {
+        dTable.search($(this).val()).draw();   // this  is for customized searchbox with datatable search feature.
+    })
+
+</script>
+
 <!-- tawk chat JS
     ============================================ -->
 {{--<script src="{{asset('../theme/js/tawk-chat.js')}}"></script>--}}

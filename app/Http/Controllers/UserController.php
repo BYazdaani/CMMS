@@ -10,15 +10,28 @@ use Illuminate\Support\Facades\Gate;
 class UserController extends Controller
 {
 
-    public function index() : View
+    public function index(): View
     {
         abort_if(Gate::denies('user_access'), 403);
 
-        $users=User::all();
+        $users = User::with('roles')->get();
 
+        $functions= [
+            'Responsable maintenance',
+            'Superviseur maintenance',
+            'Chargé méthodes et utilités',
+            'Technicien Maintenance',
+            'Opérateur Machine',
+            'Team Leader',
+            'Superviseur production',
+        ];
 
+        $date = [
+            "users" => $users,
+            'functions'=>$functions
+        ];
 
-        return view('users.index');
+        return view('users.index', $date);
     }
 
     /**
@@ -26,15 +39,29 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() : View
     {
-        //
+        $functions= [
+            'Responsable maintenance',
+            'Superviseur maintenance',
+            'Chargé méthodes et utilités',
+            'Technicien Maintenance',
+            'Opérateur Machine',
+            'Team Leader',
+            'Superviseur production',
+        ];
+
+        $date = [
+            'functions'=>$functions
+        ];
+
+        return view('users.create', $date);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -45,18 +72,28 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return void
      */
-    public function show($id)
+    public function show(User $user) : View
     {
-        //
+        abort_if(Gate::denies('user_show'), 403);
+
+        $logs=$user->loginHistories;
+
+        $date=[
+            'user'=>$user,
+            'logs'=> $logs,
+        ];
+
+        return view('users.show', $date);
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -67,8 +104,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -79,7 +116,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

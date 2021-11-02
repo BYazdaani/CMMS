@@ -12,6 +12,8 @@
 
     @include('layouts.headerScripts')
 
+    @yield("headerScripts")
+
 </head>
 <body class="font-sans antialiased">
 
@@ -20,7 +22,7 @@
 <!-- End Header Top Area -->
 
 <!-- Mobile Menu start -->
-@include('layouts.mobileHeader')
+{{--@include('layouts.mobileHeader')--}}
 <!-- Mobile Menu end -->
 
 <!-- Main Menu area start-->
@@ -28,6 +30,8 @@
 <!-- Main Menu area End-->
 
 @yield('content')
+
+@yield('bodyScripts')
 
 @include('layouts.bodyScripts')
 

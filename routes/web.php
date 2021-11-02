@@ -20,15 +20,17 @@ use App\Http\Controllers\{
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('gmao');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware('banned')->group(function () {
+
+    Route::get('/dashboard', function () {return view('dashboard');})->middleware(['auth'])->name('dashboard');
 
 //*************super admin**********************************************************************************************
-Route::resource('users', UserController::class)->middleware(['auth']);
-Route::resource('logs', LoginHistoryController::class)->middleware(['auth']);
+    Route::resource('users', UserController::class)->middleware(['auth']);
+    Route::resource('logs', LoginHistoryController::class)->middleware(['auth']);
+
+});
 
 
 require __DIR__ . '/auth.php';
