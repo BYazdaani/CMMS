@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LoginHistory;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class LoginHistoryController extends Controller
+class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index() : View
     {
-        abort_if(Gate::denies('user_management_access'), 403);
+        abort_if(Gate::denies('user_access'), 403);
 
-        return view('logs.index');
+        $users=User::all();
+
+
+
+        return view('users.index');
     }
 
     /**
@@ -45,10 +45,10 @@ class LoginHistoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\LoginHistory  $loginHistory
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(LoginHistory $loginHistory)
+    public function show($id)
     {
         //
     }
@@ -56,10 +56,10 @@ class LoginHistoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\LoginHistory  $loginHistory
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(LoginHistory $loginHistory)
+    public function edit($id)
     {
         //
     }
@@ -68,10 +68,10 @@ class LoginHistoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LoginHistory  $loginHistory
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LoginHistory $loginHistory)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -79,10 +79,10 @@ class LoginHistoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\LoginHistory  $loginHistory
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LoginHistory $loginHistory)
+    public function destroy($id)
     {
         //
     }

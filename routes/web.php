@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
-  SuperAdminController,
+    SuperAdminController,
+    UserController,
+    LoginHistoryController
 };
 
 /*
@@ -24,10 +26,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::resource('superadmins', SuperAdminController::class)->middleware(['auth']);
+//*************super admin**********************************************************************************************
+Route::resource('users', UserController::class)->middleware(['auth']);
+Route::resource('logs', LoginHistoryController::class)->middleware(['auth']);
 
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 

@@ -33,6 +33,12 @@ class PermissionSeeder extends Seeder
             'role_delete',
             'role_access',
 
+            'support_create',
+            'support_edit',
+            'support_show',
+            'support_delete',
+            'support_access',
+
             'admin_create',
             'admin_edit',
             'admin_show',
