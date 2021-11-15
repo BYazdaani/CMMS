@@ -73,6 +73,14 @@
 
 <script src="{{asset('../theme/js/bootstrap-select/bootstrap-select.js')}}"></script>
 
+<!-- datapicker JS
+       ============================================ -->
+<script src="{{asset('../theme/js/datapicker/bootstrap-datepicker.js')}}"></script>
+<script src="{{asset('../theme/js/datapicker/datepicker-active.js')}}"></script>
+
+
+<script src="{{asset('../theme/js/chosen/chosen.jquery.js')}}"></script>
+
 
 <!--  Data Table FR
     ============================================ -->

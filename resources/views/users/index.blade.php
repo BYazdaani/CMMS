@@ -33,14 +33,17 @@
                                 </thead>
                                 <tbody>
                                 @foreach($users as $user)
-                                    <tr>
-                                        <td><a href="{{route("users.show", ["user"=>$user])}}">{{$user->name}}</a></td>
-                                        <td>{{$user->email}}</td>
-                                        <td>{{$user->phone_number}}</td>
-                                        <td>{{$user->function}}</td>
-                                        <td>{{$user->roles[0]->name}}</td>
-                                        <td>{{$user->account_state ? "Activé" : "Bloqué"}}</td>
-                                    </tr>
+                                    @if(auth()->id() != $user->id && !$user->hasRole('Super Admin'))
+                                        <tr>
+                                            <td><a href="{{route("users.show", ["user"=>$user])}}">{{$user->name}}</a>
+                                            </td>
+                                            <td>{{$user->email}}</td>
+                                            <td>{{$user->phone_number}}</td>
+                                            <td>{{$user->function}}</td>
+                                            <td>{{$user->roles[0]->name}}</td>
+                                            <td>{{$user->account_state ? "Activé" : "Bloqué"}}</td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>

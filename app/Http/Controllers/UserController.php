@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -16,7 +19,7 @@ class UserController extends Controller
 
         $users = User::with('roles')->get();
 
-        $functions= [
+        $functions = [
             'Responsable maintenance',
             'Superviseur maintenance',
             'Chargé méthodes et utilités',
@@ -26,12 +29,12 @@ class UserController extends Controller
             'Superviseur production',
         ];
 
-        $date = [
+        $data = [
             "users" => $users,
-            'functions'=>$functions
+            'functions' => $functions
         ];
 
-        return view('users.index', $date);
+        return view('users.index', $data);
     }
 
     /**
@@ -39,9 +42,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() : View
+    public function create(): View
     {
-        $functions= [
+        abort_if(Gate::denies('user_create'), 403);
+
+        $functions = [
             'Responsable maintenance',
             'Superviseur maintenance',
             'Chargé méthodes et utilités',
@@ -52,21 +57,58 @@ class UserController extends Controller
         ];
 
         $date = [
-            'functions'=>$functions
+            'functions' => $functions
         ];
 
         return view('users.create', $date);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(UserRequest $userRequest)
     {
-        //
+        abort_if(Gate::denies('user_create'), 403);
+
+        DB::beginTransaction();
+
+        try {
+
+            $userRequest['password']=Hash::make($userRequest['password']);
+
+            $user = User::create($userRequest->validated());
+
+            switch ($userRequest['function']) {
+                case 'Technicien Maintenance':
+                    $user->maintenanceTechnician()->create([]);
+                    $user->assignRole('Maintenance Technician');
+                    break;
+                case 'Superviseur production':
+                case 'Team Leader':
+                case 'Opérateur Machine':
+                    $user->client()->create([]);
+                    $user->assignRole('Client');
+                    break;
+
+                case 'Responsable maintenance' :
+                case 'Superviseur maintenance':
+                case 'Chargé méthodes et utilités':
+                    $user->admin()->create([]);
+                    $user->assignRole('Admin');
+                    break;
+
+                default:
+                    DB::rollBack();
+                    return redirect()->back();
+                    break;
+            }
+
+        } catch (\Exception  $e) {
+            DB::rollBack();
+            return redirect()->back();
+        }
+
+        DB::commit();
+
+        return redirect()->route("users.show", ['user' => $user]);
     }
 
     /**
@@ -75,15 +117,15 @@ class UserController extends Controller
      * @param User $user
      * @return void
      */
-    public function show(User $user) : View
+    public function show(User $user): View
     {
         abort_if(Gate::denies('user_show'), 403);
 
-        $logs=$user->loginHistories;
+        $logs = $user->loginHistories;
 
-        $date=[
-            'user'=>$user,
-            'logs'=> $logs,
+        $date = [
+            'user' => $user,
+            'logs' => $logs,
         ];
 
         return view('users.show', $date);

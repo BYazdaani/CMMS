@@ -49,8 +49,17 @@
     ============================================ -->
 <link rel="stylesheet" href="{{asset('../theme/css/responsive.css')}}">
 
-<link rel="stylesheet" href="{{asset('css/bootstrap-select/bootstrap-select.css')}}">
-
 <!-- modernizr JS
     ============================================ -->
 <script src="{{asset('../theme/js/vendor/modernizr-2.8.3.min.js')}}"></script>
+
+<!-- bootstrap select CSS
+		============================================ -->
+<link rel="stylesheet" href="{{asset('../theme/css/bootstrap-select/bootstrap-select.css')}}">
+<!-- datapicker CSS
+    ============================================ -->
+<link rel="stylesheet" href=""{{asset('../theme/css/datapicker/datepicker3.css')}}">
+
+<!-- main CSS
+		============================================ -->
+<link rel="stylesheet" href=""{{asset('../theme/css/chosen/chosen.css')}}">

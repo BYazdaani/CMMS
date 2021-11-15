@@ -15,80 +15,85 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-element-list">
-                        <div class="basic-tb-hd">
-                            <h2>Input Text</h2>
-                            <p>Text Inputs with different sizes by height and column.</p>
-                        </div>
                         <div class="cmp-tb-hd bcs-hd">
-                            <h2>Basic Example</h2>
-                            <p>Place one add-on or button on either side of an input. You may also place one on both sides of an input. </p>
+                            <h2>Création du compte</h2>
+                            <p><strong>NB: </strong>thank you for being careful with users functions, which will affect automatically permissions and roles to use the system</p>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <div class="form-group ic-cmp-int">
-                                    <div class="form-ic-cmp">
-                                        <i class="notika-icon notika-support"></i>
+                        <form method="post" action="{{route("users.store")}}">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-support"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            <input type="text" class="form-control" placeholder="Nom & Prénom" name="name">
+                                        </div>
                                     </div>
-                                    <div class="nk-int-st">
-                                        <input type="text" class="form-control" placeholder="Nom & Prénom" name="name">
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-mail"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            <input type="text" class="form-control" placeholder="Email" name="email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-phone"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            <input type="text" class="form-control" placeholder="Numéro téléphone" name="phone_number">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <div class="form-group ic-cmp-int">
-                                    <div class="form-ic-cmp">
-                                        <i class="notika-icon notika-mail"></i>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-eye"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            <input type="password" class="form-control" placeholder="Mot de passe" name="password">
+                                        </div>
                                     </div>
-                                    <div class="nk-int-st">
-                                        <input type="text" class="form-control" placeholder="Email" name="email">
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-eye"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            <input type="password" class="form-control" placeholder="Confirmer mot de passe" name="password_confirmation">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-promos"></i>
+                                        </div>
+                                        <div class="nk-int-st ">
+                                            <select class="selectpicker form-control" data-live-search="true" name="function">
+                                                @foreach($functions as $function)
+                                                    <option value="{{$function}}">{{$function}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <div class="form-group ic-cmp-int">
-                                    <div class="form-ic-cmp">
-                                        <i class="notika-icon notika-phone"></i>
-                                    </div>
-                                    <div class="nk-int-st">
-                                        <input type="text" class="form-control" placeholder="Numéro téléphone" name="phone_number">
-                                    </div>
-                                </div>
+                            <div class="form-example-int mg-t-15">
+                                <button type="submit" class="btn btn-primary notika-btn-success">Submit</button>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <div class="form-group ic-cmp-int">
-                                    <div class="form-ic-cmp">
-                                        <i class="fa fa-lock"></i>
-                                    </div>
-                                    <div class="nk-int-st">
-                                        <input type="password" class="form-control" placeholder="Mot de passe" name="password">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <div class="form-group ic-cmp-int">
-                                    <div class="form-ic-cmp">
-                                        <i class="fa fa-lock"></i>
-                                    </div>
-                                    <div class="nk-int-st">
-                                        <input type="password" class="form-control" placeholder="Confirmer mot de passe" name="password_confirmation">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <div class="bootstrap-select fm-cmp-mg">
-                                    <select class="selectpicker" data-live-search="true">
-                                        <option>Drama</option>
-                                        <option>Cariska</option>
-                                        <option>Cheriska</option>
-                                        <option>Malias</option>
-                                        <option>Kamines</option>
-                                        <option>Austranas</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
