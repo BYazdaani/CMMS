@@ -50,6 +50,7 @@ class PermissionSeeder extends Seeder
             'user_show',
             'user_delete',
             'user_access',
+            'user_restrict',
 
             'equipment_create',
             'equipment_edit',
@@ -124,11 +125,13 @@ class PermissionSeeder extends Seeder
         $role = Role::create(['name' => 'Admin']);
 
         $adminPermissions = [
+
             'user_create',
             'user_edit',
             'user_show',
             'user_delete',
             'user_access',
+            'user_restrict',
 
             'equipment_create',
             'equipment_edit',
