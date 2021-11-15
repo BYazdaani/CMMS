@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -26,12 +27,36 @@ class UserRequest extends FormRequest
     public function rules()
     {
 
+        if (request()->routeIs('users.store')) {
+
+            $passwordRule = ['required', 'confirmed'];
+            $emailRule = ['required', 'unique:users'];
+
+        } elseif (request()->routeIs('users.update')) {
+
+            $passwordRule = ['sometimes', 'confirmed'];
+            $emailRule = ['required', Rule::unique('users')->ignore($this->user->id)];
+
+        }
+
         return [
-            'name'=>['required'],
-            'email'=>['required', 'unique:users'],
-            'password'=>['required','min:8','confirmed'],
-            'phone_number'=>['required'],
-            'function'=>['required'],
+            'name' => ['required'],
+            'email' => $emailRule,
+            'password' => $passwordRule,
+            'phone_number' => ['required'],
+            'function' => ['required'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->password == null) {
+            $this->request->remove('password');
+        }
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        dd($validator->errors());
     }
 }

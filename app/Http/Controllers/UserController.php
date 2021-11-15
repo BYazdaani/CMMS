@@ -121,14 +121,25 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_show'), 403);
 
-        $logs = $user->loginHistories;
-
-        $date = [
-            'user' => $user,
-            'logs' => $logs,
+        $functions = [
+            'Responsable maintenance',
+            'Superviseur maintenance',
+            'Chargé méthodes et utilités',
+            'Technicien Maintenance',
+            'Opérateur Machine',
+            'Team Leader',
+            'Superviseur production',
         ];
 
-        return view('users.show', $date);
+        $logs = $user->loginHistories;
+
+        $data = [
+            'user' => $user,
+            'logs' => $logs,
+            'functions'=>$functions
+        ];
+
+        return view('users.show', $data);
 
     }
 
@@ -146,13 +157,22 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param UserRequest $userRequest
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Throwable
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $userRequest, User $user)
     {
-        //
+        abort_if(Gate::denies('user_edit'), 403);
+
+        $userRequest->password = Hash::make($userRequest['password']);
+
+        dd($userRequest->validated());
+
+        $user->updateOrFail($userRequest->validated());
+
+        return redirect()->route("users.show", ['user' => $user]);
     }
 
     /**

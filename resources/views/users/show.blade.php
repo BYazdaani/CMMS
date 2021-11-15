@@ -24,18 +24,105 @@
                                             <h2>{{$user->name}}</h2>
                                         </div>
                                         <div class="contact-dt">
-                                            <ul class="contact-list widget-contact-list">
-                                                <li><i class="notika-icon notika-phone"></i>+213{{$user->phone_number}}
-                                                </li>
-                                                <li><i class="notika-icon notika-mail"></i>{{$user->email}}</li>
-                                                <li><i class="notika-icon notika-finance"></i>{{$user->function}}</li>
-                                                <li>
-                                                    <i class="notika-icon notika-promos"></i>Permissions: {{$user->roles[0]->name}}
-                                                </li>
-                                                <li>
-                                                    <i class="notika-icon notika-settings"></i>Compte: {{$user->account_state ? "Activé" : "Bloqué"}}
-                                                </li>
-                                            </ul>
+                                            <form method="post" action="{{route("users.update",['user'=>$user])}}">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="form-group ic-cmp-int">
+                                                            <div class="form-ic-cmp">
+                                                                <i class="notika-icon notika-support"></i>
+                                                            </div>
+                                                            <div class="nk-int-st">
+                                                                <input type="text" class="form-control"
+                                                                       placeholder="Nom & Prénom" name="name"
+                                                                       value="{{$user->name}}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="form-group ic-cmp-int">
+                                                            <div class="form-ic-cmp">
+                                                                <i class="notika-icon notika-mail"></i>
+                                                            </div>
+                                                            <div class="nk-int-st">
+                                                                <input type="text" class="form-control"
+                                                                       placeholder="Email" name="email"
+                                                                       value="{{$user->email}}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="form-group ic-cmp-int">
+                                                            <div class="form-ic-cmp">
+                                                                <i class="notika-icon notika-phone"></i>
+                                                            </div>
+                                                            <div class="nk-int-st">
+                                                                <input type="text" class="form-control"
+                                                                       placeholder="Numéro téléphone"
+                                                                       name="phone_number"
+                                                                       value="{{$user->phone_number}}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="form-group ic-cmp-int">
+                                                            <div class="form-ic-cmp">
+                                                                <i class="notika-icon notika-eye"></i>
+                                                            </div>
+                                                            <div class="nk-int-st">
+                                                                <input type="password" class="form-control" min="8"
+                                                                       placeholder="Mot de passe" name="password">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="form-group ic-cmp-int">
+                                                            <div class="form-ic-cmp">
+                                                                <i class="notika-icon notika-eye"></i>
+                                                            </div>
+                                                            <div class="nk-int-st">
+                                                                <input type="password" class="form-control" min="8"
+                                                                       placeholder="Confirmer mot de passe"
+                                                                       name="password_confirmation">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="form-group ic-cmp-int">
+                                                            <div class="form-ic-cmp">
+                                                                <i class="notika-icon notika-promos"></i>
+                                                            </div>
+                                                            <div class="nk-int-st ">
+                                                                <select class="selectpicker form-control"
+                                                                        data-live-search="true" name="function">
+                                                                    @foreach($functions as $function)
+                                                                        <option
+                                                                            @if($user->function == $function) selected
+                                                                            @endif value="{{$function}}">{{$function}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-example-int mg-t-15">
+                                                        <button type="submit"
+                                                                class="btn btn-primary notika-btn-success">Modifier
+                                                        </button>
+                                                        @if($user->account_state)
+                                                            <a href=""
+                                                               class="btn btn-danger notika-btn-success">Bloquer</a>
+                                                        @else
+                                                            <a href="" class="btn btn-success notika-btn-success">Activer</a>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
