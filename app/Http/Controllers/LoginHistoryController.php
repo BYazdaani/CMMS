@@ -18,7 +18,11 @@ class LoginHistoryController extends Controller
     {
         abort_if(Gate::denies('user_management_access'), 403);
 
-        return view('logs.index');
+        $data=[
+          "logs"=>LoginHistory::all(),
+        ];
+
+        return view('logs.index', $data);
     }
 
     /**

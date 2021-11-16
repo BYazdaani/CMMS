@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
@@ -52,6 +53,10 @@ class UserRequest extends FormRequest
     {
         if ($this->password == null) {
             $this->request->remove('password');
+        } else {
+            $this->request->set("password", Hash::make($this->request->get("password")));
+            $this->request->set("password_confirmation", $this->request->get("password"));
+
         }
     }
 

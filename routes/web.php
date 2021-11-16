@@ -28,11 +28,10 @@ Route::middleware('banned')->group(function () {
 
 //*************super admin**********************************************************************************************
     Route::resource('users', UserController::class)->middleware(['auth']);
+    Route::get("users/restrict/{user}", [UserController::class, 'restrict'])->name('users.restrict');
+
     Route::resource('logs', LoginHistoryController::class)->middleware(['auth']);
 
 });
 
-
 require __DIR__ . '/auth.php';
-
-

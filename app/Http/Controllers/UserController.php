@@ -72,8 +72,6 @@ class UserController extends Controller
 
         try {
 
-            $userRequest['password']=Hash::make($userRequest['password']);
-
             $user = User::create($userRequest->validated());
 
             switch ($userRequest['function']) {
@@ -136,7 +134,7 @@ class UserController extends Controller
         $data = [
             'user' => $user,
             'logs' => $logs,
-            'functions'=>$functions
+            'functions' => $functions
         ];
 
         return view('users.show', $data);
@@ -166,12 +164,44 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_edit'), 403);
 
-        $userRequest->password = Hash::make($userRequest['password']);
+        DB::beginTransaction();
 
-        dd($userRequest->validated());
+        try {
 
-        $user->updateOrFail($userRequest->validated());
+            $user->removeRole($user->getRoleNames()[0]);
 
+            switch ($userRequest['function']) {
+                case 'Technicien Maintenance':
+                    $user->assignRole('Maintenance Technician');
+                    break;
+                case 'Superviseur production':
+                case 'Team Leader':
+                case 'Opérateur Machine':
+                    $user->assignRole('Client');
+                    break;
+
+                case 'Responsable maintenance' :
+                case 'Superviseur maintenance':
+                case 'Chargé méthodes et utilités':
+                    $user->assignRole('Admin');
+                    break;
+
+                default:
+                    DB::rollBack();
+                    return redirect()->back();
+                    break;
+            }
+
+            $user->updateOrFail($userRequest->validated());
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+            return redirect()->back();
+
+        }
+
+        DB::commit();
         return redirect()->route("users.show", ['user' => $user]);
     }
 
@@ -184,5 +214,20 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Restrict the specified resource from storage.
+     *
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restrict(User $user)
+    {
+        abort_if(Gate::denies('user_restrict'), 403);
+
+        $user->updateOrFail(["account_state" => ($user->account_state == 1) ? 0 : 1]);
+
+        return redirect()->route("users.show", ['user' => $user]);
     }
 }

@@ -24,7 +24,7 @@
                                             <h2>{{$user->name}}</h2>
                                         </div>
                                         <div class="contact-dt">
-                                            <form method="post" action="{{route("users.update",['user'=>$user])}}">
+                                            <form method="post" action="{{route("users.update",['user'=>$user])}}" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="row">
@@ -113,12 +113,13 @@
                                                         <button type="submit"
                                                                 class="btn btn-primary notika-btn-success">Modifier
                                                         </button>
-                                                        @if($user->account_state)
-                                                            <a href=""
-                                                               class="btn btn-danger notika-btn-success">Bloquer</a>
-                                                        @else
-                                                            <a href="" class="btn btn-success notika-btn-success">Activer</a>
-                                                        @endif
+                                                        @can("user_restrict")
+                                                            @if($user->account_state)
+                                                                <a href="{{route("users.restrict",["user"=>$user])}}" class="btn btn-danger notika-btn-success">Bloquer</a>
+                                                            @else
+                                                                <a href="{{route("users.restrict",["user"=>$user])}}" class="btn btn-success notika-btn-success">Activer</a>
+                                                            @endif
+                                                        @endcan
                                                     </div>
                                                 </div>
 

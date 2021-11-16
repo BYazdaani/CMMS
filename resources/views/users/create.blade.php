@@ -19,7 +19,7 @@
                             <h2>Création du compte</h2>
                             <p><strong>NB: </strong>thank you for being careful with users functions, which will affect automatically permissions and roles to use the system</p>
                         </div>
-                        <form method="post" action="{{route("users.store")}}">
+                        <form method="post" action="{{route("users.store")}}" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
