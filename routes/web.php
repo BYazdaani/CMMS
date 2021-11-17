@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     SuperAdminController,
     UserController,
-    LoginHistoryController
+    LoginHistoryController,
+    ZoneController
 };
 
 /*
@@ -33,5 +34,7 @@ Route::middleware('banned')->group(function () {
     Route::resource('logs', LoginHistoryController::class)->middleware(['auth']);
 
 });
+
+Route::post("zones/initializeData", [ZoneController::class, 'initializeData'])->name('zones.initializeData');
 
 require __DIR__ . '/auth.php';
