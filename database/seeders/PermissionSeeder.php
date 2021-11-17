@@ -111,6 +111,12 @@ class PermissionSeeder extends Seeder
             'intervention_report_show',
             'intervention_report_delete',
             'intervention_report_access',
+
+            'zone_create',
+            'zone_edit',
+            'zone_show',
+            'zone_delete',
+            'zone_access',
         ];
 
         foreach ($permissions as $permission) {
@@ -192,6 +198,12 @@ class PermissionSeeder extends Seeder
             'intervention_report_show',
             'intervention_report_delete',
             'intervention_report_access',
+
+            'zone_create',
+            'zone_edit',
+            'zone_show',
+            'zone_delete',
+            'zone_access',
         ];
 
         foreach ($adminPermissions as $permission){
