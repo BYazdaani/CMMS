@@ -18,6 +18,8 @@ class CreateEquipmentTable extends Migration
             $table->unsignedBigInteger('zone_id');
             $table->string("code");
             $table->string("name");
+            $table->string("serial_number");
+            $table->string("model");
             $table->foreign('zone_id')->on("zones")->references("id")->onDelete("cascade");
             $table->timestamps();
         });

@@ -13,4 +13,8 @@ class Zone extends Model
 
     ];
 
+    public function equipments(){
+        return $this->hasMany(Equipment::class);
+    }
+
 }

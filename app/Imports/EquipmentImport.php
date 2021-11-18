@@ -24,7 +24,9 @@ class EquipmentImport implements ToModel, WithHeadingRow
         return new Equipment([
             'zone_id'=>$zone->id,
             'name' => $row["equipement"],
-            'code' => $row['code']
+            'code' => $row['code'],
+            'serial_number' => $row['serial_number'],
+            'model' => $row['model']
         ]);
     }
 }
