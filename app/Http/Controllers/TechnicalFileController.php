@@ -2,32 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\ZonesImport;
-use App\Models\User;
-use App\Models\Zone;
+use App\Models\TechnicalFile;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Gate;
-use Maatwebsite\Excel\Facades\Excel;
 
-class ZoneController extends Controller
+class TechnicalFileController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index():View
+    public function index()
     {
-        abort_if(Gate::denies('zone_access'), 403);
-
-        $zones = Zone::with('equipments')->get();
-
-        $data = [
-            'zones' => $zones
-        ];
-
-        return view('zones.index', $data);
+        //
     }
 
     /**
@@ -43,7 +30,7 @@ class ZoneController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,10 +41,10 @@ class ZoneController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Zone $zone
+     * @param  \App\Models\TechnicalFile  $technicalFile
      * @return \Illuminate\Http\Response
      */
-    public function show(Zone $zone)
+    public function show(TechnicalFile $technicalFile)
     {
         //
     }
@@ -65,10 +52,10 @@ class ZoneController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Zone $zone
+     * @param  \App\Models\TechnicalFile  $technicalFile
      * @return \Illuminate\Http\Response
      */
-    public function edit(Zone $zone)
+    public function edit(TechnicalFile $technicalFile)
     {
         //
     }
@@ -76,11 +63,11 @@ class ZoneController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Zone $zone
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\TechnicalFile  $technicalFile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Zone $zone)
+    public function update(Request $request, TechnicalFile $technicalFile)
     {
         //
     }
@@ -88,19 +75,11 @@ class ZoneController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Zone $zone
+     * @param  \App\Models\TechnicalFile  $technicalFile
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Zone $zone)
+    public function destroy(TechnicalFile $technicalFile)
     {
         //
-    }
-
-    public function initializeData(Request $request)
-    {
-
-        Excel::import(new ZonesImport(), $request->file('file')->store('temp'));
-        return back();
-
     }
 }
