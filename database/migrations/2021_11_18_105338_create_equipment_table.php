@@ -15,8 +15,10 @@ class CreateEquipmentTable extends Migration
     {
         Schema::create('equipment', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('zone_id');
             $table->string("code");
             $table->string("name");
+            $table->foreign('zone_id')->on("zones")->references("id")->onDelete("cascade");
             $table->timestamps();
         });
     }
@@ -28,6 +30,11 @@ class CreateEquipmentTable extends Migration
      */
     public function down()
     {
+
+        Schema::table('equipment', function (Blueprint $blueprint){
+           $blueprint->dropForeign("equipment_zone_id_foreign");
+        });
+
         Schema::dropIfExists('equipment');
     }
 }
