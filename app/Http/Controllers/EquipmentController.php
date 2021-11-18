@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\ZonesImport;
-use App\Models\Zone;
+use App\Imports\EquipmentImport;
+use App\Models\Equipment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ZoneController extends Controller
+class EquipmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,7 +32,7 @@ class ZoneController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -44,10 +43,10 @@ class ZoneController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Zone $zone
+     * @param  \App\Models\Equipment  $equipment
      * @return \Illuminate\Http\Response
      */
-    public function show(Zone $zone)
+    public function show(Equipment $equipment)
     {
         //
     }
@@ -55,10 +54,10 @@ class ZoneController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Zone $zone
+     * @param  \App\Models\Equipment  $equipment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Zone $zone)
+    public function edit(Equipment $equipment)
     {
         //
     }
@@ -66,11 +65,11 @@ class ZoneController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Zone $zone
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Equipment  $equipment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Zone $zone)
+    public function update(Request $request, Equipment $equipment)
     {
         //
     }
@@ -78,10 +77,10 @@ class ZoneController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Zone $zone
+     * @param  \App\Models\Equipment  $equipment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Zone $zone)
+    public function destroy(Equipment $equipment)
     {
         //
     }
@@ -89,7 +88,7 @@ class ZoneController extends Controller
     public function initializeData(Request $request)
     {
 
-        Excel::import(new ZonesImport(), $request->file('file')->store('temp'));
+        Excel::import(new EquipmentImport(), $request->file('file')->store('temp'));
         return back();
 
     }

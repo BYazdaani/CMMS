@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
-    SuperAdminController,
     UserController,
     LoginHistoryController,
-    ZoneController
+    ZoneController,
+    EquipmentController
 };
 
 /*
@@ -33,8 +33,12 @@ Route::middleware('banned')->group(function () {
 
     Route::resource('logs', LoginHistoryController::class)->middleware(['auth']);
 
-});
+    Route::resource('zones', ZoneController::class)->middleware(['auth']);
+    Route::post("zones/initializeData", [ZoneController::class, 'initializeData'])->name('zones.initializeData');
 
-Route::post("zones/initializeData", [ZoneController::class, 'initializeData'])->name('zones.initializeData');
+    Route::resource('equipments', EquipmentController::class)->middleware(['auth']);
+    Route::post("equipments/initializeData", [EquipmentController::class, 'initializeData'])->name('equipments.initializeData');
+
+});
 
 require __DIR__ . '/auth.php';
