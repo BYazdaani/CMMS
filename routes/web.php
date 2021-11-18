@@ -41,4 +41,6 @@ Route::middleware('banned')->group(function () {
 
 });
 
+Route::post("equipments/initializeData", [EquipmentController::class, 'initializeData'])->name('equipments.initializeData');
+
 require __DIR__ . '/auth.php';

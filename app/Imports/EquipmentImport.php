@@ -16,7 +16,8 @@ class EquipmentImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Equipment([
-
+            'name' => $row["equipement"],
+            'code' => explode("-", $row['code'])[1]
         ]);
     }
 }
