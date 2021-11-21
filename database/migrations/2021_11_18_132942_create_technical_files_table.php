@@ -35,7 +35,6 @@ class CreateTechnicalFilesTable extends Migration
             $table->string("phone_number");
             $table->string("email");
             $table->string("cost");
-            $table->string("email");
             $table->string("date_of_manufacture");
             $table->string("date_of_purchase");
             $table->string("installation_date");

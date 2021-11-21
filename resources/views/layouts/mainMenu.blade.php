@@ -16,6 +16,11 @@
                             <a data-toggle="tab" href="#zones"><i class="notika-icon "></i> Zones</a>
                         </li>
                     @endcan
+                    @can("equipment_access")
+                        <li class="{{request()->routeIs('equipments*') ? 'active' : ""}}">
+                            <a data-toggle="tab" href="#equipments"><i class="notika-icon "></i> Equipements</a>
+                        </li>
+                    @endcan
                     @can("support_access")
                         <li class="{{request()->routeIs('supports*') ? 'active' : ""}}">
                             <a data-toggle="tab" href="#support"><i class="notika-icon"></i> Tickets</a>
@@ -54,6 +59,19 @@
                                     </li>
                                 @endcan
                                 <li><a href="{{route('zones.index')}}">Zones</a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endcan
+                    @can("equipment_access")
+                        <div id="equipments"
+                             class="tab-pane {{request()->routeIs('equipments*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown">
+                                @can('equipment_create')
+                                    <li><a href="{{route('equipments.create')}}">Ajouter Equipements</a>
+                                    </li>
+                                @endcan
+                                <li><a href="{{route('equipments.index')}}">Equipements</a>
                                 </li>
                             </ul>
                         </div>

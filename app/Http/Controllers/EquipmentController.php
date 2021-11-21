@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Imports\EquipmentImport;
 use App\Models\Equipment;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EquipmentController extends Controller
@@ -14,9 +16,17 @@ class EquipmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index():View
     {
-        //
+        abort_if(Gate::denies('equipment_access'), 403);
+
+        $equipments = Equipment::with('zone')->get();
+
+        $data = [
+            'equipments' => $equipments
+        ];
+
+        return view('equipments.index', $data);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ZoneRequest;
 use App\Imports\ZonesImport;
 use App\Models\User;
 use App\Models\Zone;
@@ -17,7 +18,7 @@ class ZoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index():View
+    public function index(): View
     {
         abort_if(Gate::denies('zone_access'), 403);
 
@@ -35,20 +36,30 @@ class ZoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
-        //
+        abort_if(Gate::denies('zone_create'), 403);
+
+
+        $data = [
+        ];
+
+        return view('zones.create', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param ZoneRequest $zoneRequest
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ZoneRequest $zoneRequest)
     {
-        //
+        abort_if(Gate::denies('zone_create'), 403);
+
+        Zone::create($zoneRequest->validated());
+
+        return redirect()->route("zones.index");
     }
 
     /**
