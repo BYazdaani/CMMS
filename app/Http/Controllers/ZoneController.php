@@ -68,9 +68,18 @@ class ZoneController extends Controller
      * @param \App\Models\Zone $zone
      * @return \Illuminate\Http\Response
      */
-    public function show(Zone $zone)
+    public function show(Zone $zone): View
     {
-        //
+        abort_if(Gate::denies('zone_show'), 403);
+
+        $equipments = $zone->equipments;
+
+        $data = [
+            'equipments' => $equipments,
+            'zone' => $zone
+        ];
+
+        return view('zones.show', $data);
     }
 
     /**
@@ -79,21 +88,32 @@ class ZoneController extends Controller
      * @param \App\Models\Zone $zone
      * @return \Illuminate\Http\Response
      */
-    public function edit(Zone $zone)
+    public function edit(Zone $zone): View
     {
-        //
+        abort_if(Gate::denies('zone_edit'), 403);
+
+        $data = [
+            'zone' => $zone
+        ];
+
+        return view('zones.edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param ZoneRequest $zoneRequest
      * @param \App\Models\Zone $zone
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Throwable
      */
-    public function update(Request $request, Zone $zone)
+    public function update(ZoneRequest $zoneRequest, Zone $zone)
     {
-        //
+        abort_if(Gate::denies('zone_edit'), 403);
+
+        $zone->updateOrFail($zoneRequest->validated());
+
+        return redirect()->route("zones.show", ['zone' => $zone]);
     }
 
     /**

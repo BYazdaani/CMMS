@@ -17,7 +17,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="data-table-list">
                         <div class="basic-tb-hd">
-                            <h4>Liste des utilisateurs du système</h4>
+                            <h4>Liste des Zones</h4>
                         </div>
                         <div class="table-responsive">
                             <table id="data-table-basic" class="table table-striped">
@@ -33,7 +33,12 @@
                                 @foreach($zones as $zone)
                                     <tr>
                                         <td>{{$zone->id}}</td>
-                                        <td><a href="{{route("zones.show", ["zone"=>$zone])}}">{{$zone->room}}</a></td>
+                                        @can("zone_show")
+                                            <td><a href="{{route("zones.show", ["zone"=>$zone])}}">{{$zone->room}}</a>
+                                            </td>
+                                        @else
+                                            <td>{{$zone->room}}</td>
+                                        @endcan
                                         <td>{{$zone->room_code}}</td>
                                         <td>{{count($zone->equipments)}}</td>
                                     </tr>

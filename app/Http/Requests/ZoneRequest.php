@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class ZoneRequest extends FormRequest
 {
@@ -25,9 +26,20 @@ class ZoneRequest extends FormRequest
      */
     public function rules()
     {
+
+        if (request()->routeIs('zones.store')) {
+
+            $zoneRule = ['required', 'string', 'unique:zones'];
+
+        } elseif (request()->routeIs('zones.update')) {
+
+            $zoneRule = ['required', 'string', Rule::unique('zones')->ignore($this->zone->id)];
+
+        }
+
         return [
-            'room' => ['required', 'string', 'unique:zones'],
-            'room_code' => ['required', 'string', 'unique:zones'],
+            'room' => $zoneRule,
+            'room_code' => $zoneRule,
         ];
     }
 
