@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EquipmentRequest;
 use App\Imports\EquipmentImport;
 use App\Models\Equipment;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Gate;
@@ -34,20 +36,30 @@ class EquipmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() : View
     {
-        //
+        abort_if(Gate::denies("equipment_create"),403);
+
+        $zones = Zone::all();
+
+        $data = [
+            'zones' => $zones
+        ];
+
+        return view('equipments.create', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param EquipmentRequest $equipmentRequest
+     * @return void
      */
-    public function store(Request $request)
+    public function store(EquipmentRequest $equipmentRequest)
     {
-        //
+        abort_if(Gate::denies("equipment_store"),403);
+
+        dd($equipmentRequest->validated());
     }
 
     /**

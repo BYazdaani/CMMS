@@ -16,8 +16,8 @@ class CreateEquipmentTable extends Migration
         Schema::create('equipment', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('zone_id');
-            $table->string("code");
             $table->string("name");
+            $table->string("code");
             $table->string("serial_number");
             $table->string("model");
             $table->foreign('zone_id')->on("zones")->references("id")->onDelete("cascade");

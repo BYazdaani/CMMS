@@ -19,13 +19,15 @@ class CreateTechnicalFilesTable extends Migration
             $table->string("picture");
             $table->string("power");
             $table->string("frequency");
-            $table->string("electric_ower");
+            $table->string("electric_power");
             $table->string("voltage");
             $table->string("weight");
             $table->string("capacity");
             $table->string("compressed_air_pressure");
             $table->string("start");
-            $table->string("dimension");
+            $table->string("length");
+            $table->string("width");
+            $table->string("height");
             $table->string("description");
             $table->string("electrical_schema");
             $table->string("plan");
