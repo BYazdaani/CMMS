@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class EquipmentRequest extends FormRequest
@@ -40,7 +41,7 @@ class EquipmentRequest extends FormRequest
             'serial_number' => ['required', 'string', 'unique:equipment'],
             'model' => ['required', 'string'],
             'zone_id' => ['required', 'string',],
-            'picture' => ['required', 'string', 'file','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
+            'picture' => ['sometimes', 'file','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
             'power' => ['required', 'string'],
             'frequency' => ['required', 'string'],
             'electric_power' => ['required', 'string'],
@@ -53,8 +54,8 @@ class EquipmentRequest extends FormRequest
             'width' => ['required', 'string'],
             'height' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'electrical_schema' => ['required', 'string', 'file','mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip','max:5000'],
-            'plan' => ['required', 'string', 'file','mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip','max:5000'],
+            'electrical_schema' => ['sometimes', 'file','mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip,rar','max:5000'],
+            'plan' => ['sometimes', 'file','mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip,rar','max:5000'],
             'special_tools' => ['required', 'string'],
             'manufacturer' => ['required', 'string'],
             'address' => ['required', 'string'],
@@ -65,8 +66,27 @@ class EquipmentRequest extends FormRequest
             'date_of_purchase' => ['required', 'string'],
             'installation_date' => ['required', 'string'],
             'commissioning_date' => ['required', 'string'],
-            'file' => ['required', 'string', 'file','mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip','max:5000'],
+            'file' => ['sometimes', 'file','mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip,rar','max:5000'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->file == null) {
+            $this->request->remove('file');
+        }
+
+        if ($this->plan == null) {
+            $this->request->remove('plan');
+        }
+
+        if ($this->electrical_schema == null) {
+            $this->request->remove('electrical_schema');
+        }
+
+        if ($this->picture == null) {
+            $this->request->remove('picture');
+        }
     }
 
     public function failedValidation(Validator $validator)

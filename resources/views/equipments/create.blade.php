@@ -326,7 +326,7 @@
                                             <i class="notika-icon notika-promos"></i>
                                         </div>
                                         <div class="nk-int-st ">
-                                            <select class="selectpicker form-control" data-live-search="true" name="function">
+                                            <select class="selectpicker form-control" data-live-search="true" name="zone_id">
                                                 @foreach($zones as $zone)
                                                     <option value="{{$zone->id}}">{{$zone->room}}</option>
                                                 @endforeach
@@ -339,14 +339,14 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="nk-int-mk">
-                                        <h2 style="font-size: 15px">Photo de l'équipement</h2>
+                                        <h2 style="font-size: 15px">Photo de l'équipement <span style="font-size: 12px">(JPEG,PNG,JPG,GIF,SVG)*</span></h2>
                                     </div>
                                     <div class="form-group ic-cmp-int">
                                         <div class="form-ic-cmp">
                                             <i class="notika-icon notika-up-arrow"></i>
                                         </div>
                                         <div class="nk-int-st ">
-                                            <input required type="file" class="form-control" name="picture">
+                                            <input type="file" class="form-control" name="picture">
                                         </div>
                                     </div>
                                 </div>
@@ -355,14 +355,14 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="nk-int-mk">
-                                        <h2 style="font-size: 15px">Schéma électrique</h2>
+                                        <h2 style="font-size: 15px">Schéma électrique <span style="font-size: 12px">(JPEG,PNG,JPG,GIF,SVG,PDF,DOCS,ZIP)*</span></h2>
                                     </div>
                                     <div class="form-group ic-cmp-int">
                                         <div class="form-ic-cmp">
                                             <i class="notika-icon notika-up-arrow"></i>
                                         </div>
                                         <div class="nk-int-st ">
-                                            <input required type="file" class="form-control" name="electrical_schema">
+                                            <input type="file" class="form-control" name="electrical_schema">
                                         </div>
                                     </div>
                                 </div>
@@ -371,14 +371,14 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="nk-int-mk">
-                                        <h2 style="font-size: 15px">Plan</h2>
+                                        <h2 style="font-size: 15px">Plan <span style="font-size: 12px">(JPEG,PNG,JPG,GIF,SVG,PDF,DOCS,ZIP)*</span></h2>
                                     </div>
                                     <div class="form-group ic-cmp-int">
                                         <div class="form-ic-cmp">
                                             <i class="notika-icon notika-up-arrow"></i>
                                         </div>
                                         <div class="nk-int-st ">
-                                            <input required type="file" class="form-control" name="plan">
+                                            <input  type="file" class="form-control" name="plan">
                                         </div>
                                     </div>
                                 </div>
@@ -387,14 +387,14 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="nk-int-mk">
-                                        <h2 style="font-size: 15px">Fichiers attachés (ZIP*)</h2>
+                                        <h2 style="font-size: 15px">Fichiers attachés <span style="font-size: 12px">(JPEG,PNG,JPG,GIF,SVG,PDF,DOCS,ZIP)*</span></h2>
                                     </div>
                                     <div class="form-group ic-cmp-int">
                                         <div class="form-ic-cmp">
                                             <i class="notika-icon notika-up-arrow"></i>
                                         </div>
                                         <div class="nk-int-st ">
-                                            <input required type="file" class="form-control" name="file">
+                                            <input  type="file" class="form-control" name="file">
                                         </div>
                                     </div>
                                 </div>

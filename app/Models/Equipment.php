@@ -9,10 +9,16 @@ class Equipment extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
-    public function zone(){
+    public function zone()
+    {
         return $this->belongsTo(Zone::class);
+    }
+
+    public function technicalFile()
+    {
+        return $this->hasOne(TechnicalFile::class);
     }
 
 }

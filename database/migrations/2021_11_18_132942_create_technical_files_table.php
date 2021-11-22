@@ -16,7 +16,7 @@ class CreateTechnicalFilesTable extends Migration
         Schema::create('technical_files', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('equipment_id');
-            $table->string("picture");
+            $table->string("picture")->nullable();
             $table->string("power");
             $table->string("frequency");
             $table->string("electric_power");
@@ -29,8 +29,8 @@ class CreateTechnicalFilesTable extends Migration
             $table->string("width");
             $table->string("height");
             $table->string("description");
-            $table->string("electrical_schema");
-            $table->string("plan");
+            $table->string("electrical_schema")->nullable();
+            $table->string("plan")->nullable();
             $table->string("special_tools");
             $table->string("manufacturer");
             $table->string("address");
