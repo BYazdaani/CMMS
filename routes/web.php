@@ -38,6 +38,7 @@ Route::middleware('banned')->group(function () {
 
     Route::resource('equipments', EquipmentController::class)->middleware(['auth']);
     Route::post("equipments/initializeData", [EquipmentController::class, 'initializeData'])->name('equipments.initializeData');
+    Route::post("equipments/print/{equipment}", [EquipmentController::class, 'print'])->name('equipments.print');
 
 });
 

@@ -8,8 +8,6 @@
 @endsection()
 
 @section('content')
-
-
     <!-- Data Table area Start-->
     <div class="data-table-area">
         <div class="container">
@@ -35,7 +33,9 @@
                                 @foreach($equipments as $equipment)
                                     <tr>
                                         <td>{{$equipment->id}}</td>
-                                        <td><a href="{{route("equipments.show", ["equipment"=>$equipment])}}">{{$equipment->code}}</a></td>
+                                        <td>
+                                            <a href="{{route("equipments.show", ["equipment"=>$equipment])}}">{{$equipment->code}}</a>
+                                        </td>
                                         <td>{{$equipment->name}}</td>
                                         <td>{{$equipment->model}}</td>
                                         <td>{{$equipment->serial_number}}</td>
@@ -51,5 +51,4 @@
         </div>
     </div>
     <!-- Data Table area End-->
-
 @endsection()

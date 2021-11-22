@@ -99,7 +99,7 @@ class EquipmentController extends Controller
                 $url = $file->store('/attached_files');
 
                 $technical_file->equipmentAttachedFile()->create([
-                    "file"=>$url
+                    "file" => $url
                 ]);
             }
 
@@ -119,9 +119,15 @@ class EquipmentController extends Controller
      * @param \App\Models\Equipment $equipment
      * @return \Illuminate\Http\Response
      */
-    public function show(Equipment $equipment)
+    public function show(Equipment $equipment): View
     {
-        //
+        abort_if(Gate::denies("equipment_create"), 403);
+
+        $data = [
+            "equipment" => $equipment
+        ];
+
+        return view('equipments.show', $data);
     }
 
     /**
@@ -164,5 +170,16 @@ class EquipmentController extends Controller
         Excel::import(new EquipmentImport(), $request->file('file')->store('temp'));
         return back();
 
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param \App\Models\Equipment $equipment
+     * @return \Illuminate\Http\Response
+     */
+    public function print(Equipment $equipment)
+    {
+        //
     }
 }
