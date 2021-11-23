@@ -76,21 +76,21 @@ class EquipmentController extends Controller
             if ($equipmentRequest->file('picture') != null) {
                 $picture = $equipmentRequest->file('picture');
                 $url = $picture->store('/pictures');
-                $technical_file->picture = "storage/" .$url;
+                $technical_file->picture = "storage/" . $url;
                 $technical_file->save();
             }
 
             if ($equipmentRequest->file('electrical_schema') != null) {
                 $electrical_schema = $equipmentRequest->file('electrical_schema');
                 $url = $electrical_schema->store('/electrical_schemas');
-                $technical_file->electrical_schema = "storage/" .$url;
+                $technical_file->electrical_schema = "storage/" . $url;
                 $technical_file->save();
             }
 
             if ($equipmentRequest->file('plan') != null) {
                 $plan = $equipmentRequest->file('plan');
                 $url = $plan->store('/plans');
-                $technical_file->plan = "storage/" .$url;
+                $technical_file->plan = "storage/" . $url;
                 $technical_file->save();
             }
 
@@ -99,7 +99,7 @@ class EquipmentController extends Controller
                 $url = $file->store('/attached_files');
 
                 $technical_file->equipmentAttachedFile()->create([
-                    "file" => "storage/" .$url
+                    "file" => "storage/" . $url
                 ]);
             }
 
@@ -136,21 +136,78 @@ class EquipmentController extends Controller
      * @param \App\Models\Equipment $equipment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Equipment $equipment)
+    public function edit(Equipment $equipment): View
     {
-        //
+        abort_if(Gate::denies("equipment_edit"), 403);
+
+        $zones = Zone::all();
+
+        $data = [
+            "equipment" => $equipment,
+            'zones' => $zones
+        ];
+
+        return view('equipments.update', $data);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param EquipmentRequest $equipmentRequest
      * @param \App\Models\Equipment $equipment
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Equipment $equipment)
+    public function update(EquipmentRequest $equipmentRequest, Equipment $equipment): \Illuminate\Http\RedirectResponse
     {
-        //
+        abort_if(Gate::denies("equipment_edit"), 403);
+
+        $equipment->updateOrFail($equipmentRequest->only("name", "code", "serial_number", "model"));
+
+        $equipment->technicalFile->updateOrFail(
+            $equipmentRequest->only("power", "frequency", "electric_power", "voltage", "weight", "capacity", "compressed_air_pressure", "start", "length", "width", "height",
+                "description", "special_tools", "manufacturer", "address", "phone_number", "email", "cost", "date_of_manufacture", "date_of_purchase", "installation_date", "commissioning_date")
+        );
+
+        if ($equipmentRequest->file('picture') != null) {
+            $picture = $equipmentRequest->file('picture');
+            $url = $picture->store('/pictures');
+            $equipment->technicalFile->picture = "storage/" . $url;
+            $equipment->technicalFile->save();
+        }
+
+        if ($equipmentRequest->file('electrical_schema') != null) {
+            $electrical_schema = $equipmentRequest->file('electrical_schema');
+            $url = $electrical_schema->store('/electrical_schemas');
+            $equipment->technicalFile->electrical_schema = "storage/" . $url;
+            $equipment->technicalFile->save();
+        }
+
+        if ($equipmentRequest->file('plan') != null) {
+            $plan = $equipmentRequest->file('plan');
+            $url = $plan->store('/plans');
+            $equipment->technicalFile->plan = "storage/" . $url;
+            $equipment->technicalFile->save();
+        }
+
+        if ($equipmentRequest->file('file') != null) {
+            $file = $equipmentRequest->file('file');
+            $url = $file->store('/attached_files');
+
+            if ($equipment->technicalFile->equipmentAttachedFile != null) {
+                $equipment->technicalFile->equipmentAttachedFile->file = "storage/" . $url;
+                $equipment->technicalFile->equipmentAttachedFile->save();
+            } else {
+                $equipment->technicalFile->equipmentAttachedFile()->create([
+                    "file" => "storage/" . $url
+                ]);
+            }
+        }
+
+        $data = [
+            "equipment" => $equipment
+        ];
+
+        return redirect()->route("equipments.edit", ["equipment" => $equipment]);
     }
 
     /**

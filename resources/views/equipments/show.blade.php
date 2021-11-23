@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
-                                @can("equipment_access")
+                                @can("equipment_edit")
                                     <div class="breadcomb-report">
                                         <a href="{{route("equipments.edit",['equipment'=>$equipment])}}"
                                            data-toggle="tooltip" data-placement="left" title="Modifier Zone"

@@ -28,20 +28,22 @@ class EquipmentRequest extends FormRequest
     public function rules()
     {
 
-        /*if (request()->routeIs('zones.store')) {
+        if (request()->routeIs('equipments.store')) {
 
+            $uniqueRule = 'unique:equipment';
 
-        } elseif (request()->routeIs('zones.update')) {
+        } elseif (request()->routeIs('equipments.update')) {
 
-        }*/
+            $uniqueRule = Rule::unique('equipment')->ignore($this->equipment->id);
+
+        }
 
         return [
-            'name' => ['required', 'string', 'unique:equipment'],
-            'code' => ['required', 'string', 'unique:equipment'],
-            'serial_number' => ['required', 'string', 'unique:equipment'],
+            'name' => ['required', 'string', $uniqueRule],
+            'code' => ['required', 'string', $uniqueRule],
+            'serial_number' => ['required', 'string', $uniqueRule],
             'model' => ['required', 'string'],
             'zone_id' => ['required', 'string',],
-            'picture' => ['sometimes', 'file','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
             'power' => ['required', 'string'],
             'frequency' => ['required', 'string'],
             'electric_power' => ['required', 'string'],
@@ -54,8 +56,6 @@ class EquipmentRequest extends FormRequest
             'width' => ['required', 'string'],
             'height' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'electrical_schema' => ['sometimes', 'file','mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip,rar','max:5000'],
-            'plan' => ['sometimes', 'file','mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip,rar','max:5000'],
             'special_tools' => ['required', 'string'],
             'manufacturer' => ['required', 'string'],
             'address' => ['required', 'string'],
@@ -66,27 +66,30 @@ class EquipmentRequest extends FormRequest
             'date_of_purchase' => ['required', 'string'],
             'installation_date' => ['required', 'string'],
             'commissioning_date' => ['required', 'string'],
-            'file' => ['sometimes', 'file','mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip,rar','max:5000'],
+            'picture' => ['sometimes', 'file', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'electrical_schema' => ['sometimes', 'file', 'mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip,rar', 'max:5000'],
+            'plan' => ['sometimes', 'file', 'mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip,rar', 'max:5000'],
+            'file' => ['sometimes', 'file', 'mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip,rar', 'max:5000'],
         ];
     }
 
     protected function prepareForValidation()
     {
-        if ($this->file == null) {
-            $this->request->remove('file');
-        }
+        /* if ($this->file == null) {
+             $this->request->remove('file');
+         }
 
-        if ($this->plan == null) {
-            $this->request->remove('plan');
-        }
+         if ($this->plan == null) {
+             $this->request->remove('plan');
+         }
 
-        if ($this->electrical_schema == null) {
-            $this->request->remove('electrical_schema');
-        }
+         if ($this->electrical_schema == null) {
+             $this->request->remove('electrical_schema');
+         }
 
-        if ($this->picture == null) {
-            $this->request->remove('picture');
-        }
+         if ($this->picture == null) {
+             $this->request->remove('picture');
+         }*/
     }
 
     public function failedValidation(Validator $validator)
