@@ -45,7 +45,7 @@
     <!-- Breadcomb area End-->
 
     <!-- Data Table area Start-->
-    <div class="data-table-area">
+    <div class="data-table-area mg-b-30">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -73,7 +73,7 @@
                                     <td colspan="2">{{$equipment->zone->room}}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" rowspan="14"><img src="{{asset('../theme/img/logo/logo.png')}}" style="width: 100px" alt=""/></td>
+                                    <td colspan="4" rowspan="14"><img src="{{asset($equipment->technicalFile->picture)}}" style="object-fit: cover; max-width: 600px" alt=""/></td>
                                     <td colspan="2"><strong>Caractéristique technique</strong></td>
                                 </tr>
                                 <tr>
@@ -134,9 +134,70 @@
                                 <tr>
                                     <td colspan="2"><strong>Fabricant</strong> </td>
                                     <td colspan="2" style="color: #0d4c92">{{$equipment->technicalFile->manufacturer}} </td>
-                                    <td colspan="2"><a><i class="notika-icon notika-down-arrow"></i></a> <u> Schéma électrique</u> </td>
+                                    @if(isset($equipment->technicalFile->electrical_schema))
+                                        <td colspan="2"><a href="{{asset($equipment->technicalFile->electrical_schema)}}" target="_blank"><i class="notika-icon notika-down-arrow"></i></a> <u> Schéma électrique</u> </td>
+                                    @else
+                                        <td colspan="2"> <i> No Schema</i> </td>
+                                    @endif
                                 </tr>
-
+                                <tr>
+                                    <td colspan="2"><strong>Adresse</strong> </td>
+                                    <td colspan="2" style="color: #0d4c92">{{$equipment->technicalFile->address}} </td>
+                                    @if(isset($equipment->technicalFile->plan))
+                                        <td colspan="2"><a href="{{asset($equipment->technicalFile->plan)}}" target="_blank"><i class="notika-icon notika-down-arrow"></i></a> <u> Plan Autocad</u> </td>
+                                    @else
+                                        <td colspan="2"> <i> No Plan</i> </td>
+                                    @endif
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><strong>Téléphone</strong> </td>
+                                    <td colspan="2" style="color: #0d4c92">{{$equipment->technicalFile->phone_number}} </td>
+                                    @if(isset($equipment->technicalFile->equipmentAttachedFile))
+                                    <td colspan="2"><a href="{{asset($equipment->technicalFile->equipmentAttachedFile->file)}}" target="_blank"><i class="notika-icon notika-down-arrow"></i></a> <u> Autre Fichiers</u> </td>
+                                    @else
+                                        <td colspan="2"> <i> No Files</i> </td>
+                                    @endif
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><strong>E-mail</strong> </td>
+                                    <td colspan="2" style="color: #0d4c92">{{$equipment->technicalFile->email}} </td>
+                                    <td colspan="2"><strong>Outillage spécial</strong></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><strong>Cout</strong> </td>
+                                    <td colspan="2" style="color: #0d4c92">{{$equipment->technicalFile->cost}} </td>
+                                    <td colspan="2" rowspan="4">{{$equipment->technicalFile->special_tools}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><strong>Date de Fabrication</strong> </td>
+                                    <td colspan="2" style="color: #0d4c92">{{$equipment->technicalFile->date_of_manufacture}} </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><strong>Date d'Achat</strong> </td>
+                                    <td colspan="2" style="color: #0d4c92">{{$equipment->technicalFile->date_of_purchase}} </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><strong>Date d'Installation</strong> </td>
+                                    <td colspan="2" style="color: #0d4c92">{{$equipment->technicalFile->installation_date}} </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><strong>Date de Mise en Service</strong> </td>
+                                    <td colspan="2" style="color: #0d4c92">{{$equipment->technicalFile->commissioning_date}} </td>
+                                    <td colspan="2"><strong>Description</strong></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><strong>Lien</strong> </td>
+                                    <td colspan="2" rowspan="4" style="color: #0d4c92">{{$equipment->technicalFile->installation_date}} </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><a><i class="notika-icon notika-next"></i></a> <u> Pièce de rechange</u> </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><a><i class="notika-icon notika-next"></i></a> <u> Fiche d'entretien préventif</u> </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><a><i class="notika-icon notika-next"></i></a> <u> Historique de la machine</u> </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

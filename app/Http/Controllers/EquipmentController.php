@@ -76,21 +76,21 @@ class EquipmentController extends Controller
             if ($equipmentRequest->file('picture') != null) {
                 $picture = $equipmentRequest->file('picture');
                 $url = $picture->store('/pictures');
-                $technical_file->picture = $url;
+                $technical_file->picture = "storage/" .$url;
                 $technical_file->save();
             }
 
             if ($equipmentRequest->file('electrical_schema') != null) {
                 $electrical_schema = $equipmentRequest->file('electrical_schema');
                 $url = $electrical_schema->store('/electrical_schemas');
-                $technical_file->electrical_schema = $url;
+                $technical_file->electrical_schema = "storage/" .$url;
                 $technical_file->save();
             }
 
             if ($equipmentRequest->file('plan') != null) {
                 $plan = $equipmentRequest->file('plan');
                 $url = $plan->store('/plans');
-                $technical_file->plan = $url;
+                $technical_file->plan = "storage/" .$url;
                 $technical_file->save();
             }
 
@@ -99,7 +99,7 @@ class EquipmentController extends Controller
                 $url = $file->store('/attached_files');
 
                 $technical_file->equipmentAttachedFile()->create([
-                    "file" => $url
+                    "file" => "storage/" .$url
                 ]);
             }
 
