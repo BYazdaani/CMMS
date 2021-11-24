@@ -5,7 +5,8 @@ use App\Http\Controllers\{
     UserController,
     LoginHistoryController,
     ZoneController,
-    EquipmentController
+    EquipmentController,
+    WorkRequestController
 };
 
 /*
@@ -40,6 +41,8 @@ Route::middleware(['banned', 'auth'])->group(function () {
     Route::post("equipments/initializeData", [EquipmentController::class, 'initializeData'])->name('equipments.initializeData');
     Route::post("equipments/print/{equipment}", [EquipmentController::class, 'print'])->name('equipments.print');
     Route::resource('equipments', EquipmentController::class);
+
+    Route::resource('work_requests', WorkRequestController::class);
 
 });
 

@@ -21,6 +21,11 @@
                             <a data-toggle="tab" href="#equipments"><i class="notika-icon "></i> Equipements</a>
                         </li>
                     @endcan
+                    @can("work_request_access")
+                        <li class="{{request()->routeIs('work_requests*') ? 'active' : ""}}">
+                            <a data-toggle="tab" href="#work_requests"><i class="notika-icon"></i> Demandes de travaille</a>
+                        </li>
+                    @endcan
                     @can("support_access")
                         <li class="{{request()->routeIs('supports*') ? 'active' : ""}}">
                             <a data-toggle="tab" href="#support"><i class="notika-icon"></i> Tickets</a>
@@ -35,6 +40,7 @@
                             </li>
                         </ul>
                     </div>
+                    @can("user_access")
                     <div id="users"
                          class="tab-pane {{ request()->routeIs('users*') || request()->routeIs('logs*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
                         <ul class="notika-main-menu-dropdown">
@@ -50,6 +56,7 @@
                             @endcan
                         </ul>
                     </div>
+                    @endcan
                     @can("zone_access")
                         <div id="zones"
                              class="tab-pane {{request()->routeIs('zones*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
@@ -72,6 +79,19 @@
                                     </li>
                                 @endcan
                                 <li><a href="{{route('equipments.index')}}">Equipements</a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endcan
+                    @can("work_request_access")
+                        <div id="work_requests"
+                             class="tab-pane {{request()->routeIs('work_requests*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown">
+                                @can('work_request_create')
+                                    <li><a href="{{route('work_requests.create')}}">Ajouter Demande de Travaille</a>
+                                    </li>
+                                @endcan
+                                <li><a href="{{route('work_requests.index')}}">Mes demandes</a>
                                 </li>
                             </ul>
                         </div>
