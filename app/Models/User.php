@@ -25,8 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
-        'function',
-        "account_state"
+        "account_state",
+        "department_id"
     ];
 
     /**
@@ -91,5 +91,10 @@ class User extends Authenticatable
     public function admin()
     {
         return $this->hasOne(Admin::class);
+    }
+
+    public function workRequests()
+    {
+        return $this->hasMany(WorkRequest::class);
     }
 }

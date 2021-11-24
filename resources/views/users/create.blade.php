@@ -80,9 +80,25 @@
                                             <i class="notika-icon notika-promos"></i>
                                         </div>
                                         <div class="nk-int-st ">
-                                            <select class="selectpicker form-control" data-live-search="true" name="function">
-                                                @foreach($functions as $function)
-                                                    <option value="{{$function}}">{{$function}}</option>
+                                            <select class="selectpicker form-control" data-live-search="true" name="role">
+                                                @foreach($roles as $role)
+                                                    <option value="{{$role}}">{{$role}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-promos"></i>
+                                        </div>
+                                        <div class="nk-int-st ">
+                                            <select class="selectpicker form-control" data-live-search="true" name="department_id">
+                                                @foreach($departments as $department)
+                                                    <option value="{{$department->id}}">{{$department->designation}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

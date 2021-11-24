@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +30,7 @@ class UserController extends Controller
 
         $data = [
             "users" => $users,
-            'functions' => $functions
+            'functions' => $functions,
         ];
 
         return view('users.index', $data);
@@ -44,18 +45,17 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_create'), 403);
 
-        $functions = [
-            'Responsable maintenance',
-            'Superviseur maintenance',
-            'Chargé méthodes et utilités',
-            'Technicien Maintenance',
-            'Opérateur Machine',
-            'Team Leader',
-            'Superviseur production',
+        $roles = [
+            'Admin',
+            'Maintenance Technician',
+            'Client',
         ];
 
+        $departments = Department::all();
+
         $date = [
-            'functions' => $functions
+            'roles' => $roles,
+            "departments" => $departments
         ];
 
         return view('users.create', $date);
@@ -72,21 +72,19 @@ class UserController extends Controller
 
             $user = User::create($userRequest->validated());
 
-            switch ($userRequest['function']) {
-                case 'Technicien Maintenance':
+            switch ($userRequest['role']) {
+
+                case 'Maintenance Technician':
                     $user->maintenanceTechnician()->create([]);
                     $user->assignRole('Maintenance Technician');
                     break;
-                case 'Superviseur production':
-                case 'Team Leader':
-                case 'Opérateur Machine':
+
+                case 'Client':
                     $user->client()->create([]);
                     $user->assignRole('Client');
                     break;
 
-                case 'Responsable maintenance' :
-                case 'Superviseur maintenance':
-                case 'Chargé méthodes et utilités':
+                case 'Admin' :
                     $user->admin()->create([]);
                     $user->assignRole('Admin');
                     break;
@@ -99,7 +97,7 @@ class UserController extends Controller
 
         } catch (\Exception  $e) {
             DB::rollBack();
-            return redirect()->back();
+            return $e->getMessage();
         }
 
         DB::commit();
@@ -117,22 +115,21 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_show'), 403);
 
-        $functions = [
-            'Responsable maintenance',
-            'Superviseur maintenance',
-            'Chargé méthodes et utilités',
-            'Technicien Maintenance',
-            'Opérateur Machine',
-            'Team Leader',
-            'Superviseur production',
+        $roles = [
+            'Admin',
+            'Maintenance Technician',
+            'Client',
         ];
 
         $logs = $user->loginHistories;
 
+        $departments = Department::all();
+
         $data = [
             'user' => $user,
             'logs' => $logs,
-            'functions' => $functions
+            'roles' => $roles,
+            "departments" => $departments
         ];
 
         return view('users.show', $data);
@@ -168,19 +165,20 @@ class UserController extends Controller
 
             $user->removeRole($user->getRoleNames()[0]);
 
-            switch ($userRequest['function']) {
-                case 'Technicien Maintenance':
+            switch ($userRequest['role']) {
+
+                case 'Maintenance Technician':
+                    $user->maintenanceTechnician()->create([]);
                     $user->assignRole('Maintenance Technician');
                     break;
-                case 'Superviseur production':
-                case 'Team Leader':
-                case 'Opérateur Machine':
+
+                case 'Client':
+                    $user->client()->create([]);
                     $user->assignRole('Client');
                     break;
 
-                case 'Responsable maintenance' :
-                case 'Superviseur maintenance':
-                case 'Chargé méthodes et utilités':
+                case 'Admin' :
+                    $user->admin()->create([]);
                     $user->assignRole('Admin');
                     break;
 

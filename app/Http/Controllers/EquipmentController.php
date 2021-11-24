@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EquipmentRequest;
 use App\Imports\EquipmentImport;
+use App\Models\Department;
 use App\Models\Equipment;
 use App\Models\Zone;
 use Illuminate\Http\Request;
@@ -42,9 +43,11 @@ class EquipmentController extends Controller
         abort_if(Gate::denies("equipment_create"), 403);
 
         $zones = Zone::all();
+        $departments = Department::all();
 
         $data = [
-            'zones' => $zones
+            'zones' => $zones,
+            "departments" => $departments
         ];
 
         return view('equipments.create', $data);

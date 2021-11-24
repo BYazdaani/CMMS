@@ -16,11 +16,11 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $user = User::create([
+            "department_id"=>3,
             'name' => "Mohammed Errir",
             'email' => "mohammed.erriri@vitalcareprod.com",
             'password' => Hash::make("azerty123"),
             'phone_number' => "0770301603",
-            'function' => "Chargé méthodes et utilités",
         ]);
 
         $user->admin()->create([

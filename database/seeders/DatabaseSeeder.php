@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $this->call(DepartmentsSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(SuperAdminSeeder::class);
         $this->call(AdminSeeder::class);

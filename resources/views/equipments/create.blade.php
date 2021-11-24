@@ -317,7 +317,7 @@
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <div class="nk-int-mk">
                                         <h2 style="font-size: 15px">Salle</h2>
                                     </div>
@@ -329,6 +329,23 @@
                                             <select class="selectpicker form-control" data-live-search="true" name="zone_id">
                                                 @foreach($zones as $zone)
                                                     <option value="{{$zone->id}}">{{$zone->room}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="nk-int-mk">
+                                        <h2 style="font-size: 15px">Département</h2>
+                                    </div>
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-promos"></i>
+                                        </div>
+                                        <div class="nk-int-st ">
+                                            <select class="selectpicker form-control" data-live-search="true" name="department_id">
+                                                @foreach($departments as $department)
+                                                    <option value="{{$department->id}}">{{$department->designation}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

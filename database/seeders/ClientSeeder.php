@@ -16,11 +16,11 @@ class ClientSeeder extends Seeder
     public function run()
     {
         $user = User::create([
+            "department_id"=>2,
             'name' => "Test Client",
             'email' => "test.client@vitalcareprod.com",
             'password' => Hash::make("azerty123"),
             'phone_number' => "0770458632",
-            'function' => "Opérateur Machine",
         ]);
 
         $user->Client()->create([

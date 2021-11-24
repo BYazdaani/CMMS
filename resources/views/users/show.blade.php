@@ -97,11 +97,30 @@
                                                             </div>
                                                             <div class="nk-int-st ">
                                                                 <select class="selectpicker form-control"
-                                                                        data-live-search="true" name="function">
-                                                                    @foreach($functions as $function)
+                                                                        data-live-search="true" name="role">
+                                                                    @foreach($roles as $role)
                                                                         <option
-                                                                            @if($user->function == $function) selected
-                                                                            @endif value="{{$function}}">{{$function}}</option>
+                                                                            @if($user->hasRole($role)) selected
+                                                                            @endif value="{{$role}}">{{$role}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="form-group ic-cmp-int">
+                                                            <div class="form-ic-cmp">
+                                                                <i class="notika-icon notika-promos"></i>
+                                                            </div>
+                                                            <div class="nk-int-st ">
+                                                                <select class="selectpicker form-control" data-live-search="true" name="department_id">
+                                                                    @foreach($departments as $department)
+                                                                        <option
+                                                                            @if($user->department_id == $department->id) selected
+                                                                            @endif
+                                                                            value="{{$department->id}}">{{$department->designation}}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>

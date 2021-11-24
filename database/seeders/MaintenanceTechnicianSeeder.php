@@ -16,11 +16,11 @@ class MaintenanceTechnicianSeeder extends Seeder
     public function run()
     {
         $user = User::create([
+            "department_id"=>3,
             'name' => "Nassim SMAILIA",
             'email' => "nassim.smailia@vitalcareprod.com",
             'password' => Hash::make("azerty123"),
             'phone_number' => "0770276232",
-            'function' => "Technicien Maintenance",
         ]);
 
         $user->maintenanceTechnician()->create([

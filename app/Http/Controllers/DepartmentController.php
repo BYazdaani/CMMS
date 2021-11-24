@@ -2,30 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Equipment;
-use App\Models\WorkRequest;
+use App\Models\Department;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Contracts\View\View;
 
-class WorkRequestController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return \Illuminate\Http\Response
      */
-    public function index() : View
+    public function index()
     {
-        abort_if(Gate::denies('equipment_access'), 403);
-
-        $workRequests = auth()->user()->workRequests;
-
-        $data = [
-            'workRequests' => $workRequests
-        ];
-
-        return view('work_requests.index', $data);
+        //
     }
 
     /**
@@ -52,10 +41,10 @@ class WorkRequestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\WorkRequest  $workRequest
+     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function show(WorkRequest $workRequest)
+    public function show(Department $department)
     {
         //
     }
@@ -63,10 +52,10 @@ class WorkRequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\WorkRequest  $workRequest
+     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function edit(WorkRequest $workRequest)
+    public function edit(Department $department)
     {
         //
     }
@@ -75,10 +64,10 @@ class WorkRequestController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\WorkRequest  $workRequest
+     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, WorkRequest $workRequest)
+    public function update(Request $request, Department $department)
     {
         //
     }
@@ -86,10 +75,10 @@ class WorkRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\WorkRequest  $workRequest
+     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy(WorkRequest $workRequest)
+    public function destroy(Department $department)
     {
         //
     }

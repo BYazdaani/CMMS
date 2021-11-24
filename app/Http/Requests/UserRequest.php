@@ -41,11 +41,12 @@ class UserRequest extends FormRequest
         }
 
         return [
+            'department_id' => ['required', 'string','exists:departments,id'],
             'name' => ['required'],
             'email' => $emailRule,
             'password' => $passwordRule,
             'phone_number' => ['required'],
-            'function' => ['required'],
+            'role' => ['required'],
         ];
     }
 
