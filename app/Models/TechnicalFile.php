@@ -9,7 +9,10 @@ class TechnicalFile extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $fillable=[
+        "picture", "electrical_schema", "plan", "power", "frequency", "electric_power", "voltage", "weight", "capacity", "compressed_air_pressure", "start", "length", "width", "height",
+        "description", "special_tools", "manufacturer", "address", "phone_number", "email", "cost", "date_of_manufacture", "date_of_purchase", "installation_date", "commissioning_date"
+    ];
 
     public function equipment()
     {

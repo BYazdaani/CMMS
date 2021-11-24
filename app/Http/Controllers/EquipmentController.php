@@ -68,27 +68,28 @@ class EquipmentController extends Controller
 
             //work with select
 
+            $data=$equipmentRequest->validated();
+
             if ($equipmentRequest->file('picture') != null) {
                 $picture = $equipmentRequest->file('picture');
                 $url = $picture->store('/pictures');
-                $picture = "storage/" . $url;
+                $data['picture'] = "storage/" . $url;
             }
 
             if ($equipmentRequest->file('electrical_schema') != null) {
                 $electrical_schema = $equipmentRequest->file('electrical_schema');
                 $url = $electrical_schema->store('/electrical_schemas');
-                $electrical_schema = "storage/" . $url;
+                $data['electrical_schema'] = "storage/" . $url;
             }
 
             if ($equipmentRequest->file('plan') != null) {
                 $plan = $equipmentRequest->file('plan');
                 $url = $plan->store('/plans');
-                $plan = "storage/" . $url;
+                $data['plan'] = "storage/" . $url;
             }
 
             $technical_file = $equipment->technicalFile()->create(
-                $equipmentRequest->only($picture, $electrical_schema, $plan, "power", "frequency", "electric_power", "voltage", "weight", "capacity", "compressed_air_pressure", "start", "length", "width", "height",
-                    "description", "special_tools", "manufacturer", "address", "phone_number", "email", "cost", "date_of_manufacture", "date_of_purchase", "installation_date", "commissioning_date")
+                $data
             );
 
             if ($equipmentRequest->file('file') != null) {
