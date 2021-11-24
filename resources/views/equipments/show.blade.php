@@ -45,7 +45,7 @@
     <!-- Breadcomb area End-->
 
     <!-- Data Table area Start-->
-    <div class="data-table-area mg-b-30">
+    <div class="data-table-area">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
