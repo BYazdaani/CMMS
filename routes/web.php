@@ -23,22 +23,23 @@ Route::get('/', function () {
     return view('welcome');
 })->name('gmao');
 
-Route::middleware('banned')->group(function () {
+Route::middleware(['banned', 'auth'])->group(function () {
 
-    Route::get('/dashboard', function () {return view('dashboard');})->middleware(['auth'])->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-//*************super admin**********************************************************************************************
-    Route::resource('users', UserController::class)->middleware(['auth']);
     Route::get("users/restrict/{user}", [UserController::class, 'restrict'])->name('users.restrict');
+    Route::resource('users', UserController::class);
 
-    Route::resource('logs', LoginHistoryController::class)->middleware(['auth']);
+    Route::resource('logs', LoginHistoryController::class);
 
-    Route::resource('zones', ZoneController::class)->middleware(['auth']);
     Route::post("zones/initializeData", [ZoneController::class, 'initializeData'])->name('zones.initializeData');
+    Route::resource('zones', ZoneController::class);
 
-    Route::resource('equipments', EquipmentController::class)->middleware(['auth']);
     Route::post("equipments/initializeData", [EquipmentController::class, 'initializeData'])->name('equipments.initializeData');
     Route::post("equipments/print/{equipment}", [EquipmentController::class, 'print'])->name('equipments.print');
+    Route::resource('equipments', EquipmentController::class);
 
 });
 
