@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WorkRequestRequest;
 use App\Models\Equipment;
 use App\Models\WorkRequest;
 use Illuminate\Http\Request;
@@ -15,9 +16,9 @@ class WorkRequestController extends Controller
      *
      * @return View
      */
-    public function index() : View
+    public function index(): View
     {
-        abort_if(Gate::denies('equipment_access'), 403);
+        abort_if(Gate::denies('work_request_access'), 403);
 
         $workRequests = auth()->user()->workRequests;
 
@@ -33,26 +34,55 @@ class WorkRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
-        //
+        abort_if(Gate::denies('work_request_create'), 403);
+
+        if (auth()->user()->hasRole('Client')) {
+            $equipments = auth()->user()->department->equipments;
+        } else {
+            $equipments = Equipment::all();
+        }
+
+        $priorities=[
+          "Haute","Moyenne","Basse"
+        ];
+
+        $data = [
+            'equipments' => $equipments,
+            'priorities' => $priorities,
+        ];
+
+
+        return view('work_requests.create', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param WorkRequestRequest $workRequestRequest
+     * @return void
      */
-    public function store(Request $request)
+    public function store(WorkRequestRequest $workRequestRequest)
     {
-        //
+        abort_if(Gate::denies('work_request_create'), 403);
+
+        $data=$workRequestRequest->validated();
+
+        $data['date']=now()->toDateString();
+        $data['hour']=now()->toTimeString();
+        $data['user_id']=auth()->id();
+
+        $work_request=WorkRequest::create($data);
+
+        return redirect()->back();
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\WorkRequest  $workRequest
+     * @param \App\Models\WorkRequest $workRequest
      * @return \Illuminate\Http\Response
      */
     public function show(WorkRequest $workRequest)
@@ -63,7 +93,7 @@ class WorkRequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\WorkRequest  $workRequest
+     * @param \App\Models\WorkRequest $workRequest
      * @return \Illuminate\Http\Response
      */
     public function edit(WorkRequest $workRequest)
@@ -74,8 +104,8 @@ class WorkRequestController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\WorkRequest  $workRequest
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\WorkRequest $workRequest
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, WorkRequest $workRequest)
@@ -86,7 +116,7 @@ class WorkRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\WorkRequest  $workRequest
+     * @param \App\Models\WorkRequest $workRequest
      * @return \Illuminate\Http\Response
      */
     public function destroy(WorkRequest $workRequest)

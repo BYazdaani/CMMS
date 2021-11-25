@@ -9,9 +9,9 @@ class WorkRequest extends Model
 {
     use HasFactory;
 
-    protected $fillable=[];
+    protected $fillable=["user_id","equipment_id",'description', "date", 'hour', 'priority', 'lot'];
 
     public function user(){
-        return $this->belongsTo(WorkRequest::class);
+        return $this->belongsTo(User::class);
     }
 }

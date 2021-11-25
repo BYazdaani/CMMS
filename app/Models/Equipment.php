@@ -23,4 +23,9 @@ class Equipment extends Model
         return $this->hasOne(TechnicalFile::class);
     }
 
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
 }
