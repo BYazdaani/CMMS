@@ -44,6 +44,7 @@ class EquipmentRequest extends FormRequest
             'serial_number' => ['required', 'string', $uniqueRule],
             'model' => ['required', 'string'],
             'zone_id' => ['required', 'string','exists:zones,id'],
+            'department_id' => ['required', 'string','exists:departments,id'],
             'power' => ['required', 'string'],
             'frequency' => ['required', 'string'],
             'electric_power' => ['required', 'string'],

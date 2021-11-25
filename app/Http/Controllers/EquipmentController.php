@@ -67,7 +67,7 @@ class EquipmentController extends Controller
 
         try {
 
-            $equipment = Equipment::create($equipmentRequest->only("name", "code", "serial_number", "model", "zone_id"));
+            $equipment = Equipment::create($equipmentRequest->only("name", "code", "serial_number", "model", "zone_id", "department_id"));
 
             //work with select
 

@@ -10,7 +10,7 @@ class Equipment extends Model
     use HasFactory;
 
     protected $fillable=[
-        "name", "code", "serial_number", "model", "zone_id"
+        "name", "code", "serial_number", "model", "zone_id", "department_id"
     ];
 
     public function zone()
