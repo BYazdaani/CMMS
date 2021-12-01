@@ -16,14 +16,21 @@ class WorkRequestController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         abort_if(Gate::denies('work_request_access'), 403);
 
-        $workRequests = auth()->user()->workRequests;
+        switch ($request['filter']) {
+            case "only":
+                $workRequests = auth()->user()->workRequests;
+                break;
+            case "all":
+                $workRequests = WorkRequest::all();
+        }
+
 
         $data = [
-            'workRequests' => $workRequests
+            'workRequests' => $workRequests ?? $workRequests = WorkRequest::all()
         ];
 
         return view('work_requests.index', $data);
@@ -44,8 +51,8 @@ class WorkRequestController extends Controller
             $equipments = Equipment::all();
         }
 
-        $priorities=[
-          "Haute","Moyenne","Basse"
+        $priorities = [
+            "Haute", "Moyenne", "Basse"
         ];
 
         $data = [
@@ -61,21 +68,21 @@ class WorkRequestController extends Controller
      * Store a newly created resource in storage.
      *
      * @param WorkRequestRequest $workRequestRequest
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(WorkRequestRequest $workRequestRequest)
     {
         abort_if(Gate::denies('work_request_create'), 403);
 
-        $data=$workRequestRequest->validated();
+        $data = $workRequestRequest->validated();
 
-        $data['date']=now()->toDateString();
-        $data['hour']=now()->toTimeString();
-        $data['user_id']=auth()->id();
+        $data['date'] = now()->toDateString();
+        $data['hour'] = now()->toTimeString();
+        $data['user_id'] = auth()->id();
 
-        $work_request=WorkRequest::create($data);
+        $work_request = WorkRequest::create($data);
 
-        return redirect()->back();
+        return redirect()->route("work_requests.show", $work_request);
 
     }
 
@@ -85,9 +92,34 @@ class WorkRequestController extends Controller
      * @param \App\Models\WorkRequest $workRequest
      * @return \Illuminate\Http\Response
      */
-    public function show(WorkRequest $workRequest)
+    public function show(WorkRequest $workRequest): View
     {
-        //
+        abort_if(Gate::denies('work_request_show'), 403);
+
+        $data = [
+            'workRequest' => $workRequest
+        ];
+
+        if ($workRequest->user_id == auth()->id()){
+
+            if (auth()->user()->hasRole('Client')) {
+                $equipments = auth()->user()->department->equipments;
+            } else {
+                $equipments = Equipment::all();
+            }
+
+            $data['equipments']=$equipments;
+
+            $priorities = [
+                "Haute", "Moyenne", "Basse"
+            ];
+
+            $data['priorities']=$priorities;
+
+            return view('work_requests.edit', $data);
+        }else{
+            return view('work_requests.show', $data);
+        }
     }
 
     /**
@@ -106,21 +138,29 @@ class WorkRequestController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\WorkRequest $workRequest
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, WorkRequest $workRequest)
+    public function update(WorkRequestRequest $request, WorkRequest $workRequest)
     {
-        //
+        abort_if(Gate::denies('work_request_edit'), 403);
+
+        $workRequest->updateOrFail($request->validated());
+
+        return redirect()->route('work_requests.show', $workRequest);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param \App\Models\WorkRequest $workRequest
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(WorkRequest $workRequest)
     {
-        //
+        abort_if(Gate::denies('work_request_delete'), 403);
+
+        $workRequest->delete();
+
+        return redirect()->route('work_requests.index');
     }
 }

@@ -41,21 +41,21 @@
                         </ul>
                     </div>
                     @can("user_access")
-                    <div id="users"
-                         class="tab-pane {{ request()->routeIs('users*') || request()->routeIs('logs*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
-                        <ul class="notika-main-menu-dropdown">
-                            @can('user_create')
-                                <li><a href="{{route('users.create')}}">Ajouter Utilisateur</a>
+                        <div id="users"
+                             class="tab-pane {{ request()->routeIs('users*') || request()->routeIs('logs*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown">
+                                @can('user_create')
+                                    <li><a href="{{route('users.create')}}">Ajouter Utilisateur</a>
+                                    </li>
+                                @endcan
+                                <li><a href="{{route('users.index')}}">Comptes Utilisateurs</a>
                                 </li>
-                            @endcan
-                            <li><a href="{{route('users.index')}}">Comptes Utilisateurs</a>
-                            </li>
-                            @can('user_management_access')
-                                <li><a href="{{route('logs.index')}}">Log Des activités</a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </div>
+                                @can('user_management_access')
+                                    <li><a href="{{route('logs.index')}}">Log Des activités</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
                     @endcan
                     @can("zone_access")
                         <div id="zones"
@@ -88,11 +88,23 @@
                              class="tab-pane {{request()->routeIs('work_requests*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
                                 @can('work_request_create')
-                                    <li><a href="{{route('work_requests.create')}}">Ajouter Demande de Travaille</a>
+                                    <li><a href="{{route('work_requests.create')}}">Ajouter</a>
                                     </li>
                                 @endcan
-                                <li><a href="{{route('work_requests.index')}}">Mes demandes</a>
+                                <li><a href="#" onclick="event.preventDefault(); document.getElementById('index-form').submit();">Mes demandes</a>
+                                    <form id="index-form" action="{{ route('work_requests.index') }}" method="GET" class="d-none">
+
+                                        <input type="hidden" value="only" name="filter">
+                                    </form>
                                 </li>
+                                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin'))
+                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('my-index-form').submit();">Liste des Demandes</a>
+                                        <form id="my-index-form" action="{{ route('work_requests.index') }}" method="GET" class="d-none">
+
+                                            <input type="hidden" value="all" name="filter">
+                                        </form>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     @endcan

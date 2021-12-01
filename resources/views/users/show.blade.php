@@ -1,5 +1,12 @@
 @extends('layouts.app')
 
+@section('headerScripts')
+
+    <!-- Data Table JS============================================ -->
+    <link rel="stylesheet" href="{{asset('../theme/css/jquery.dataTables.min.css')}}">
+
+@endsection()
+
 @section("content")
     <!-- Start tabs area-->
     <div class="tabs-info-area">
@@ -179,8 +186,39 @@
                                     </div>
                                 @endcan
                                 <div id="dt" class="tab-pane fade">
-                                    <div class="tab-ctn">
-                                        <p>dt</p>
+                                    <div class="data-table-list">
+                                        <div class="basic-tb-hd">
+                                            <h4>Mes demandes de travaille</h4>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table id="data-table-basic" class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Heure</th>
+                                                    <th>Equipement</th>
+                                                    <th>Code</th>
+                                                    <th>Priorité</th>
+                                                    <th>Etat</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($workRequests as $workRequest)
+                                                    <tr>
+                                                        <td>{{$workRequest->created_at->toDateString()}}</td>
+                                                        <td>{{$workRequest->created_at->toTimeString()}}</td>
+                                                        <td>{{$workRequest->equipment->name}}</td>
+                                                        <td>{{$workRequest->equipment->code}}</td>
+                                                        <td>{{$workRequest->priority}}</td>
+                                                        <td></td>
+                                                        <td><a href="{{route("users.show", ["user"=>$workRequest])}}"></a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                                 <div id="ot" class="tab-pane fade">

@@ -125,11 +125,14 @@ class UserController extends Controller
 
         $departments = Department::all();
 
+        $workRequests = $user->workRequests;
+
         $data = [
             'user' => $user,
             'logs' => $logs,
             'roles' => $roles,
-            "departments" => $departments
+            "departments" => $departments,
+            "workRequests" => $workRequests
         ];
 
         return view('users.show', $data);

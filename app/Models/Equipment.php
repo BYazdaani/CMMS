@@ -9,7 +9,7 @@ class Equipment extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
+    protected $fillable = [
         "name", "code", "serial_number", "model", "zone_id", "department_id"
     ];
 
@@ -26,6 +26,11 @@ class Equipment extends Model
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function workRequests()
+    {
+        return $this->hasMany(WorkRequest::class);
     }
 
 }
