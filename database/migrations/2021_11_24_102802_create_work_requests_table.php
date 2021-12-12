@@ -22,6 +22,7 @@ class CreateWorkRequestsTable extends Migration
             $table->string("hour");
             $table->string("lot");
             $table->text("description");
+            $table->integer("status")->default(0);
             $table->foreign('equipment_id')->on("equipment")->references("id")->onDelete("cascade");
             $table->foreign('user_id')->on("users")->references("id")->onDelete("cascade");
             $table->timestamps();

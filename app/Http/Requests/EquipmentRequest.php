@@ -39,7 +39,7 @@ class EquipmentRequest extends FormRequest
         }
 
         return [
-            'name' => ['required', 'string', $uniqueRule],
+            'name' => ['required', 'string'],
             'code' => ['required', 'string', $uniqueRule],
             'serial_number' => ['required', 'string', $uniqueRule],
             'model' => ['required', 'string'],
@@ -67,6 +67,7 @@ class EquipmentRequest extends FormRequest
             'date_of_purchase' => ['required', 'string'],
             'installation_date' => ['required', 'string'],
             'commissioning_date' => ['required', 'string'],
+            'status' => ['sometimes', 'in:0,1,2,3'],
             'picture' => ['sometimes', 'file', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'electrical_schema' => ['sometimes', 'file', 'mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip,rar', 'max:5000'],
             'plan' => ['sometimes', 'file', 'mimes:jpeg,png,jpg,gif,svg,pdf,docs,zip,rar', 'max:5000'],

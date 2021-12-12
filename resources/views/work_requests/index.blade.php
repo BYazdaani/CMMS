@@ -46,7 +46,15 @@
                                         <td>{{$workRequest->equipment->name}}</td>
                                         <td>{{$workRequest->equipment->code}}</td>
                                         <td>{{$workRequest->priority}}</td>
-                                        <td></td>
+                                        <td>
+                                            @switch($workRequest->status)
+
+                                                @case(0) en attente @break
+                                                @case(1) en cours @break
+                                                @case(2) traitée @break
+                                                @default annullée @break
+                                            @endswitch
+                                        </td>
                                         <td><a href="{{route("work_requests.show", ["work_request"=>$workRequest])}}">Detail</a>
                                         </td>
                                     </tr>

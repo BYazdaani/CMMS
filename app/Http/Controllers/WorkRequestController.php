@@ -82,6 +82,12 @@ class WorkRequestController extends Controller
 
         $work_request = WorkRequest::create($data);
 
+        if (now()->gt(now()->toDateString() . ' 07:30:00') && now()->lt(now()->toDateString() . ' 17:30:00')) {
+            //here the admins will make decision
+        } else {
+            //here the system automatically chose a user to send him work order
+        }
+
         return redirect()->route("work_requests.show", $work_request);
 
     }
@@ -100,7 +106,7 @@ class WorkRequestController extends Controller
             'workRequest' => $workRequest
         ];
 
-        if ($workRequest->user_id == auth()->id()){
+        if ($workRequest->user_id == auth()->id()) {
 
             if (auth()->user()->hasRole('Client')) {
                 $equipments = auth()->user()->department->equipments;
@@ -108,16 +114,16 @@ class WorkRequestController extends Controller
                 $equipments = Equipment::all();
             }
 
-            $data['equipments']=$equipments;
+            $data['equipments'] = $equipments;
 
             $priorities = [
                 "Haute", "Moyenne", "Basse"
             ];
 
-            $data['priorities']=$priorities;
+            $data['priorities'] = $priorities;
 
             return view('work_requests.edit', $data);
-        }else{
+        } else {
             return view('work_requests.show', $data);
         }
     }

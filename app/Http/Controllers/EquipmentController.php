@@ -142,10 +142,12 @@ class EquipmentController extends Controller
         abort_if(Gate::denies("equipment_edit"), 403);
 
         $zones = Zone::all();
+        $departments = Department::all();
 
         $data = [
             "equipment" => $equipment,
-            'zones' => $zones
+            'zones' => $zones,
+            "departments" => $departments
         ];
 
         return view('equipments.update', $data);

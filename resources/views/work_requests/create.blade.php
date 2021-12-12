@@ -30,7 +30,7 @@
                                         <div class="nk-int-st ">
                                             <select class="selectpicker form-control" data-live-search="true" name="equipment_id">
                                                 @foreach($equipments as $equipment)
-                                                    <option value="{{$equipment->id}}">{{$equipment->code}}</option>
+                                                    <option value="{{$equipment->id}}">{{$equipment->name}} - {{$equipment->code}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -42,7 +42,7 @@
                                             <i class="notika-icon notika-edit"></i>
                                         </div>
                                         <div class="nk-int-st">
-                                            <input required type="text" class="form-control" placeholder="Lot N:" name="lot">
+                                            <input required type="number" class="form-control" placeholder="Lot N:" name="lot">
                                         </div>
                                     </div>
                                 </div>

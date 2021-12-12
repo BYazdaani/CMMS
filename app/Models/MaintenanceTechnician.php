@@ -9,7 +9,7 @@ class MaintenanceTechnician extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $fillable=["status"];
 
     public function user()
     {
