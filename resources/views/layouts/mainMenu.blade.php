@@ -26,6 +26,11 @@
                             <a data-toggle="tab" href="#work_requests"><i class="notika-icon"></i> Demandes de travaille</a>
                         </li>
                     @endcan
+                    @can("work_order_access")
+                        <li class="{{request()->routeIs('work_orders*') ? 'active' : ""}}">
+                            <a data-toggle="tab" href="#work_orders"><i class="notika-icon"></i> Ordres de travaille</a>
+                        </li>
+                    @endcan
                     @can("support_access")
                         <li class="{{request()->routeIs('supports*') ? 'active' : ""}}">
                             <a data-toggle="tab" href="#support"><i class="notika-icon"></i> Tickets</a>
@@ -100,6 +105,27 @@
                                 @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin'))
                                     <li><a href="#" onclick="event.preventDefault(); document.getElementById('my-index-form').submit();">Liste des Demandes</a>
                                         <form id="my-index-form" action="{{ route('work_requests.index') }}" method="GET" class="d-none">
+
+                                            <input type="hidden" value="all" name="filter">
+                                        </form>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    @endcan
+                    @can("work_order_access")
+                        <div id="work_orders"
+                             class="tab-pane {{request()->routeIs('work_orders*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown">
+                                <li><a href="#" onclick="event.preventDefault(); document.getElementById('index-form').submit();">Mes Orders</a>
+                                    <form id="index-form" action="{{ route('work_orders.index') }}" method="GET" class="d-none">
+
+                                        <input type="hidden" value="only" name="filter">
+                                    </form>
+                                </li>
+                                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin'))
+                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('my-index-form').submit();">Liste des Ordres</a>
+                                        <form id="my-index-form" action="{{ route('work_orders.index') }}" method="GET" class="d-none">
 
                                             <input type="hidden" value="all" name="filter">
                                         </form>

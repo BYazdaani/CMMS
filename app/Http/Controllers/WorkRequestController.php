@@ -8,6 +8,8 @@ use App\Models\WorkRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class WorkRequestController extends Controller
 {
@@ -151,6 +153,23 @@ class WorkRequestController extends Controller
         abort_if(Gate::denies('work_request_edit'), 403);
 
         $workRequest->updateOrFail($request->validated());
+
+        return redirect()->route('work_requests.show', $workRequest);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\WorkRequest $workRequest
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function cancel(Request $request, WorkRequest $workRequest)
+    {
+
+        abort_if(Gate::denies('work_request_edit'), 403);
+
+        $workRequest->updateOrFail(["status" => 3]);
 
         return redirect()->route('work_requests.show', $workRequest);
     }

@@ -6,7 +6,8 @@ use App\Http\Controllers\{
     LoginHistoryController,
     ZoneController,
     EquipmentController,
-    WorkRequestController
+    WorkRequestController,
+    WorkOrderController
 };
 
 /*
@@ -43,6 +44,9 @@ Route::middleware(['banned', 'auth'])->group(function () {
     Route::resource('equipments', EquipmentController::class);
 
     Route::resource('work_requests', WorkRequestController::class);
+    Route::post("work_requests/cancel/{work_request}", [WorkRequestController::class, 'cancel'])->name('work_requests.cancel');
+
+    Route::resource('work_orders', WorkOrderController::class);
 
 });
 

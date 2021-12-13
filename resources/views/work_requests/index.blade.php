@@ -52,7 +52,8 @@
                                                 @case(0) en attente @break
                                                 @case(1) en cours @break
                                                 @case(2) traitée @break
-                                                @default annullée @break
+                                                @case(3) annullée @break
+                                                @default N/A @break
                                             @endswitch
                                         </td>
                                         <td><a href="{{route("work_requests.show", ["work_request"=>$workRequest])}}">Detail</a>

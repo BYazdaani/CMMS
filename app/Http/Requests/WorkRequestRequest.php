@@ -26,7 +26,7 @@ class WorkRequestRequest extends FormRequest
     public function rules()
     {
         return [
-            'equipment_id' => ['required', 'string','exists:equipment,id'],
+            'equipment_id' => ['required', 'string', 'exists:equipment,id'],
             'description' => ['required', 'string'],
             'priority' => ['required', 'in:Haute,Moyenne,Basse'],
             'lot' => ['required', 'string'],
