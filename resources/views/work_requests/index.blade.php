@@ -17,7 +17,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="data-table-list">
                         <div class="basic-tb-hd">
-                            <h4>Mes demandes de travaille</h4>
+                            <h4>Mes demandes de travail</h4>
                         </div>
                         <div class="table-responsive">
                             <table id="data-table-basic" class="table table-striped">

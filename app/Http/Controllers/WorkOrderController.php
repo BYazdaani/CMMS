@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WorkOrderRequest;
 use App\Models\WorkOrder;
+use App\Models\WorkRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class WorkOrderController extends Controller
 {
@@ -30,18 +34,39 @@ class WorkOrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param WorkOrderRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(WorkOrderRequest $request)
     {
-        //
+        abort_if(Gate::denies('work_order_create'), 403);
+
+        $data = $request->validated();
+
+        $data['date'] = now()->toDateString();
+        $data['hour'] = now()->toTimeString();
+        $data['admin_id'] = Auth::user()->admin->id;
+
+        $workOrder = WorkOrder::create($data);
+
+        $workOrder->workOrderLogs()->create([
+           'status'=>"created"
+        ]);
+
+        $workRequest = WorkRequest::findOrFail($request->get('work_request_id'));
+
+        $workRequest->status = 1;
+
+        $workRequest->save();
+
+        return redirect()->route('work_requests.show', ['work_request' => $request->get('work_request_id')]);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\WorkOrder  $workOrder
+     * @param \App\Models\WorkOrder $workOrder
      * @return \Illuminate\Http\Response
      */
     public function show(WorkOrder $workOrder)
@@ -52,7 +77,7 @@ class WorkOrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\WorkOrder  $workOrder
+     * @param \App\Models\WorkOrder $workOrder
      * @return \Illuminate\Http\Response
      */
     public function edit(WorkOrder $workOrder)
@@ -63,8 +88,8 @@ class WorkOrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\WorkOrder  $workOrder
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\WorkOrder $workOrder
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, WorkOrder $workOrder)
@@ -75,7 +100,7 @@ class WorkOrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\WorkOrder  $workOrder
+     * @param \App\Models\WorkOrder $workOrder
      * @return \Illuminate\Http\Response
      */
     public function destroy(WorkOrder $workOrder)

@@ -21,7 +21,7 @@ class WorkRequest extends Model
         return $this->belongsTo(Equipment::class);
     }
 
-    public function workOrder()
+    public function workOrders()
     {
         return $this->hasMany(WorkOrder::class);
     }

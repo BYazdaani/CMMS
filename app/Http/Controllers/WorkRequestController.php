@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkRequestRequest;
 use App\Models\Equipment;
+use App\Models\MaintenanceTechnician;
 use App\Models\WorkRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -108,24 +109,22 @@ class WorkRequestController extends Controller
             'workRequest' => $workRequest
         ];
 
+        $data['priorities'] = ["Haute", "Moyenne", "Basse"];
+        $data['types'] = ['Curatif', 'Préventif'];
+        $data['natures'] = ['Eléctrique', 'Mécanique', 'Pneumatique', 'Hydraulique'];
+        $data['technicians'] = MaintenanceTechnician::where('status', '=', 1)->with('user')->get();
+
         if ($workRequest->user_id == auth()->id()) {
 
             if (auth()->user()->hasRole('Client')) {
-                $equipments = auth()->user()->department->equipments;
+                $data['equipments'] = auth()->user()->department->equipments;
             } else {
-                $equipments = Equipment::all();
+                $data['equipments'] = Equipment::all();
             }
-
-            $data['equipments'] = $equipments;
-
-            $priorities = [
-                "Haute", "Moyenne", "Basse"
-            ];
-
-            $data['priorities'] = $priorities;
 
             return view('work_requests.edit', $data);
         } else {
+
             return view('work_requests.show', $data);
         }
     }

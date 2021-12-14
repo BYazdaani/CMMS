@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class WorkOrderLog extends Model
 {
     use HasFactory;
+
+    protected $fillable=['work_order_id','status'];
+
+    public function workOrder()
+    {
+        return $this->belongsTo(WorkOrder::class);
+    }
 }
