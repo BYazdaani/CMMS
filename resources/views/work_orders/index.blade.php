@@ -17,46 +17,38 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="data-table-list">
                         <div class="basic-tb-hd">
-                            <h4>Demandes de travail</h4>
+                            <h4>Ordres de travail</h4>
                         </div>
                         <div class="table-responsive">
                             <table id="data-table-basic" class="table table-striped">
                                 <thead>
                                 <tr>
                                     @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin'))
-                                        <th><strong>Employé</strong></th>
+                                        <th><strong>Technicien</strong></th>
                                     @endif
+                                    <th>Affecté par</th>
+                                    <th>Type</th>
+                                    <th>Nature</th>
                                     <th>Date</th>
                                     <th>Heure</th>
-                                    <th>Equipement</th>
-                                    <th>Code</th>
-                                    <th>Priorité</th>
                                     <th>Etat</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($workRequests as $workRequest)
+                                @foreach($workOrders as $workOrder)
                                     <tr>
                                         @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin'))
-                                            <th><strong>{{$workRequest->user->name}}</strong></th>
+                                            <th><strong>{{$workOrder->maintenanceTechnician->user->name}}</strong></th>
                                         @endif
-                                        <td>{{$workRequest->created_at->toDateString()}}</td>
-                                        <td>{{$workRequest->created_at->toTimeString()}}</td>
-                                        <td>{{$workRequest->equipment->name}}</td>
-                                        <td>{{$workRequest->equipment->code}}</td>
-                                        <td>{{$workRequest->priority}}</td>
+                                        <td>{{$workOrder->admin->user->name}}</td>
+                                        <td>{{$workOrder->type}}</td>
+                                        <td>{{$workOrder->nature}}</td>
+                                        <td>{{$workOrder->date}}</td>
+                                        <td>{{$workOrder->hour}}</td>
+                                        <th>{{$workOrder->workOrderLogs->last()->status}}</th>
                                         <td>
-                                            @switch($workRequest->status)
-
-                                                @case(0) en attente @break
-                                                @case(1) en cours @break
-                                                @case(2) traitée @break
-                                                @case(3) annullée @break
-                                                @default N/A @break
-                                            @endswitch
-                                        </td>
-                                        <td><a href="{{route("work_requests.show", ["work_request"=>$workRequest])}}">Detail</a>
+                                            <a href="{{route("work_orders.show", ["work_order"=>$workOrder])}}">Detail</a>
                                         </td>
                                     </tr>
                                 @endforeach

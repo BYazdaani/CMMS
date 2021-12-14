@@ -96,15 +96,21 @@
                                     <li><a href="{{route('work_requests.create')}}">Ajouter</a>
                                     </li>
                                 @endcan
-                                <li><a href="#" onclick="event.preventDefault(); document.getElementById('index-form').submit();">Mes demandes</a>
-                                    <form id="index-form" action="{{ route('work_requests.index') }}" method="GET" class="d-none">
+                                <li><a href="#"
+                                       onclick="event.preventDefault(); document.getElementById('index-form').submit();">Mes
+                                        demandes</a>
+                                    <form id="index-form" action="{{ route('work_requests.index') }}" method="GET"
+                                          class="d-none">
 
                                         <input type="hidden" value="only" name="filter">
                                     </form>
                                 </li>
                                 @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin'))
-                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('my-index-form').submit();">Liste des Demandes</a>
-                                        <form id="my-index-form" action="{{ route('work_requests.index') }}" method="GET" class="d-none">
+                                    <li><a href="#"
+                                           onclick="event.preventDefault(); document.getElementById('my-index-form').submit();">Liste
+                                            des Demandes</a>
+                                        <form id="my-index-form" action="{{ route('work_requests.index') }}"
+                                              method="GET" class="d-none">
 
                                             <input type="hidden" value="all" name="filter">
                                         </form>
@@ -117,15 +123,23 @@
                         <div id="work_orders"
                              class="tab-pane {{request()->routeIs('work_orders*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="#" onclick="event.preventDefault(); document.getElementById('index-form').submit();">Mes Orders</a>
-                                    <form id="index-form" action="{{ route('work_orders.index') }}" method="GET" class="d-none">
+                                @if(auth()->user()->hasRole('Maintenance Technician'))
+                                    <li><a href="#"
+                                           onclick="event.preventDefault(); document.getElementById('work-order-index-form').submit();">Mes
+                                            Orders</a>
+                                        <form id="work-order-index-form" action="{{ route('work_orders.index') }}"
+                                              method="GET" class="d-none">
 
-                                        <input type="hidden" value="only" name="filter">
-                                    </form>
-                                </li>
+                                            <input type="hidden" value="only" name="filter">
+                                        </form>
+                                    </li>
+                                @endif
                                 @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin'))
-                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('my-index-form').submit();">Liste des Ordres</a>
-                                        <form id="my-index-form" action="{{ route('work_orders.index') }}" method="GET" class="d-none">
+                                    <li><a href="#"
+                                           onclick="event.preventDefault(); document.getElementById('work-order-my-index-form').submit();">Liste
+                                            des Ordres</a>
+                                        <form id="work-order-my-index-form" action="{{ route('work_orders.index') }}"
+                                              method="GET" class="d-none">
 
                                             <input type="hidden" value="all" name="filter">
                                         </form>

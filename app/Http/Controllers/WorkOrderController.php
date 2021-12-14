@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\WorkOrderRequest;
 use App\Models\WorkOrder;
 use App\Models\WorkRequest;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -14,11 +15,27 @@ class WorkOrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return View
      */
-    public function index()
+    public function index(Request $request): View
     {
-        //
+        abort_if(Gate::denies('work_order_access'), 403);
+
+        switch ($request['filter']) {
+            case "only":
+                $workOrders = auth()->user()->maintenanceTechnician->workOrders;
+                break;
+            case "all":
+                $workOrders = WorkOrder::all();
+        }
+
+
+        $data = [
+            'workOrders' => $workOrders ?? WorkRequest::all()
+        ];
+
+        return view('work_orders.index', $data);
     }
 
     /**

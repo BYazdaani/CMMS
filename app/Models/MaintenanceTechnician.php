@@ -16,7 +16,7 @@ class MaintenanceTechnician extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function workOrder()
+    public function workOrders()
     {
         return $this->hasMany(WorkOrder::class);
     }

@@ -17,6 +17,7 @@ class WorkRequestController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return View
      */
     public function index(Request $request): View
@@ -33,7 +34,7 @@ class WorkRequestController extends Controller
 
 
         $data = [
-            'workRequests' => $workRequests ?? $workRequests = WorkRequest::all()
+            'workRequests' => $workRequests ?? WorkRequest::all()
         ];
 
         return view('work_requests.index', $data);
