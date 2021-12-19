@@ -224,7 +224,7 @@
     </div>
     <!-- Data Table area End-->
 
-    @can("work_order_access")
+    @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin'))
         <!-- Data Table area Start-->
         <div class="data-table-area mg-t-30">
             <div class="container">
@@ -252,7 +252,7 @@
                                     @foreach($workRequest->workOrders as $workOrder)
                                         <tr>
                                             <th>{{$workOrder->maintenanceTechnician->user->name}}</th>
-                                            <td>{{$workOrder->admin->user->name}}</td>
+                                            <td>{{$workOrder->admin->user->name ?? "By System"}}</td>
                                             <td>{{$workOrder->type}}</td>
                                             <td>{{$workOrder->nature}}</td>
                                             <td>{{$workOrder->date}}</td>
@@ -270,6 +270,6 @@
             </div>
         </div>
         <!-- Data Table area End-->
-    @endcan
+    @endif
 
 @endsection()

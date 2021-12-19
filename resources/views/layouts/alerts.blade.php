@@ -2,128 +2,44 @@
 
 
     <div class="hd-message-info">
-        <a href="#">
-            <div class="hd-message-sn">
-                <div class="hd-message-img">
-                    <img src="{{asset('../theme/img/post/1.jpg')}}" alt=""/>
+        @foreach($alerts as $alert)
+            <a href="{{route("work_requests.show", ["work_request"=>$alert])}}">
+                <div class="hd-message-sn">
+                    <div class="hd-mg-ctn">
+                        <h3>{{$alert->user->name}}</h3>
+                        <p>Equipement : {{$alert->equipment->name}} - {{$alert->equipment->code}}</p>
+                    </div>
                 </div>
-                <div class="hd-mg-ctn">
-                    <h3>David Belle</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                </div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="hd-message-sn">
-                <div class="hd-message-img">
-                    <img src="{{asset('../theme/img/post/1.jpg')}}" alt=""/>
-                </div>
-                <div class="hd-mg-ctn">
-                    <h3>Jonathan Morris</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                </div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="hd-message-sn">
-                <div class="hd-message-img">
-                    <img src="{{asset('../theme/img/post/1.jpg')}}" alt=""/>
-                </div>
-                <div class="hd-mg-ctn">
-                    <h3>Fredric Mitchell</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                </div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="hd-message-sn">
-                <div class="hd-message-img">
-                    <img src="{{asset('../theme/img/post/1.jpg')}}" alt=""/>
-                </div>
-                <div class="hd-mg-ctn">
-                    <h3>David Belle</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                </div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="hd-message-sn">
-                <div class="hd-message-img">
-                    <img src="{{asset('../theme/img/post/1.jpg')}}" alt=""/>
-                </div>
-                <div class="hd-mg-ctn">
-                    <h3>Glenn Jecobs</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                </div>
-            </div>
-        </a>
+            </a>
+        @endforeach
+
     </div>
     <div class="hd-mg-va">
-        <a href="#">View Demandes</a>
+        <a href="{{route("work_requests.index")}}">Voir tout</a>
     </div>
 
 @elseif(auth()->user()->hasRole('Maintenance Technician'))
 
-
     <div class="hd-message-info">
-        <a href="#">
-            <div class="hd-message-sn">
-                <div class="hd-message-img">
-                    <img src="{{asset('../theme/img/post/1.jpg')}}" alt=""/>
+        @foreach($alerts as $alert)
+            <a href="{{route("work_orders.show", ["work_order"=>$alert])}}">
+                <div class="hd-message-sn">
+                    <div class="hd-mg-ctn">
+                        <h3>Priorité : {{$alert->workRequest->priority}}</h3>
+                        <p>Equipement : {{$alert->workRequest->equipment->name}} - {{$alert->workRequest->equipment->code}}</p>
+                    </div>
                 </div>
-                <div class="hd-mg-ctn">
-                    <h3>David Belle</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                </div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="hd-message-sn">
-                <div class="hd-message-img">
-                    <img src="{{asset('../theme/img/post/1.jpg')}}" alt=""/>
-                </div>
-                <div class="hd-mg-ctn">
-                    <h3>Jonathan Morris</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                </div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="hd-message-sn">
-                <div class="hd-message-img">
-                    <img src="{{asset('../theme/img/post/1.jpg')}}" alt=""/>
-                </div>
-                <div class="hd-mg-ctn">
-                    <h3>Fredric Mitchell</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                </div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="hd-message-sn">
-                <div class="hd-message-img">
-                    <img src="{{asset('../theme/img/post/1.jpg')}}" alt=""/>
-                </div>
-                <div class="hd-mg-ctn">
-                    <h3>David Belle</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                </div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="hd-message-sn">
-                <div class="hd-message-img">
-                    <img src="{{asset('../theme/img/post/1.jpg')}}" alt=""/>
-                </div>
-                <div class="hd-mg-ctn">
-                    <h3>Glenn Jecobs</h3>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                </div>
-            </div>
-        </a>
+            </a>
+        @endforeach
     </div>
     <div class="hd-mg-va">
-        <a href="#">View Orders</a>
+        <a href="#"
+           onclick="event.preventDefault(); document.getElementById('work-order-index-form').submit();">Voir tout</a>
+        <form id="work-order-index-form" action="{{ route('work_orders.index') }}"
+              method="GET" class="d-none">
+
+            <input type="hidden" value="only" name="filter">
+        </form>
     </div>
 
 @endif

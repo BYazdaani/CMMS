@@ -145,7 +145,7 @@
                                                                     <div class="nk-int-st">
                                                                         <textarea type="text" rows="5"
                                                                                   class="form-control"
-                                                                                  placeholder="Description anomalie :"
+                                                                                  placeholder="Instructions :"
                                                                                   name="description"></textarea>
                                                                     </div>
                                                                 </div>

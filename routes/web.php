@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\MaintenanceTechnician;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     UserController,

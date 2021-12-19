@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkOrderRequest;
+use App\Models\Equipment;
+use App\Models\MaintenanceTechnician;
 use App\Models\WorkOrder;
 use App\Models\WorkRequest;
 use Illuminate\Contracts\View\View;
@@ -67,7 +69,7 @@ class WorkOrderController extends Controller
         $workOrder = WorkOrder::create($data);
 
         $workOrder->workOrderLogs()->create([
-           'status'=>"created"
+            'status' => "created"
         ]);
 
         $workRequest = WorkRequest::findOrFail($request->get('work_request_id'));
@@ -76,7 +78,7 @@ class WorkOrderController extends Controller
 
         $workRequest->save();
 
-        return redirect()->route('work_requests.show', ['work_request' => $request->get('work_request_id')]);
+        return redirect()->route('work_orders.show', ['work_order' => $workOrder]);
 
     }
 
@@ -86,9 +88,16 @@ class WorkOrderController extends Controller
      * @param \App\Models\WorkOrder $workOrder
      * @return \Illuminate\Http\Response
      */
-    public function show(WorkOrder $workOrder)
+    public function show(WorkOrder $workOrder): View
     {
-        //
+        abort_if(Gate::denies('work_request_show'), 403);
+
+        $data = [
+            'work_order' => $workOrder,
+        ];
+
+        return view('work_orders.show', $data);
+
     }
 
     /**
@@ -118,10 +127,17 @@ class WorkOrderController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\WorkOrder $workOrder
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(WorkOrder $workOrder)
     {
-        //
+        abort_if(Gate::denies('work_order_delete'), 403);
+
+        $work_request=$workOrder->workRequest->id;
+
+        $workOrder->delete();
+
+        return redirect()->route("work_requests.show",['work_request'=>$work_request]);
+
     }
 }

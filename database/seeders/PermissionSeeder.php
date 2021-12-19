@@ -235,18 +235,16 @@ class PermissionSeeder extends Seeder
 
         $role = Role::create(['name' => 'Maintenance Technician']);
 
-        $maintenanceTechniciantPermissions = [
+        $maintenanceTechnicianPermissions = [
             'work_request_create',
             'work_request_edit',
             'work_request_show',
             'work_request_delete',
             'work_request_access',
 
-            'work_order_create',
+            'work_order_access',
             'work_order_edit',
             'work_order_show',
-            'work_order_delete',
-            'work_order_access',
 
             'intervention_report_create',
             'intervention_report_edit',
@@ -271,7 +269,7 @@ class PermissionSeeder extends Seeder
 
         ];
 
-        foreach ($maintenanceTechniciantPermissions as $permission){
+        foreach ($maintenanceTechnicianPermissions as $permission){
             $role->givePermissionTo($permission);
         }
 

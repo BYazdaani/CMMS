@@ -41,7 +41,7 @@
                                         @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin'))
                                             <th><strong>{{$workOrder->maintenanceTechnician->user->name}}</strong></th>
                                         @endif
-                                        <td>{{$workOrder->admin->user->name}}</td>
+                                        <td>{{$workOrder->admin->user->name ?? "By System"}}</td>
                                         <td>{{$workOrder->type}}</td>
                                         <td>{{$workOrder->nature}}</td>
                                         <td>{{$workOrder->date}}</td>
