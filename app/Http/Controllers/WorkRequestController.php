@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkRequestRequest;
+use App\Models\Admin;
 use App\Models\Equipment;
 use App\Models\MaintenanceTechnician;
 use App\Models\WorkOrder;
 use App\Models\WorkRequest;
+use App\Notifications\NewWorkOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\NewWorkRequest;
 
 class WorkRequestController extends Controller
 {
@@ -88,8 +91,14 @@ class WorkRequestController extends Controller
 
         $work_request = WorkRequest::create($data);
 
-        if (now()->gt(now()->toDateString() . ' 07:30:00') && now()->lt(now()->toDateString() . ' 10:30:00')) {
+        $admins = Admin::all();
+        $technicians = MaintenanceTechnician::all();
+
+        if (now()->gt(now()->toDateString() . ' 07:30:00') && now()->lt(now()->toDateString() . ' 12:30:00')) {
             //here the admins will make decision
+            foreach ($admins as $admin) {
+                $admin->user->notify(new NewWorkRequest($work_request, 'a crée une nouvelle demande de travail'));
+            }
         } else {
 
             //here the system automatically chose a user to send him work order
@@ -121,7 +130,17 @@ class WorkRequestController extends Controller
             } else {
                 //send an alert email to all admins and agents.
 
-                return "email admins";
+                if (auth()->user()->hasRole('Client')) {
+                    auth()->user()->notify(new NewWorkRequest($work_request, 'Votre demande est bien crée mais il n\'ya pas de technicians pour intervenir'));
+                }
+
+                foreach ($admins as $admin) {
+                    $admin->user->notify(new NewWorkRequest($work_request, 'a crée une nouvelle demande de travail, les techniciens de maintenance sont hors ligne! merci d\'intervenir'));
+                }
+
+                foreach ($technicians as $technician) {
+                    $technician->user->notify(new NewWorkRequest($work_request, 'a crée une nouvelle demande de travail, connecter au systeme'));
+                }
             }
 
         }
