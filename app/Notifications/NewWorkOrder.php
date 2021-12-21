@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\WorkOrder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,20 +12,25 @@ class NewWorkOrder extends Notification
 {
     use Queueable;
 
+    protected $workOrder;
+    protected $line;
+
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param WorkOrder $workOrder
+     * @param String $line
      */
-    public function __construct()
+    public function __construct(WorkOrder $workOrder, string $line)
     {
-        //
+        $this->workOrder = $workOrder;
+        $this->line = $line;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -35,21 +41,23 @@ class NewWorkOrder extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject('Ordre de Travail - ' . now()->toDateTimeString())
+            ->greeting("Hey!")
+            ->line($this->line)
+            ->action('Consulter', route("work_orders.show", ['work_order' => $this->workOrder]))
+            ->line('Do Not Reply!');
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)

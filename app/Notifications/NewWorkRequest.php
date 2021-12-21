@@ -50,7 +50,7 @@ class NewWorkRequest extends Notification
             ->subject('Demande de Travail - ' . now()->toDateTimeString())
             ->greeting("Hey!")
             ->line($this->workRequest->user->name." ".$this->line)
-            ->action('Consulter la Demande', route("work_requests.show",['work_request'=>$this->workRequest]))
+            ->action('Consulter', route("work_requests.show",['work_request'=>$this->workRequest]))
             ->line('Do Not Reply!');
     }
 

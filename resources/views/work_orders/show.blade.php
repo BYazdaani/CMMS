@@ -97,7 +97,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="12"  class="text-left" style="height: 200px">
-                                        <strong>Instructions :</strong> {{$work_order->description}} </td>
+                                        <strong>Instructions :</strong> {{$work_order->workRequest->description}} </td>
                                 </tr>
                                 </tbody>
                             </table>
