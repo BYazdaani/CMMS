@@ -7,6 +7,8 @@ use App\Models\Equipment;
 use App\Models\MaintenanceTechnician;
 use App\Models\WorkOrder;
 use App\Models\WorkRequest;
+use App\Notifications\NewWorkOrder;
+use App\Notifications\NewWorkRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,6 +79,10 @@ class WorkOrderController extends Controller
         $workRequest->status = 1;
 
         $workRequest->save();
+
+        $workOrder->maintenanceTechnician->user->notify(new NewWorkOrder($workOrder, 'Vous avez un nouveau Ordre de Travail'));
+
+        $workRequest->user->notify((new NewWorkRequest($workRequest, 'Votre demande est en cours de traitment'))->delay(now()->addSeconds(10)));
 
         return redirect()->route('work_orders.show', ['work_order' => $workOrder]);
 

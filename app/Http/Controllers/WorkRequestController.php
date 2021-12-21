@@ -239,6 +239,8 @@ class WorkRequestController extends Controller
 
         $workRequest->updateOrFail(["status" => 3]);
 
+        $workRequest->user->notify(new NewWorkRequest($workRequest, 'Votre demande est annulée'));
+
         return redirect()->route('work_requests.show', $workRequest);
     }
 
