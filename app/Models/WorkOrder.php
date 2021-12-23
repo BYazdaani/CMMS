@@ -14,7 +14,6 @@ class WorkOrder extends Model
         'maintenance_technician_id',
         'work_request_id',
         'type',
-        'nature',
         'description',
         'date',
         'hour',

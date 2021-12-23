@@ -19,7 +19,6 @@ class CreateWorkOrdersTable extends Migration
             $table->unsignedBigInteger("admin_id")->nullable();
             $table->unsignedBigInteger("maintenance_technician_id")->nullable();
             $table->string("type");
-            $table->string("nature");
             $table->string("date");
             $table->string("hour");
             $table->text("description");

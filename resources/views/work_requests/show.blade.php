@@ -73,7 +73,7 @@
                                                         <h2>Nouveau Ordre de Travail</h2>
                                                         <br>
                                                         <div class="row">
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                 <div class="nk-int-mk">
                                                                     <h5>Type :</h5>
                                                                 </div>
@@ -92,7 +92,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                           {{-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="nk-int-mk">
                                                                     <h5>Nature :</h5>
                                                                 </div>
@@ -110,8 +110,8 @@
                                                                         </select>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                            </div>--}}
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                 <div class="nk-int-mk">
                                                                     <h5>Intervenant :</h5>
                                                                 </div>

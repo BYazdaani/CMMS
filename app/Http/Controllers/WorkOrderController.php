@@ -139,11 +139,11 @@ class WorkOrderController extends Controller
     {
         abort_if(Gate::denies('work_order_delete'), 403);
 
-        $work_request=$workOrder->workRequest->id;
+        $work_request = $workOrder->workRequest->id;
 
         $workOrder->delete();
 
-        return redirect()->route("work_requests.show",['work_request'=>$work_request]);
+        return redirect()->route("work_requests.show", ['work_request' => $work_request]);
 
     }
 }

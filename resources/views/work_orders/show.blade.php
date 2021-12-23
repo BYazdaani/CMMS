@@ -82,8 +82,8 @@
                                 <tr>
                                     <td colspan="3"><strong>Type :</strong></td>
                                     <td colspan="3">{{$work_order->type}}</td>
-                                    <td colspan="3"><strong>Nature :</strong></td>
-                                    <td colspan="3">{{$work_order->nature}}</td>
+                                    <td colspan="3"><strong>N° DT: </strong></td>
+                                    <td colspan="3">DT{{$work_order->workRequest->id}}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="3"><strong>Date :</strong></td>

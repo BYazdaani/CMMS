@@ -75,7 +75,7 @@
                                                         <h2>Nouveau Ordre de Travail</h2>
                                                         <br>
                                                         <div class="row">
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                 <div class="nk-int-mk">
                                                                     <h5>Type :</h5>
                                                                 </div>
@@ -95,7 +95,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                            {{--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="nk-int-mk">
                                                                     <h5>Nature :</h5>
                                                                 </div>
@@ -114,8 +114,8 @@
                                                                         </select>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                            </div>--}}
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                 <div class="nk-int-mk">
                                                                     <h5>Intervenant :</h5>
                                                                 </div>
@@ -285,7 +285,6 @@
                                     <th>Technicien</th>
                                     <th>Affecté par</th>
                                     <th>Type</th>
-                                    <th>Nature</th>
                                     <th>Date</th>
                                     <th>Heure</th>
                                     <th>Etat</th>
@@ -296,9 +295,8 @@
                                 @foreach($workRequest->workOrders as $workOrder)
                                     <tr>
                                         <th>{{$workOrder->maintenanceTechnician->user->name}}</th>
-                                        <td>{{$workOrder->admin->user->name}}</td>
+                                        <td>{{$workOrder->admin->user->name ?? "By System"}}</td>
                                         <td>{{$workOrder->type}}</td>
-                                        <td>{{$workOrder->nature}}</td>
                                         <td>{{$workOrder->date}}</td>
                                         <td>{{$workOrder->hour}}</td>
                                         <th>{{$workOrder->workOrderLogs->last()->status}}</th>

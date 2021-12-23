@@ -29,7 +29,7 @@ class WorkOrderRequest extends FormRequest
             'maintenance_technician_id' => ['required', 'string', 'exists:maintenance_technicians,id'],
             'work_request_id' => ['required', 'string', 'exists:work_requests,id'],
             'type' => ['required', 'string'],
-            'nature' => ['required', 'string'],
+            //'nature' => ['required', 'string'],
             'description' => ['required', 'string'],
         ];
     }
