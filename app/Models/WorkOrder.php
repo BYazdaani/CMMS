@@ -10,14 +10,13 @@ class WorkOrder extends Model
     use HasFactory;
 
     protected $fillable = [
-        'work_order_id',
         'maintenance_technician_id',
         'work_request_id',
+        'admin_id',
         'type',
         'description',
         'date',
         'hour',
-        'admin_id'
     ];
 
     public function workRequest()
@@ -37,5 +36,9 @@ class WorkOrder extends Model
 
     public function  workOrderLogs(){
         return $this->hasMany(WorkOrderLog::class);
+    }
+
+    public function interventionReport(){
+        return $this->belongsTo(InterventionReport::class);
     }
 }

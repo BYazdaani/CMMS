@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class InterventionReport extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'work_order_id',
+        'nature',
+        'observation'
+    ];
+
+    public function workOrder(){
+        return $this->belongsTo(WorkOrder::class);
+    }
 }

@@ -14,7 +14,11 @@ class CreateInterventionReportsTable extends Migration
     public function up()
     {
         Schema::create('intervention_reports', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements("id");
+            $table->unsignedBigInteger("work_order_id");
+            $table->string("nature");
+            $table->string("observation");
+            $table->foreign("work_order_id")->on("work_orders")->references("id")->onDelete("cascade");
             $table->timestamps();
         });
     }
@@ -26,6 +30,11 @@ class CreateInterventionReportsTable extends Migration
      */
     public function down()
     {
+
+        Schema::table('intervention_reports', function (Blueprint $blueprint){
+            $blueprint->dropForeign("intervention_reports_work_order_id_foreign");
+        });
+
         Schema::dropIfExists('intervention_reports');
     }
 }
