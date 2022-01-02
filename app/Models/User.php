@@ -26,7 +26,8 @@ class User extends Authenticatable
         'password',
         'phone_number',
         "account_state",
-        "department_id"
+        "department_id",
+        "device_token"
     ];
 
     /**

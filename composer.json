@@ -12,7 +12,9 @@
         "laravel/sanctum": "^2.13",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
-        "spatie/laravel-permission": "^5.1"
+        "spatie/laravel-permission": "^5.1",
+      "ext-curl": "*",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

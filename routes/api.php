@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\V1\{
-    AuthController
+    AuthController,
+    FCMController
 };
 
 /*
@@ -23,4 +24,6 @@ Route::middleware(['banned', 'auth:sanctum'])->group(function () {
 
     Route::post('/logout',[AuthController::class, 'logout'])->name("logout");
 
+
 });
+Route::post('/fcm',[FCMController::class, 'store'])->name("store");

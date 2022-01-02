@@ -19,6 +19,7 @@ class AuthController extends Controller
         $data = $request->validate([
             'email' => ['required', 'string', 'email', 'max:255',],
             'password' => ['required', 'string'],
+            'device_token' => ['required', 'string'],
         ]);
 
         $user = User::where('email', $data['email'])->first();
@@ -30,6 +31,9 @@ class AuthController extends Controller
             ], 401);
 
         }
+
+        $user->device_token = $data['device_token'];
+        $user->save();
 
         $token = $user->createToken('GMAO_App')->plainTextToken;
 
