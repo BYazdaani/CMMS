@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\api\V1\FCMController;
 use App\Http\Requests\WorkRequestRequest;
 use App\Models\Admin;
 use App\Models\Equipment;
@@ -86,6 +87,8 @@ class WorkRequestController extends Controller
 
         $data = $workRequestRequest->validated();
 
+        $fcmController = new FCMController();
+
         DB::beginTransaction();
 
         try {
@@ -101,7 +104,7 @@ class WorkRequestController extends Controller
             $admins = Admin::all();
             $technicians = MaintenanceTechnician::all();
 
-            if (now()->gt(now()->toDateString() . ' 07:30:00') && now()->lt(now()->toDateString() . ' 17:30:00')) {
+            if (now()->gt(now()->toDateString() . ' 07:30:00') && now()->lt(now()->toDateString() . ' 10:30:00')) {
                 //here the admins will make decision
                 foreach ($admins as $admin) {
 
@@ -144,6 +147,10 @@ class WorkRequestController extends Controller
                         $admin->user->notify((new NewWorkOrder($workOrder, 'un ordre de travail auto-geerated by system'))->delay($when));
                     }
 
+                    $fcmController->store(
+                        "Ordre de Travail", $data['description'], "order", $workOrder->maintenanceTechnician->user->device_token
+                    );
+
 
                 } else {
                     //send an alert email to all admins and agents.
@@ -159,12 +166,15 @@ class WorkRequestController extends Controller
 
                     foreach ($technicians as $technician) {
                         $technician->user->notify(new NewWorkRequest($work_request, 'a crée une nouvelle demande de travail, connecter au systeme'));
+                        $fcmController->store(
+                            "Ordre de Travail", $data['description'], "order", $technician->user->device_token
+                        );
                     }
                 }
 
             }
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
 
             Session::flash("error", $e->getMessage());

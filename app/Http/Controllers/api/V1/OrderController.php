@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api\V1;
 
-use App\Models\Client;
+use App\Http\Controllers\Controller;
+use App\Models\WorkOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
-class ClientController extends Controller
+class OrderController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +16,12 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        abort_if(Gate::denies('work_order_access'), 403);
+
+        return response(
+            auth()->user()->maintenanceTechnician->workOrders()->paginate(10)
+        , 200);
+
     }
 
     /**
@@ -42,10 +48,10 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\WorkOrder  $workOrder
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client)
+    public function show(WorkOrder $workOrder)
     {
         //
     }
@@ -53,10 +59,10 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\WorkOrder  $workOrder
      * @return \Illuminate\Http\Response
      */
-    public function edit(Client $client)
+    public function edit(WorkOrder $workOrder)
     {
         //
     }
@@ -65,10 +71,10 @@ class ClientController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\WorkOrder  $workOrder
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, WorkOrder $workOrder)
     {
         //
     }
@@ -76,10 +82,10 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\WorkOrder  $workOrder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy(WorkOrder $workOrder)
     {
         //
     }

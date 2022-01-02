@@ -33,31 +33,21 @@ class FCMController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param $title
+     * @param $content
+     * @param $route
+     * @param $device_token
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store($title, $content, $route, $device_token)
     {
-
-        $data = Validator::make($request->all(), [
-            'title' => 'required',
-            'content' => 'required',
-            'route' => 'required',
-            'device_token' => 'required'
-        ]);
-
-        if ($data->fails()) {
-
-            Session::flash("error", "completer les informations SVP!");
-            return redirect()->back();
-        }
 
         define('API_ACCESS_KEY', env("ACK"));
 
-        $data = array('route' => $data['route']);
-        $msg = array('title' => $data['title'], 'body' => $data['body'],);
+        $data = array('route' => $route);
+        $msg = array('title' => $title, 'body' => $content,);
 
-        $fields = array('to' => $data['device_token'],
+        $fields = array('to' => $device_token,
             'notification' => $msg, 'data' => $data);
 
         $headers = array('Authorization: key=' . API_ACCESS_KEY, 'Content-Type: application/json');

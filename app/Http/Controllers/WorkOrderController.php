@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\api\V1\FCMController;
 
 class WorkOrderController extends Controller
 {
@@ -83,6 +84,12 @@ class WorkOrderController extends Controller
         $workOrder->maintenanceTechnician->user->notify(new NewWorkOrder($workOrder, 'Vous avez un nouveau Ordre de Travail'));
 
         $workRequest->user->notify((new NewWorkRequest($workRequest, 'Votre demande est en cours de traitment'))->delay(now()->addSeconds(10)));
+
+        $fcmController = new FCMController();
+
+        $fcmController->store(
+            "Ordre de Travail", $data['description'], "order", $workOrder->maintenanceTechnician->user->device_token
+        );
 
         return redirect()->route('work_orders.show', ['work_order' => $workOrder]);
 
