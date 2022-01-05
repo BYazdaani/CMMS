@@ -23,7 +23,8 @@ Route::post('/login',[AuthController::class, 'login'])->name("login");
 
 Route::middleware(['banned', 'auth:sanctum'])->group(function () {
 
-    Route::post('/logout',[AuthController::class, 'logout'])->name("logout");
+    Route::get('/logout',[AuthController::class, 'logout'])->name("logout");
+
     Route::resource('work_orders', OrderController::class);
 
 });

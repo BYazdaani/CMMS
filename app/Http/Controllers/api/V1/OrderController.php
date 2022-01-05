@@ -19,7 +19,7 @@ class OrderController extends Controller
         abort_if(Gate::denies('work_order_access'), 403);
 
         return response(
-            auth()->user()->maintenanceTechnician->workOrders()->paginate(10)
+            auth()->user()->maintenanceTechnician->workOrders()->with('workRequest.equipment.zone')->with('workOrderLogs')->paginate(10)
         , 200);
 
     }
@@ -76,7 +76,11 @@ class OrderController extends Controller
      */
     public function update(Request $request, WorkOrder $workOrder)
     {
-        //
+        $workOrderLog=$workOrder->workOrderLogs()->create([
+            'status' => "opened"
+        ]);
+
+        return response($workOrderLog,200);
     }
 
     /**
