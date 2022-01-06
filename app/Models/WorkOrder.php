@@ -40,7 +40,7 @@ class WorkOrder extends Model
     }
 
     public function interventionReport(){
-        return $this->belongsTo(InterventionReport::class);
+        return $this->hasOne(InterventionReport::class);
     }
 
     protected static function boot()

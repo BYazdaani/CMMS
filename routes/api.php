@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\V1\{
     AuthController,
     FCMController,
-    OrderController
+    OrderController,
+    InterventionReportController
 };
 
 /*
@@ -26,6 +27,7 @@ Route::middleware(['banned', 'auth:sanctum'])->group(function () {
     Route::get('/logout',[AuthController::class, 'logout'])->name("logout");
 
     Route::resource('work_orders', OrderController::class);
+    Route::resource('intervention_report', InterventionReportController::class);
 
 });
 Route::post('/fcm',[FCMController::class, 'store'])->name("store");
