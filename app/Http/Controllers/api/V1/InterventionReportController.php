@@ -47,11 +47,14 @@ InterventionReportController extends Controller
 
         $interventionReport=InterventionReport::create($data);
 
-        $workOrderLog=$interventionReport->workOrder->workOrderLogs()->create([
-            'status' => $request['status']
+        $interventionReport->workOrder->workOrderLogs()->create([
+            'status' => "done"
         ]);
 
-        return response($workOrderLog,200);
+        $interventionReport->workOrder->workRequest->status =2;
+        $interventionReport->workOrder->workRequest->save();
+
+        return response($interventionReport->workOrder->load('workRequest.equipment.zone')->load('workOrderLogs')->load('interventionReport'),200);
 
     }
 

@@ -20,7 +20,7 @@ class OrderController extends Controller
 
         return response(
             auth()->user()->maintenanceTechnician->workOrders()->with('workRequest.equipment.zone')->with('workOrderLogs')->with('interventionReport')->paginate(10)
-        , 200);
+            , 200);
 
     }
 
@@ -37,7 +37,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,7 +48,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\WorkOrder  $workOrder
+     * @param \App\Models\WorkOrder $workOrder
      * @return \Illuminate\Http\Response
      */
     public function show(WorkOrder $workOrder)
@@ -59,7 +59,7 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\WorkOrder  $workOrder
+     * @param \App\Models\WorkOrder $workOrder
      * @return \Illuminate\Http\Response
      */
     public function edit(WorkOrder $workOrder)
@@ -70,8 +70,8 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\WorkOrder  $workOrder
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\WorkOrder $workOrder
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, WorkOrder $workOrder)
@@ -79,17 +79,22 @@ class OrderController extends Controller
 
         abort_if(Gate::denies('work_order_edit'), 403);
 
-        $workOrderLog=$workOrder->workOrderLogs()->create([
-            'status' => $request['done']
+        $workOrderLog = $workOrder->workOrderLogs()->create([
+            'status' => $request['status']
         ]);
 
-        return response($workOrderLog,200);
+        if ($request['status'] == "canceled") {
+            $workOrder->workRequest->status = 3;
+            $workOrder->workRequest->save();
+        }
+
+        return response($workOrderLog, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\WorkOrder  $workOrder
+     * @param \App\Models\WorkOrder $workOrder
      * @return \Illuminate\Http\Response
      */
     public function destroy(WorkOrder $workOrder)
