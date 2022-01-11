@@ -105,7 +105,7 @@ class WorkOrderController extends Controller
      */
     public function show(WorkOrder $workOrder): View
     {
-        abort_if(Gate::denies('work_request_show'), 403);
+        abort_if(Gate::denies('work_order_show'), 403);
 
         $data = [
             'work_order' => $workOrder,
@@ -153,6 +153,24 @@ class WorkOrderController extends Controller
         $workOrder->delete();
 
         return redirect()->route("work_requests.show", ['work_request' => $work_request]);
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\Models\WorkOrder $workOrder
+     * @return \Illuminate\Http\Response
+     */
+    public function print(WorkOrder $workOrder): View
+    {
+        abort_if(Gate::denies('work_order_show'), 403);
+
+        $data = [
+            'work_order' => $workOrder,
+        ];
+
+        return view('work_orders.print', $data);
 
     }
 }

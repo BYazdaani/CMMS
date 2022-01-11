@@ -280,4 +280,28 @@ class WorkRequestController extends Controller
 
         return redirect()->route('work_requests.index');
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\Models\WorkRequest $workRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function print(WorkRequest $workRequest): View
+    {
+        abort_if(Gate::denies('work_request_show'), 403);
+
+        $data = [
+            'workRequest' => $workRequest
+        ];
+
+        $data['priorities'] = ["Haute", "Moyenne", "Basse"];
+        $data['types'] = ['Curatif', 'Préventif'];
+        $data['natures'] = ['Eléctrique', 'Mécanique', 'Pneumatique', 'Hydraulique'];
+        $data['technicians'] = MaintenanceTechnician::where('status', '=', 1)->with('user')->get();
+
+        return view('work_requests.print', $data);
+
+    }
+
 }

@@ -46,8 +46,10 @@ Route::middleware(['banned', 'auth'])->group(function () {
 
     Route::resource('work_requests', WorkRequestController::class);
     Route::post("work_requests/cancel/{work_request}", [WorkRequestController::class, 'cancel'])->name('work_requests.cancel');
+    Route::get("work_requests/print/{work_request}", [WorkRequestController::class, 'print'])->name('work_requests.print');
 
     Route::resource('work_orders', WorkOrderController::class);
+    Route::get("work_orders/print/{work_order}", [WorkOrderController::class, 'print'])->name('work_orders.print');
 
 });
 
