@@ -6,6 +6,7 @@ use App\Http\Requests\WorkOrderRequest;
 use App\Models\Equipment;
 use App\Models\MaintenanceTechnician;
 use App\Models\WorkOrder;
+use App\Models\WorkOrderLog;
 use App\Models\WorkRequest;
 use App\Notifications\NewWorkOrder;
 use App\Notifications\NewWorkRequest;
@@ -166,11 +167,20 @@ class WorkOrderController extends Controller
     {
         abort_if(Gate::denies('work_order_show'), 403);
 
+        $start = $workOrder->workOrderLogs()->where('status','=','started')->first();
+        $end = $workOrder->workOrderLogs()->where('status','=','done')->first();
+
         $data = [
             'work_order' => $workOrder,
+            'start' => $start,
+            'end' => $end,
         ];
 
-        return view('work_orders.print', $data);
+        if ($workOrder->workOrderLogs->last()->status == "done"){
+            return view('intervention_report.print', $data);
+        }else{
+            return view('work_orders.print', $data);
+        }
 
     }
 }
