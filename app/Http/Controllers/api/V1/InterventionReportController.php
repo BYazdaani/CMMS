@@ -4,8 +4,11 @@ namespace App\Http\Controllers\api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InterventionRequest;
+use App\Models\Admin;
 use App\Models\InterventionReport;
 use App\Models\WorkOrder;
+use App\Notifications\NewWorkOrder;
+use App\Notifications\NewWorkRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -51,8 +54,19 @@ InterventionReportController extends Controller
             'status' => "done"
         ]);
 
+
         $interventionReport->workOrder->workRequest->status =2;
         $interventionReport->workOrder->workRequest->save();
+
+        $admins = Admin::all();
+
+        $when = now()->addSeconds(10);
+
+        foreach ($admins as $admin) {
+            $admin->user->notify((new NewWorkOrder($interventionReport->workOrder, 'Ce Ordre est cloturé '))->delay($when));
+        }
+
+        $interventionReport->workOrder->workRequest->user->notify((new NewWorkRequest($interventionReport->workOrder->workRequest, 'Votre demande est traité'))->delay($when));
 
         return response($interventionReport->workOrder->load('workRequest.equipment.zone')->load('workOrderLogs')->load('interventionReport'),200);
 
