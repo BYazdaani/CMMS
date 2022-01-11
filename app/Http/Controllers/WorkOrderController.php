@@ -87,9 +87,9 @@ class WorkOrderController extends Controller
             "Ordre de Travail", $data['description'], "order", $workOrder->maintenanceTechnician->user->device_token
         );
 
-       // $workOrder->maintenanceTechnician->user->notify((new NewWorkOrder($workOrder, 'Vous avez un nouveau Ordre de Travail'))->delay(now()->addSeconds(10)));
+        $workOrder->maintenanceTechnician->user->notify((new NewWorkOrder($workOrder, 'Vous avez un nouveau Ordre de Travail'))->delay(now()->addSeconds(10)));
 
-       // $workRequest->user->notify((new NewWorkRequest($workRequest, 'Votre demande est en cours de traitment'))->delay(now()->addSeconds(10)));
+        $workRequest->user->notify((new NewWorkRequest($workRequest, 'Votre demande est en cours de traitment'))->delay(now()->addSeconds(10)));
 
         return redirect()->route('work_orders.show', ['work_order' => $workOrder]);
 

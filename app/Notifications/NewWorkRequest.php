@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\WorkRequest;
 
-class NewWorkRequest extends Notification
+class NewWorkRequest extends Notification implements ShouldQueue
 {
     use Queueable;
 

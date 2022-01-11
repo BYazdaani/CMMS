@@ -104,7 +104,7 @@ class WorkRequestController extends Controller
             $admins = Admin::all();
             $technicians = MaintenanceTechnician::all();
 
-            if (now()->gt(now()->toDateString() . ' 07:30:00') && now()->lt(now()->toDateString() . ' 17:30:00')) {
+            if (now()->gt(now()->toDateString() . ' 07:30:00') && now()->lt(now()->toDateString() . ' 10:30:00')) {
                 //here the admins will make decision
                 foreach ($admins as $admin) {
 
@@ -139,9 +139,9 @@ class WorkRequestController extends Controller
 
                     $work_request->save();
 
-                    $workOrder->maintenanceTechnician->user->notify(new NewWorkOrder($workOrder, 'Nouveau ordre de travail auto generated'));
+                    $workOrder->maintenanceTechnician->user->notify((new NewWorkOrder($workOrder, 'Nouveau ordre de travail auto generated'))->delay($when));
 
-                    $work_request->user->notify(new NewWorkRequest($work_request, 'Votre demande est en cours de traitment'));
+                    $work_request->user->notify((new NewWorkRequest($work_request, 'Votre demande est en cours de traitment'))->delay($when));
 
                     foreach ($admins as $admin) {
                         $admin->user->notify((new NewWorkOrder($workOrder, 'un ordre de travail auto-geerated by system'))->delay($when));
@@ -157,15 +157,15 @@ class WorkRequestController extends Controller
 
                     if (auth()->user()->hasRole('Client')) {
 
-                        auth()->user()->notify(new NewWorkRequest($work_request, 'Votre demande est bien crée mais il n\'ya pas de technicians pour intervenir'));
+                        auth()->user()->notify((new NewWorkRequest($work_request, 'Votre demande est bien crée mais il n\'ya pas de technicians pour intervenir'))->delay($when));
                     }
 
                     foreach ($admins as $admin) {
-                        $admin->user->notify(new NewWorkRequest($work_request, 'a crée une nouvelle demande de travail, les techniciens de maintenance sont hors ligne! merci d\'intervenir'));
+                        $admin->user->notify((new NewWorkRequest($work_request, 'a crée une nouvelle demande de travail, les techniciens de maintenance sont hors ligne! merci d\'intervenir'))->delay($when));
                     }
 
                     foreach ($technicians as $technician) {
-                        $technician->user->notify(new NewWorkRequest($work_request, 'a crée une nouvelle demande de travail, connecter au systeme'));
+                        $technician->user->notify((new NewWorkRequest($work_request, 'a crée une nouvelle demande de travail, connecter au systeme'))->delay($when));
                         $fcmController->store(
                             "Ordre de Travail", $data['description'], "order", $technician->user->device_token
                         );
