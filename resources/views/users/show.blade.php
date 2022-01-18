@@ -21,8 +21,9 @@
                                     <li><a data-toggle="tab" href="#logs">Logs</a></li>
                                 @endcan
                                 <li><a data-toggle="tab" href="#dt">Demande de Travaille</a></li>
-                                <li><a data-toggle="tab" href="#ot">Ordre de Travaille</a></li>
-                                <li><a data-toggle="tab" href="#ri">Rapport d'invetaire</a></li>
+                                @if($user->hasRole('Maintenance Technician'))
+                                    <li><a data-toggle="tab" href="#ot">Ordre de Travaille</a></li>
+                                @endif
                             </ul>
                             <div class="tab-content tab-custom-st">
                                 <div id="information" class="tab-pane fade in active">
@@ -31,7 +32,8 @@
                                             <h2>{{$user->name}}</h2>
                                         </div>
                                         <div class="contact-dt">
-                                            <form method="post" action="{{route("users.update",['user'=>$user])}}" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
+                                            <form method="post" action="{{route("users.update",['user'=>$user])}}"
+                                                  onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="row">
@@ -122,7 +124,8 @@
                                                                 <i class="notika-icon notika-promos"></i>
                                                             </div>
                                                             <div class="nk-int-st ">
-                                                                <select class="selectpicker form-control" data-live-search="true" name="department_id">
+                                                                <select class="selectpicker form-control"
+                                                                        data-live-search="true" name="department_id">
                                                                     @foreach($departments as $department)
                                                                         <option
                                                                             @if($user->department_id == $department->id) selected
@@ -141,9 +144,11 @@
                                                         </button>
                                                         @can("user_restrict")
                                                             @if($user->account_state)
-                                                                <a href="{{route("users.restrict",["user"=>$user])}}" class="btn btn-danger notika-btn-success">Bloquer</a>
+                                                                <a href="{{route("users.restrict",["user"=>$user])}}"
+                                                                   class="btn btn-danger notika-btn-success">Bloquer</a>
                                                             @else
-                                                                <a href="{{route("users.restrict",["user"=>$user])}}" class="btn btn-success notika-btn-success">Activer</a>
+                                                                <a href="{{route("users.restrict",["user"=>$user])}}"
+                                                                   class="btn btn-success notika-btn-success">Activer</a>
                                                             @endif
                                                         @endcan
                                                     </div>
@@ -188,7 +193,7 @@
                                 <div id="dt" class="tab-pane fade">
                                     <div class="data-table-list">
                                         <div class="basic-tb-hd">
-                                            <h4>Mes demandes de travaille</h4>
+                                            <h4>Demandes de travaille</h4>
                                         </div>
                                         <div class="table-responsive">
                                             <table id="data-table-basic" class="table table-striped">
@@ -211,8 +216,18 @@
                                                         <td>{{$workRequest->equipment->name}}</td>
                                                         <td>{{$workRequest->equipment->code}}</td>
                                                         <td>{{$workRequest->priority}}</td>
-                                                        <td></td>
-                                                        <td><a href="{{route("users.show", ["user"=>$workRequest])}}"></a>
+                                                        <td>
+                                                            @switch($workRequest->status)
+
+                                                                @case(0) en attente @break
+                                                                @case(1) en cours @break
+                                                                @case(2) traitée @break
+                                                                @case(3) annullée @break
+                                                                @default N/A @break
+                                                            @endswitch
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{route("work_requests.show", ["work_request"=>$workRequest])}}">Detail</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -221,16 +236,53 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="ot" class="tab-pane fade">
-                                    <div class="tab-ctn">
-                                        <p>ot</p>
+                                @if($user->hasRole('Maintenance Technician'))
+                                    <div id="ot" class="tab-pane fade">
+                                        <div class="data-table-list">
+                                            <div class="basic-tb-hd">
+                                                <h4>Ordres de travail</h4>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table id="data-table-basic" class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Affecté par</th>
+                                                        <th>Type</th>
+                                                        <th>Nature</th>
+                                                        <th>Date</th>
+                                                        <th>Heure</th>
+                                                        <th>Etat</th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($user->maintenanceTechnician->workOrders as $workOrder)
+                                                        <tr>
+                                                            <td>{{$workOrder->admin->user->name ?? "By System"}}</td>
+                                                            <td>{{$workOrder->type}}</td>
+                                                            <td>{{$workOrder->interventionReport->nature ?? "N/A"}}</td>
+                                                            <td>{{$workOrder->date}}</td>
+                                                            <td>{{$workOrder->hour}}</td>
+                                                            <th>
+                                                                @switch($workOrder->workOrderLogs->last()->status)
+                                                                    @case("created") en attente @break
+                                                                    @case("opened") en cours @break
+                                                                    @case("started") traitée @break
+                                                                    @case("done") annullée @break
+                                                                    @case("canceled") annullée @break
+                                                                    @default Erreur @break
+                                                                @endswitch</th>
+                                                            <td>
+                                                                <a href="{{route("work_orders.show", ["work_order"=>$workOrder])}}">Detail</a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div id="ri" class="tab-pane fade">
-                                    <div class="tab-ctn">
-                                        <p>ri</p>
-                                    </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>

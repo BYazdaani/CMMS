@@ -46,7 +46,15 @@
                                         <td>{{$workOrder->nature}}</td>
                                         <td>{{$workOrder->date}}</td>
                                         <td>{{$workOrder->hour}}</td>
-                                        <th>{{$workOrder->workOrderLogs->last()->status}}</th>
+                                        <th>@switch($workOrder->workOrderLogs->last()->status)
+                                                @case("created") en attente @break
+                                                @case("opened") en cours @break
+                                                @case("started") traitée @break
+                                                @case("done") annullée @break
+                                                @case("canceled") annullée @break
+                                                @default Erreur @break
+                                            @endswitch
+                                        </th>
                                         <td>
                                             <a href="{{route("work_orders.show", ["work_order"=>$workOrder])}}">Detail</a>
                                         </td>

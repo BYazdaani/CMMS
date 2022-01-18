@@ -19,7 +19,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="breadcomb-wp">
                                     <div class="breadcomb-icon">
-                                        <a href="#"><i class="notika-icon notika-print"></i></a>
+                                        <a href="{{route("work_requests.print",["work_request"=>$workRequest])}}" target="_blank"><i class="notika-icon notika-print"></i></a>
                                     </div>
                                     <div class="breadcomb-ctn">
                                         <h2>DT{{$workRequest->id}}</h2>

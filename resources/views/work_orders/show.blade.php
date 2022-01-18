@@ -19,7 +19,8 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="breadcomb-wp">
                                     <div class="breadcomb-icon">
-                                        <a href="{{route("work_orders.print",["work_order"=>$work_order])}}"><i class="notika-icon notika-print"></i></a>
+                                        <a href="{{route("work_orders.print",["work_order"=>$work_order])}}"><i
+                                                class="notika-icon notika-print"></i></a>
                                     </div>
                                     <div class="breadcomb-ctn">
                                         <h2>Demande de Travail N°: <a
@@ -27,7 +28,14 @@
                                         </h2>
                                         <p>Etat de l'ordre:
                                             <span class="bread-ntd">
-                                                {{$work_order->workOrderLogs->last()->status}}
+                                                @switch($work_order->workOrderLogs->last()->status)
+                                                    @case("created") en attente @break
+                                                    @case("opened") en cours @break
+                                                    @case("started") traitée @break
+                                                    @case("done") annullée @break
+                                                    @case("canceled") annullée @break
+                                                    @default Erreur @break
+                                                @endswitch
                                             </span>
                                         </p>
                                     </div>
