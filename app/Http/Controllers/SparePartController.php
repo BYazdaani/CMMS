@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipment;
 use App\Models\sparePart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Contracts\View\View;
 
 class SparePartController extends Controller
 {
@@ -12,9 +15,17 @@ class SparePartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() : View
     {
-        //
+        abort_if(Gate::denies('user_create'), 403);
+
+        $spare_parts = sparePart::all();
+
+        $data = [
+            'spare_parts' => $spare_parts
+        ];
+
+        return view('spare_parts.index',$data);
     }
 
     /**

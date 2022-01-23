@@ -23,6 +23,8 @@ class CreateSparePartsTable extends Migration
             $table->string("alert_threshold");
             $table->string("description");
             $table->string("observation");
+            $table->integer("in_stock")->default(0);
+            $table->integer("out_stock")->default(0);
             $table->foreign("stock_site_id")->on("stock_sites")->references("id")->onDelete("cascade");
             $table->foreign("spare_part_category_id")->on("spare_part_categories")->references("id")->onDelete("cascade");
             $table->timestamps();

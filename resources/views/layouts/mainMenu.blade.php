@@ -31,6 +31,11 @@
                             <a data-toggle="tab" href="#work_orders"><i class="notika-icon"></i> Ordres de travaille</a>
                         </li>
                     @endcan
+                    @can("spare_part_access")
+                        <li class="{{request()->routeIs('spare_parts*') ? 'active' : ""}}">
+                            <a data-toggle="tab" href="#spare_parts"><i class="notika-icon"></i> Piéces de rechanges</a>
+                        </li>
+                    @endcan
                     @can("support_access")
                         <li class="{{request()->routeIs('supports*') ? 'active' : ""}}">
                             <a data-toggle="tab" href="#support"><i class="notika-icon"></i> Tickets</a>
@@ -145,6 +150,19 @@
                                         </form>
                                     </li>
                                 @endif
+                            </ul>
+                        </div>
+                    @endcan
+                    @can("spare_part_access")
+                        <div id="spare_parts"
+                             class="tab-pane {{request()->routeIs('spare_parts*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown">
+                                <li><a href="{{route('spare_parts.index')}}">Liste PDR</a>
+                                </li>
+                                <li><a href="#">Stock Site</a>
+                                </li>
+                                <li><a href="#">PDR Catégoties</a>
+                                </li>
                             </ul>
                         </div>
                     @endcan

@@ -8,7 +8,8 @@ use App\Http\Controllers\{
     ZoneController,
     EquipmentController,
     WorkRequestController,
-    WorkOrderController
+    WorkOrderController,
+    SparePartController
 };
 
 /*
@@ -50,6 +51,8 @@ Route::middleware(['banned', 'auth'])->group(function () {
 
     Route::resource('work_orders', WorkOrderController::class);
     Route::get("work_orders/print/{work_order}", [WorkOrderController::class, 'print'])->name('work_orders.print');
+
+    Route::resource('spare_parts', SparePartController::class);
 
 });
 

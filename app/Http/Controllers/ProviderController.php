@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SuperAdmin;
+use App\Models\provider;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\View\View;
 
-class SuperAdminController extends Controller
+class ProviderController extends Controller
 {
-    public function index(): View
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        abort_if(Gate::denies('user_create'), 403);
-
+        //
     }
 
     /**
@@ -28,7 +30,7 @@ class SuperAdminController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -39,10 +41,10 @@ class SuperAdminController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\SuperAdmin $superAdmin
+     * @param  \App\Models\provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function show(SuperAdmin $superAdmin)
+    public function show(provider $provider)
     {
         //
     }
@@ -50,10 +52,10 @@ class SuperAdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\SuperAdmin $superAdmin
+     * @param  \App\Models\provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function edit(SuperAdmin $superAdmin)
+    public function edit(provider $provider)
     {
         //
     }
@@ -61,11 +63,11 @@ class SuperAdminController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\SuperAdmin $superAdmin
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SuperAdmin $superAdmin)
+    public function update(Request $request, provider $provider)
     {
         //
     }
@@ -73,10 +75,10 @@ class SuperAdminController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\SuperAdmin $superAdmin
+     * @param  \App\Models\provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SuperAdmin $superAdmin)
+    public function destroy(provider $provider)
     {
         //
     }
