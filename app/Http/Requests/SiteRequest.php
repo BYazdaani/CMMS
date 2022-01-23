@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class InterventionRequest extends FormRequest
+class SiteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,7 @@ class InterventionRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('stock_create');
+        return Gate::allows('intervention_report_create');
     }
 
     /**
@@ -26,9 +26,8 @@ class InterventionRequest extends FormRequest
     public function rules()
     {
         return [
-            'work_order_id' => ['required', 'string', 'exists:work_orders,id'],
-            'nature' => ['required', 'string'],
-            'observation' => ['required', 'string'],
+            'designation' => ['required', 'string'],
+            'code' => ['required', 'string'],
         ];
     }
 

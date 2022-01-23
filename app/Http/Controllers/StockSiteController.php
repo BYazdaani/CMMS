@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SiteRequest;
 use App\Models\stockSite;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class StockSiteController extends Controller
 {
@@ -12,9 +15,17 @@ class StockSiteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
-        //
+        abort_if(Gate::denies('stock_access'), 403);
+
+        $sites = stockSite::all();
+
+        $data = [
+            'sites' => $sites
+        ];
+
+        return view('sites.index',$data);
     }
 
     /**
@@ -31,11 +42,18 @@ class StockSiteController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(SiteRequest $request)
     {
-        //
+        abort_if(Gate::denies('stock_create'), 403);
+
+        $data=$request->validated();
+
+        stockSite::create($data);
+
+        return redirect()->route('stock_sites.index');
+
     }
 
     /**

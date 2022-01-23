@@ -43,7 +43,7 @@
                                         <td>{{$spare_part->init_stock}}</td>
                                         <td
                                         @if($spare_part->actual_stock< $spare_part->alert_threshold)
-                                            style="background-color: #db6e6e"
+                                            style="background-color: #ffbbbb"
                                             @endif
                                         >{{$spare_part->actual_stock}}</td>
                                         <td>{{$spare_part->alert_threshold}}</td>

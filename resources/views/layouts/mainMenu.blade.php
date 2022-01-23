@@ -32,7 +32,7 @@
                         </li>
                     @endcan
                     @can("spare_part_access")
-                        <li class="{{request()->routeIs('spare_parts*') ? 'active' : ""}}">
+                        <li class="{{request()->is('stock/*') ? 'active' : ""}}">
                             <a data-toggle="tab" href="#spare_parts"><i class="notika-icon"></i> Piéces de rechanges</a>
                         </li>
                     @endcan
@@ -155,13 +155,17 @@
                     @endcan
                     @can("spare_part_access")
                         <div id="spare_parts"
-                             class="tab-pane {{request()->routeIs('spare_parts*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
+                             class="tab-pane {{request()->is('stock/*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
                                 <li><a href="{{route('spare_parts.index')}}">Liste PDR</a>
                                 </li>
-                                <li><a href="#">Stock Site</a>
-                                </li>
-                                <li><a href="#">PDR Catégoties</a>
+                                @can("stock_access")
+                                    <li>
+                                        <a href="{{route('stock_sites.index')}}">Stock Site</a>
+                                    </li>
+                                @endcan
+                                <li>
+                                    <a href="{{route('categories.index')}}">PDR Catégoties</a>
                                 </li>
                             </ul>
                         </div>
@@ -170,7 +174,7 @@
                         <div id="support"
                              class="tab-pane {{request()->routeIs('supports*') ? 'active' : ""}} notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="contact.html">Contact</a>
+                                <li><a href="#">Contact</a>
                                 </li>
                             </ul>
                         </div>
