@@ -23,4 +23,12 @@ class sparePart extends Model
         return $this->belongsTo(stockSite::class);
     }
 
+    public function invoices(){
+        return $this->belongsToMany(
+            invoice::class,
+            'invoices_spare_parts',
+            'invoice_id',
+            'spare_part_id')->withPivot('quantity','product_price');
+    }
+
 }
