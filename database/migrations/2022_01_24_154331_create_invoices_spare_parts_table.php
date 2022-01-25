@@ -18,7 +18,6 @@ class CreateInvoicesSparePartsTable extends Migration
             $table->unsignedBigInteger("invoice_id");
             $table->unsignedBigInteger("spare_part_id");
             $table->integer("quantity");
-            $table->float("product_price");
             $table->foreign("invoice_id")->references("id")->on("invoices")->onDelete("cascade");
             $table->foreign("spare_part_id")->references("id")->on("spare_parts")->onDelete("cascade");
             $table->timestamps();

@@ -37,6 +37,7 @@
                                                         <th>Stock initial</th>
                                                         <th>Stock actuel</th>
                                                         <th>Seuil d'alerte</th>
+                                                        <th>Prix Unitaire</th>
                                                         <th>Descriptif</th>
                                                         <th>Stockage</th>
                                                         <th>Observation</th>
@@ -56,6 +57,7 @@
                                                                 @endif
                                                             >{{$spare_part->actual_stock}}</td>
                                                             <td>{{$spare_part->alert_threshold}}</td>
+                                                            <td>{{$spare_part->unite_price}}DA</td>
                                                             <td>{{$spare_part->description}}</td>
                                                             <td>{{$spare_part->stockSite->designation}}</td>
                                                             <td>{{$spare_part->observation}}</td>
@@ -106,7 +108,17 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-edit"></i>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        <input type="number" class="form-control" placeholder="Prix unitaire" name="unite_price" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 <div class="form-group ic-cmp-int">
                                                     <div class="form-ic-cmp">
                                                         <i class="notika-icon notika-promos"></i>
@@ -120,7 +132,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 <div class="form-group ic-cmp-int">
                                                     <div class="form-ic-cmp">
                                                         <i class="notika-icon notika-promos"></i>

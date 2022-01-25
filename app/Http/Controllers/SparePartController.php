@@ -65,9 +65,9 @@ class SparePartController extends Controller
 
         sparePart::create($data);
 
-        $invoice = invoice::find(1);
+        /*$invoice = invoice::find(1);
 
-        $invoice->spareParts()->attach(1,['quantity'=>50,'product_price'=>60]);
+        $invoice->spareParts()->attach(1,['quantity'=>50,'product_price'=>60]);*/
 
         return redirect()->route('spare_parts.index');
 

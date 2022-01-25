@@ -31,6 +31,7 @@ class SparePartRequest extends FormRequest
             'code' => ['required', 'string'],
             'init_stock' => ['required','integer'],
             'alert_threshold' => ['required', 'integer'],
+            'unite_price' => ['required', 'numeric'],
             'description' => ['required', 'string'],
             'observation' => ['required', 'string'],
         ];
