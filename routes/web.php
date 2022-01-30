@@ -11,7 +11,8 @@ use App\Http\Controllers\{
     WorkOrderController,
     SparePartController,
     SparePartCategoryController,
-    StockSiteController
+    StockSiteController,
+    InvoiceController
 };
 
 /*
@@ -58,6 +59,7 @@ Route::middleware(['banned', 'auth'])->group(function () {
         Route::resource('spare_parts', SparePartController::class);
         Route::resource('categories', SparePartCategoryController::class);
         Route::resource('stock_sites', StockSiteController::class);
+        Route::resource('invoices', InvoiceController::class);
     });
 
 });

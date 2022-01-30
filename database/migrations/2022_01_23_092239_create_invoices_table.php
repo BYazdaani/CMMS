@@ -17,6 +17,7 @@ class CreateInvoicesTable extends Migration
             $table->bigIncrements("id");
             $table->unsignedBigInteger("admin_id");
             $table->unsignedBigInteger("provider_id");
+            $table->string("invoice_code");
             $table->foreign("admin_id")->on("admins")->references("id")->onDelete("cascade");
             $table->foreign("provider_id")->on("providers")->references("id")->onDelete("cascade");
             $table->timestamps();

@@ -159,14 +159,18 @@
                             <ul class="notika-main-menu-dropdown">
                                 <li><a href="{{route('spare_parts.index')}}">Liste PDR</a>
                                 </li>
+                                <li><a href="{{route('invoices.index')}}">Entrées</a>
+                                </li>
+                                <li><a href="{{route('invoices.create')}}">Sorties</a>
+                                </li>
                                 @can("stock_access")
                                     <li>
                                         <a href="{{route('stock_sites.index')}}">Stock Site</a>
                                     </li>
+                                    <li>
+                                        <a href="{{route('categories.index')}}">PDR Catégoties</a>
+                                    </li>
                                 @endcan
-                                <li>
-                                    <a href="{{route('categories.index')}}">PDR Catégoties</a>
-                                </li>
                             </ul>
                         </div>
                     @endcan

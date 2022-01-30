@@ -10,7 +10,7 @@ class invoice extends Model
     use HasFactory;
 
     protected $fillable = [
-
+        "admin_id","provider_id","invoice_code"
     ];
 
     public function spareParts()

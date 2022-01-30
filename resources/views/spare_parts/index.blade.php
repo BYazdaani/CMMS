@@ -22,8 +22,6 @@
 
                                 <li><a data-toggle="tab" href="#add">Ajouter</a></li>
 
-                                <li><a data-toggle="tab" href="#in_stock">Entrées</a></li>
-
                             </ul>
                             <div class="tab-content tab-custom-st">
                                 <div id="list" class="tab-pane fade in active">
@@ -63,7 +61,6 @@
                                                             <td>{{$spare_part->observation}}</td>
                                                             <td>{{$spare_part->in_stock}}</td>
                                                             <td>{{$spare_part->out_stock}}</td>
-                                                            </th>
                                                         </tr>
                                                     @endforeach
                                                     </tbody>
@@ -175,10 +172,6 @@
                                             <button type="submit" class="btn btn-primary notika-btn-success">Submit</button>
                                         </div>
                                     </form>
-                                </div>
-
-                                <div id="in_stock" class="tab-pane fade">
-
                                 </div>
 
                             </div>
