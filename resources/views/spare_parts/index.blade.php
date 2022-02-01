@@ -30,17 +30,16 @@
                                                 <table id="data-table-basic" class="table table-striped">
                                                     <thead>
                                                     <tr>
-                                                        <th>Pièce</th>
+                                                        <th>Code</th>
                                                         <th>Catégorie</th>
                                                         <th>Stock initial</th>
                                                         <th>Stock actuel</th>
                                                         <th>Seuil d'alerte</th>
                                                         <th>Prix Unitaire</th>
-                                                        <th>Descriptif</th>
                                                         <th>Stockage</th>
-                                                        <th>Observation</th>
                                                         <th>Entrées</th>
                                                         <th>Sorties</th>
+                                                        <th class="text-center justify-content-center">Detail</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -56,11 +55,12 @@
                                                             >{{$spare_part->actual_stock}}</td>
                                                             <td>{{$spare_part->alert_threshold}}</td>
                                                             <td>{{$spare_part->unite_price}}DA</td>
-                                                            <td>{{$spare_part->description}}</td>
                                                             <td>{{$spare_part->stockSite->designation}}</td>
-                                                            <td>{{$spare_part->observation}}</td>
                                                             <td>{{$spare_part->in_stock}}</td>
                                                             <td>{{$spare_part->out_stock}}</td>
+                                                            <td class="text-center justify-content-center">
+                                                                <a href="{{route("spare_parts.edit", ["spare_part"=>$spare_part])}}">Consulter</a>
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                     </tbody>
@@ -73,7 +73,7 @@
                                     <form method="post" action="{{route("spare_parts.store")}}" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                 <div class="form-group ic-cmp-int">
                                                     <div class="form-ic-cmp">
                                                         <i class="notika-icon notika-edit"></i>
@@ -83,7 +83,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-edit"></i>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        <input type="text" class="form-control" placeholder="Désignation" name="designation" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                 <div class="form-group ic-cmp-int">
                                                     <div class="form-ic-cmp">
                                                         <i class="notika-icon notika-edit"></i>
@@ -93,7 +103,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                 <div class="form-group ic-cmp-int">
                                                     <div class="form-ic-cmp">
                                                         <i class="notika-icon notika-edit"></i>

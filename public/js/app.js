@@ -5407,10 +5407,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "invoice",
   props: {
@@ -29006,231 +29002,225 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "data-table-area" }, [
-    _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-12 col-md-12 col-sm-12 col-xs-12" }, [
-          _c(
-            "div",
-            { staticClass: "form-element-list" },
-            [
-              _vm._m(0),
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-12 col-md-12 col-sm-12 col-xs-12" }, [
+      _c(
+        "div",
+        { staticClass: "form-element-list" },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "form-group col-lg-6 col-sm-12" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-control-label",
+                  attrs: { for: "provider" },
+                },
+                [_vm._v("Fourniseur")]
+              ),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "form-group col-lg-6 col-sm-12" }, [
-                  _c(
-                    "label",
+              _c(
+                "select",
+                {
+                  directives: [
                     {
-                      staticClass: "form-control-label",
-                      attrs: { for: "provider" },
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.provider,
+                      expression: "provider",
                     },
-                    [_vm._v("Fourniseur")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.provider,
-                          expression: "provider",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: { id: "provider", required: "" },
-                      on: {
-                        change: function ($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function (o) {
-                              return o.selected
-                            })
-                            .map(function (o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.provider = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        },
-                      },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "provider", required: "" },
+                  on: {
+                    change: function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.provider = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
                     },
-                    _vm._l(_vm.providers, function (provider) {
-                      return _c(
-                        "option",
-                        { domProps: { value: provider.id } },
-                        [_vm._v(_vm._s(provider.name))]
-                      )
-                    }),
-                    0
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group col-lg-6 col-sm-12" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-control-label",
-                      attrs: { for: "serial_number" },
-                    },
-                    [_vm._v("Numéro Facture")]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.serial_number,
-                        expression: "serial_number",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "Numéro Facture",
-                      name: "serial_number",
-                      id: "serial_number",
-                      required: "",
-                    },
-                    domProps: { value: _vm.serial_number },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.serial_number = $event.target.value
-                      },
-                    },
-                  }),
-                ]),
+                  },
+                },
+                _vm._l(_vm.providers, function (provider) {
+                  return _c("option", { domProps: { value: provider.id } }, [
+                    _vm._v(_vm._s(provider.name)),
+                  ])
+                }),
+                0
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-6 col-sm-12" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-control-label",
+                  attrs: { for: "serial_number" },
+                },
+                [_vm._v("Numéro Facture")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.serial_number,
+                    expression: "serial_number",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Numéro Facture",
+                  name: "serial_number",
+                  id: "serial_number",
+                  required: "",
+                },
+                domProps: { value: _vm.serial_number },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.serial_number = $event.target.value
+                  },
+                },
+              }),
+            ]),
+          ]),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._l(_vm.materials, function (spare) {
+            return _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "form-group col-lg-8 col-sm-12" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "text", disabled: "" },
+                  domProps: { value: spare.code },
+                }),
               ]),
               _vm._v(" "),
-              _vm._m(1),
-              _vm._v(" "),
-              _vm._l(_vm.materials, function (spare) {
-                return _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "form-group col-lg-8 col-sm-12" }, [
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: { type: "text", disabled: "" },
-                      domProps: { value: spare.code },
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-lg-4 col-sm-12" }, [
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: { type: "number", disabled: "" },
-                      domProps: { value: spare.quantity },
-                    }),
-                  ]),
-                ])
+              _c("div", { staticClass: "form-group col-lg-4 col-sm-12" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "number", disabled: "" },
+                  domProps: { value: spare.quantity },
+                }),
+              ]),
+            ])
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "form-group col-lg-6 col-sm-12" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.material,
+                      expression: "material",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "toner_name", required: "" },
+                  on: {
+                    change: function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.material = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                  },
+                },
+                _vm._l(_vm.spares, function (spare) {
+                  return _c("option", { domProps: { value: spare } }, [
+                    _vm._v(_vm._s(spare.code)),
+                  ])
+                }),
+                0
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-4 col-sm-12" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.quantity,
+                    expression: "quantity",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "number",
+                  placeholder: "Quantité",
+                  name: "quantity",
+                  id: "quantity",
+                  required: "",
+                },
+                domProps: { value: _vm.quantity },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.quantity = $event.target.value
+                  },
+                },
+              }),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-2 col-sm-12" }, [
+              _c("label", {
+                staticClass: "form-control-label",
+                attrs: { for: "quantity" },
               }),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "form-group col-lg-6 col-sm-12" }, [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.material,
-                          expression: "material",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: { id: "toner_name", required: "" },
-                      on: {
-                        change: function ($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function (o) {
-                              return o.selected
-                            })
-                            .map(function (o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.material = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        },
-                      },
-                    },
-                    _vm._l(_vm.spares, function (spare) {
-                      return _c("option", { domProps: { value: spare } }, [
-                        _vm._v(_vm._s(spare.code)),
-                      ])
-                    }),
-                    0
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group col-lg-4 col-sm-12" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.quantity,
-                        expression: "quantity",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "number",
-                      placeholder: "Quantité",
-                      name: "quantity",
-                      id: "quantity",
-                      required: "",
-                    },
-                    domProps: { value: _vm.quantity },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.quantity = $event.target.value
-                      },
-                    },
-                  }),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group col-lg-2 col-sm-12" }, [
-                  _c("label", {
-                    staticClass: "form-control-label",
-                    attrs: { for: "quantity" },
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary notika-btn-success block",
-                      on: { click: _vm.addSpare },
-                    },
-                    [_vm._v("Ajouter")]
-                  ),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-example-int mg-t-15" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-primary notika-btn-success",
-                    on: { click: _vm.addInvoice },
-                  },
-                  [_vm._v("Ajouter facture")]
-                ),
-              ]),
-            ],
-            2
-          ),
-        ]),
-      ]),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-primary notika-btn-success block",
+                  on: { click: _vm.addSpare },
+                },
+                [_vm._v("Ajouter")]
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-example-int mg-t-15" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary notika-btn-success",
+                on: { click: _vm.addInvoice },
+              },
+              [_vm._v("Ajouter facture")]
+            ),
+          ]),
+        ],
+        2
+      ),
     ]),
   ])
 }
@@ -29245,7 +29235,7 @@ var staticRenderFns = [
       _c("p", [
         _c("strong", [_vm._v("NB: ")]),
         _vm._v(
-          "thank you for being careful with users functions, which will affect\n                            automatically permissions and roles to use the system"
+          "thank you for being careful with users functions, which will affect\n                    automatically permissions and roles to use the system"
         ),
       ]),
     ])

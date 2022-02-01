@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 
 class InvoiceController extends Controller
@@ -21,13 +22,16 @@ class InvoiceController extends Controller
      */
     public function index(): View
     {
+        abort_if(Gate::denies('invoice_access'), 403);
+
 
         $data = [
             'providers' => provider::all(),
             'spares' => sparePart::all(),
+            'invoices'=>invoice::all(),
         ];
 
-        return view('invoices.create', $data);
+        return view('invoices.index', $data);
     }
 
     /**
@@ -48,6 +52,8 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('invoice_create'), 403);
+
         DB::beginTransaction();
 
         try {
@@ -55,6 +61,7 @@ class InvoiceController extends Controller
             $invoice = invoice::create([
                 "admin_id" => Auth::user()->admin->id,
                 "provider_id" => $request['provider'],
+                "invoice_code" => $request['serial_number'],
             ]);
 
             foreach ($request['spares'] as $spare) {
@@ -63,7 +70,7 @@ class InvoiceController extends Controller
 
                 $sparePart = sparePart::find($spare['id']);
                 $sparePart->actual_stock += $spare['quantity'];
-                $sparePart->in_stock ++;
+                $sparePart->in_stock += $spare['quantity'];
                 $sparePart->save();
 
             }
@@ -84,9 +91,16 @@ class InvoiceController extends Controller
      * @param \App\Models\invoice $invoice
      * @return \Illuminate\Http\Response
      */
-    public function show(invoice $invoice)
+    public function show(invoice $invoice) : View
     {
-        //
+        abort_if(Gate::denies('invoice_show'), 403);
+
+        $data = [
+            'invoice' => $invoice,
+        ];
+
+        return view('invoices.show', $data);
+
     }
 
     /**
@@ -116,10 +130,36 @@ class InvoiceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\invoice $invoice
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(invoice $invoice)
     {
-        //
+
+        abort_if(Gate::denies('invoice_delete'), 403);
+
+        DB::beginTransaction();
+
+        try {
+
+            $spares=$invoice->spareParts;
+
+            foreach ($spares as $spare) {
+
+                $spare->actual_stock -= $spare->pivot->quantity;
+                $spare->save();
+
+            }
+
+            $invoice->delete();
+
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            Session::flash("error", $e->getMessage());
+            return redirect()->back();
+        }
+
+        DB::commit();
+        return redirect()->route('invoices.index');
+
     }
 }

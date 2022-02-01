@@ -117,6 +117,12 @@ class PermissionSeeder extends Seeder
             'zone_show',
             'zone_delete',
             'zone_access',
+
+            'invoice_create',
+            'invoice_edit',
+            'invoice_show',
+            'invoice_delete',
+            'invoice_access',
         ];
 
         foreach ($permissions as $permission) {
@@ -204,6 +210,12 @@ class PermissionSeeder extends Seeder
             'zone_show',
             'zone_delete',
             'zone_access',
+
+            'invoice_create',
+            'invoice_edit',
+            'invoice_show',
+            'invoice_delete',
+            'invoice_access',
         ];
 
         foreach ($adminPermissions as $permission){

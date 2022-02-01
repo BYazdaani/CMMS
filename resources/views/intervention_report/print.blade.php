@@ -72,6 +72,12 @@
                 </tr>
                 </tbody>
             </table>
+            <br>
+            <br>
+            <br>
+            <h4 class="text-left">
+                Visa
+            </h4>
         </div>
     </div>
 </div>

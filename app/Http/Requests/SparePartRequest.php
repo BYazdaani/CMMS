@@ -29,6 +29,7 @@ class SparePartRequest extends FormRequest
             'stock_site_id' => ['required', 'string', 'exists:stock_sites,id'],
             'spare_part_category_id' => ['required', 'string', 'exists:spare_part_categories,id'],
             'code' => ['required', 'string'],
+            'designation' => ['required', 'string'],
             'init_stock' => ['required','integer'],
             'alert_threshold' => ['required', 'integer'],
             'unite_price' => ['required', 'numeric'],

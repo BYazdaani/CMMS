@@ -19,12 +19,17 @@ class invoice extends Model
             sparePart::class,
             'invoices_spare_parts',
             'invoice_id',
-            'spare_part_id')->withPivot('quantity','product_price');
+            'spare_part_id')->withPivot('quantity');
     }
 
     public function provider()
     {
         return $this->belongsTo(provider::class);
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
     }
 
 }

@@ -49,9 +49,9 @@
                                         <th>@switch($workOrder->workOrderLogs->last()->status)
                                                 @case("created") en attente @break
                                                 @case("opened") en cours @break
-                                                @case("started") traitée @break
-                                                @case("done") annullée @break
-                                                @case("canceled") annullée @break
+                                                @case("started") débuté @break
+                                                @case("done") terminé @break
+                                                @case("canceled") annullé @break
                                                 @default Erreur @break
                                             @endswitch
                                         </th>

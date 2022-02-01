@@ -18,7 +18,8 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="breadcomb-wp">
                                     <div class="breadcomb-icon">
-                                        <a href="{{route("work_requests.print",["work_request"=>$workRequest])}}" target="_blank">
+                                        <a href="{{route("work_requests.print",["work_request"=>$workRequest])}}"
+                                           target="_blank">
                                             <i class="notika-icon notika-print"></i>
                                         </a>
                                     </div>
@@ -70,7 +71,8 @@
                                                 </div>
                                                 <form action="{{route("work_orders.store")}}" method="post">
                                                     @csrf
-                                                    <input type="hidden" value="{{$workRequest->id}}" name="work_request_id">
+                                                    <input type="hidden" value="{{$workRequest->id}}"
+                                                           name="work_request_id">
                                                     <div class="modal-body">
                                                         <h2>Nouveau Ordre de Travail</h2>
                                                         <br>
@@ -88,31 +90,32 @@
                                                                                 data-live-search="true"
                                                                                 name="type">
                                                                             @foreach($types as $type)
-                                                                                <option value="{{$type}}">{{$type}}</option>
+                                                                                <option
+                                                                                    value="{{$type}}">{{$type}}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                           {{-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                                <div class="nk-int-mk">
-                                                                    <h5>Nature :</h5>
-                                                                </div>
-                                                                <div class="form-group ic-cmp-int">
-                                                                    <div class="form-ic-cmp">
-                                                                        <i class="notika-icon notika-promos"></i>
-                                                                    </div>
-                                                                    <div class="nk-int-st ">
-                                                                        <select class="selectpicker form-control"
-                                                                                data-live-search="true"
-                                                                                name="nature">
-                                                                            @foreach($natures as $nature)
-                                                                                <option value="{{$nature}}">{{$nature}}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>--}}
+                                                            {{-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                                 <div class="nk-int-mk">
+                                                                     <h5>Nature :</h5>
+                                                                 </div>
+                                                                 <div class="form-group ic-cmp-int">
+                                                                     <div class="form-ic-cmp">
+                                                                         <i class="notika-icon notika-promos"></i>
+                                                                     </div>
+                                                                     <div class="nk-int-st ">
+                                                                         <select class="selectpicker form-control"
+                                                                                 data-live-search="true"
+                                                                                 name="nature">
+                                                                             @foreach($natures as $nature)
+                                                                                 <option value="{{$nature}}">{{$nature}}</option>
+                                                                             @endforeach
+                                                                         </select>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>--}}
                                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                 <div class="nk-int-mk">
                                                                     <h5>Intervenant :</h5>
@@ -123,9 +126,11 @@
                                                                     </div>
                                                                     <div class="nk-int-st ">
                                                                         <select class="selectpicker form-control"
-                                                                                data-live-search="true" name="maintenance_technician_id">
+                                                                                data-live-search="true"
+                                                                                name="maintenance_technician_id">
                                                                             @foreach($technicians as $technician)
-                                                                                <option value="{{$technician->id}}">{{$technician->user->name}}</option>
+                                                                                <option
+                                                                                    value="{{$technician->id}}">{{$technician->user->name}}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
@@ -149,7 +154,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-default">Save changes</button>
+                                                        <button type="submit" class="btn btn-default">Save changes
+                                                        </button>
                                                         <button type="button" class="btn btn-default"
                                                                 data-dismiss="modal">Close
                                                         </button>
@@ -259,8 +265,17 @@
                                             <td>{{$workOrder->nature}}</td>
                                             <td>{{$workOrder->date}}</td>
                                             <td>{{$workOrder->hour}}</td>
-                                            <th>{{$workOrder->workOrderLogs->last()->status}}</th>
-                                            <td><a href="{{route("work_orders.show", ["work_order"=>$workOrder])}}">Detail</a></td>
+                                            <th>@switch($work_order->workOrderLogs->last()->status)
+                                                    @case("created") en attente @break
+                                                    @case("opened") ouvert @break
+                                                    @case("started") débuté @break
+                                                    @case("done") terminé @break
+                                                    @case("canceled") annullé @break
+                                                    @default Erreur @break
+                                                @endswitch
+                                            </th>
+                                            <td><a href="{{route("work_orders.show", ["work_order"=>$workOrder])}}">Detail</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

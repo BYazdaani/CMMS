@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SparePartRequest;
+use App\Http\Requests\SparePartUpdateRequest;
 use App\Models\Equipment;
 use App\Models\invoice;
 use App\Models\provider;
@@ -90,9 +91,20 @@ class SparePartController extends Controller
      * @param  \App\Models\sparePart  $sparePart
      * @return \Illuminate\Http\Response
      */
-    public function edit(sparePart $sparePart)
+    public function edit(sparePart $sparePart) : View
     {
-        //
+        abort_if(Gate::denies('spare_part_edit'), 403);
+
+        $sites = stockSite::all();
+        $categories = sparePartCategory::all();
+
+        $data = [
+            'sparePart' => $sparePart,
+            'sites' => $sites,
+            'categories' => $categories,
+        ];
+
+        return view('spare_parts.update',$data);
     }
 
     /**
@@ -100,11 +112,18 @@ class SparePartController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\sparePart  $sparePart
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, sparePart $sparePart)
+    public function update(SparePartUpdateRequest $request, sparePart $sparePart)
     {
-        //
+        abort_if(Gate::denies('spare_part_edit'), 403);
+
+        $data=$request->validated();
+
+        $sparePart->updateOrFail($data);
+
+        return redirect()->route("spare_parts.edit", ['spare_part' => $sparePart]);
+
     }
 
     /**

@@ -20,4 +20,8 @@ class Admin extends Model
     {
         return $this->hasMany(WorkOrder::class);
     }
+
+    public function invoices(){
+        return $this->hasMany(invoice::class);
+    }
 }
