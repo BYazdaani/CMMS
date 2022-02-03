@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\InterventionRequest;
 use App\Models\Admin;
 use App\Models\InterventionReport;
+use App\Models\sparePart;
 use App\Models\WorkOrder;
 use App\Notifications\NewWorkOrder;
 use App\Notifications\NewWorkRequest;
@@ -63,9 +64,19 @@ InterventionReportController extends Controller
             'status' => "done"
         ]);
 
-
         $interventionReport->workOrder->workRequest->status = 2;
         $interventionReport->workOrder->workRequest->save();
+
+        foreach ($request['spare_parts'] as $key => $value) {
+
+            $interventionReport->spareParts()->attach($key, ['quantity' => $value]);
+
+            $sparePart = sparePart::find($value);
+            $sparePart->actual_stock -= $value;
+            $sparePart->out_stock += $value;
+            $sparePart->save();
+
+        }
 
         $admins = Admin::all();
 
