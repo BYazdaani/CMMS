@@ -31,4 +31,12 @@ class sparePart extends Model
             'spare_part_id')->withPivot('quantity');
     }
 
+    public function interventionReports(){
+        return $this->belongsToMany(
+            InterventionReport::class,
+            'intervention_report_spare_parts',
+            'intervention_report_id',
+            'spare_part_id')->withPivot('quantity');
+    }
+
 }

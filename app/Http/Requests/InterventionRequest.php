@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class InterventionRequest extends FormRequest
 {
@@ -27,7 +28,8 @@ class InterventionRequest extends FormRequest
     {
         return [
             'work_order_id' => ['required', 'string', 'exists:work_orders,id'],
-            'nature' => ['required', 'string'],
+            'nature' => ['required'],
+            'spare_parts' => ['required'],
             'observation' => ['required', 'string'],
         ];
     }

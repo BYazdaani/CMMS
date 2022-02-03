@@ -18,4 +18,12 @@ class InterventionReport extends Model
     public function workOrder(){
         return $this->belongsTo(WorkOrder::class);
     }
+
+    public function spareParts(){
+        return $this->belongsToMany(
+            sparePart::class,
+            'intervention_report_spare_parts',
+            'intervention_report_id',
+            'spare_part_id')->withPivot('quantity');
+    }
 }

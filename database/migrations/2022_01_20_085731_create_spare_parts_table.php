@@ -20,7 +20,7 @@ class CreateSparePartsTable extends Migration
             $table->string("code");
             $table->string("designation");
             $table->integer("init_stock");
-            $table->string("actual_stock");
+            $table->integer("actual_stock");
             $table->string("alert_threshold");
             $table->float("unite_price");
             $table->string("description");

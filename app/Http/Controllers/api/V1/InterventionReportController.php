@@ -39,23 +39,32 @@ InterventionReportController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(InterventionRequest $request)
     {
+
         abort_if(Gate::denies('intervention_report_create'), 403);
 
-        $data=$request->validated();
+        $data = $request->validated();
 
-        $interventionReport=InterventionReport::create($data);
+        $nature = "";
+
+        foreach ($data['nature'] as $sparPart) {
+            $nature = $nature . " - " . $sparPart;
+        }
+
+        $data['nature'] = $nature;
+
+        $interventionReport = InterventionReport::create($data);
 
         $interventionReport->workOrder->workOrderLogs()->create([
             'status' => "done"
         ]);
 
 
-        $interventionReport->workOrder->workRequest->status =2;
+        $interventionReport->workOrder->workRequest->status = 2;
         $interventionReport->workOrder->workRequest->save();
 
         $admins = Admin::all();
@@ -68,14 +77,14 @@ InterventionReportController extends Controller
 
         $interventionReport->workOrder->workRequest->user->notify((new NewWorkRequest($interventionReport->workOrder->workRequest, 'Votre demande est traité'))->delay($when));
 
-        return response($interventionReport->workOrder->load('workRequest.equipment.zone')->load('workOrderLogs')->load('interventionReport'),200);
+        return response($interventionReport->workOrder->load('workRequest.equipment.zone')->load('workOrderLogs')->load('interventionReport'), 200);
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\InterventionReport  $interventionReport
+     * @param \App\Models\InterventionReport $interventionReport
      * @return \Illuminate\Http\Response
      */
     public function show(InterventionReport $interventionReport)
@@ -86,7 +95,7 @@ InterventionReportController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\InterventionReport  $interventionReport
+     * @param \App\Models\InterventionReport $interventionReport
      * @return \Illuminate\Http\Response
      */
     public function edit(InterventionReport $interventionReport)
@@ -97,8 +106,8 @@ InterventionReportController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\InterventionReport  $interventionReport
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\InterventionReport $interventionReport
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, InterventionReport $interventionReport)
@@ -109,7 +118,7 @@ InterventionReportController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\InterventionReport  $interventionReport
+     * @param \App\Models\InterventionReport $interventionReport
      * @return \Illuminate\Http\Response
      */
     public function destroy(InterventionReport $interventionReport)

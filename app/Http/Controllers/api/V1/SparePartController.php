@@ -12,13 +12,14 @@ class SparePartController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('spare_part_access'), 403);
 
-        $spareParts = sparePart::with('stockSite')->with('sparePartCategory')->get();
+        $spareParts = sparePart::with('stockSite')->with('sparePartCategory')->where('code','like',$request["name"].'%')->paginate(100);
 
         return response(
             $spareParts
