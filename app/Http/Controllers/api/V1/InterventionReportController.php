@@ -53,7 +53,7 @@ InterventionReportController extends Controller
         $nature = "";
 
         foreach ($data['nature'] as $sparPart) {
-            $nature = $nature . " - " . $sparPart;
+            $nature = $sparPart . " - " . $nature;
         }
 
         $data['nature'] = $nature;
@@ -71,24 +71,15 @@ InterventionReportController extends Controller
 
             $interventionReport->spareParts()->attach($key, ['quantity' => $value]);
 
-            $sparePart = sparePart::find($value);
+            $sparePart = sparePart::find($key);
             $sparePart->actual_stock -= $value;
             $sparePart->out_stock += $value;
             $sparePart->save();
 
         }
 
-        $admins = Admin::all();
 
-        $when = now()->addSeconds(10);
-
-        foreach ($admins as $admin) {
-            $admin->user->notify((new NewWorkOrder($interventionReport->workOrder, 'Ce Ordre est cloturé '))->delay($when));
-        }
-
-        $interventionReport->workOrder->workRequest->user->notify((new NewWorkRequest($interventionReport->workOrder->workRequest, 'Votre demande est traité'))->delay($when));
-
-        return response($interventionReport->workOrder->load('workRequest.equipment.zone')->load('workOrderLogs')->load('interventionReport'), 200);
+        return response($interventionReport->workOrder->load('workRequest.equipment.zone')->load('workOrderLogs')->load('interventionReport.spareParts'), 200);
 
     }
 

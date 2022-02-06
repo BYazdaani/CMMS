@@ -19,7 +19,7 @@ class OrderController extends Controller
         abort_if(Gate::denies('work_order_access'), 403);
 
         return response(
-            auth()->user()->maintenanceTechnician->workOrders()->with('workRequest.equipment.zone')->with('workOrderLogs')->with('interventionReport')->paginate(10)
+            auth()->user()->maintenanceTechnician->workOrders()->with('workRequest.equipment.zone')->with('workOrderLogs')->with('interventionReport.spareParts')->paginate(10)
             , 200);
 
     }
@@ -53,7 +53,6 @@ class OrderController extends Controller
      */
     public function show(WorkOrder $workOrder)
     {
-        //
     }
 
     /**
