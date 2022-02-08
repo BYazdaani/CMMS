@@ -19,7 +19,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="breadcomb-wp">
                                     <div class="breadcomb-icon">
-                                        <a href="{{route("work_orders.print",["work_order"=>$work_order])}}"><i
+                                        <a href="{{route("work_orders.print",["work_order"=>$work_order])}}" target="_blank"><i
                                                 class="notika-icon notika-print"></i></a>
                                     </div>
                                     <div class="breadcomb-ctn">
@@ -115,11 +115,13 @@
                                     <td colspan="12" class="text-left" style="height: 200px">
                                         <strong>Instructions :</strong> {{$work_order->description}} </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="12" class="text-left" style="height: 200px">
-                                        <strong>Description anomalie
-                                            :</strong> {{$work_order->workRequest->description}} </td>
-                                </tr>
+                                @if(str_contains($work_order->workOrderLogs->last()->status,"canceled"))
+                                    <tr>
+                                        <td colspan="12" class="text-left" style="height: 200px">
+                                            <strong>Motif d'annulation
+                                                :</strong> {{$work_order->reason}} </td>
+                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>
@@ -176,5 +178,80 @@
         </div>
         <!-- Data Table area End-->
     @endif
+
+    @if(isset($work_order->interventionReport))
+        <!-- Data Table area Start-->
+        <div class="data-table-area mg-t-10">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mg-t-10">
+                        <div class="normal-table-list mg-t-10">
+                            <div class="table-responsive text-center">
+                                <table class="table table-bordered ">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="12" class="text-center"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="3"><img src="{{asset('../theme/img/logo/logo.png')}}"
+                                                             style="height: 30px" alt=""/></td>
+                                        <td colspan="6"><h3>Rapprt d'intervention</h3></td>
+                                        <td colspan="3">N° RI:
+                                            <strong>RI{{$work_order->interventionReport->id}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"><strong>Nature :</strong></td>
+                                        <td colspan="9">{{$work_order->interventionReport->nature}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="12" class="text-left" style="height: 200px">
+                                            <strong>Détails Intervention
+                                                :</strong> {{$work_order->interventionReport->observation}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="12" class="text-left" style="height: 200px">
+                                            <div class="basic-tb-hd">
+                                                <h4>Piéces de Rechange utilisées</h4>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table id="data-table-basic" class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Code</th>
+                                                        <th>Designation</th>
+                                                        <th>Catégories</th>
+                                                        <th>Quantité</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($work_order->interventionReport->spareParts as $sparePart)
+                                                        <tr>
+                                                            <td>{{$sparePart->code}}</td>
+                                                            <td>{{$sparePart->designation}}</td>
+                                                            <td>{{$sparePart->sparePartCategory->tag}}</td>
+                                                            <td>{{$sparePart->pivot->quantity}}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Data Table area End-->
+    @endif
+
+    <br>
+    <br>
+    <br>
 
 @endsection()

@@ -21,11 +21,6 @@
     <div class="normal-table-list mg-t-10">
         <div class="table-responsive text-center">
             <table class="table table-bordered ">
-                <thead>
-                <tr>
-                    <th colspan="12" class="text-center"></th>
-                </tr>
-                </thead>
                 <tbody>
                 <tr>
                     <td colspan="3"><img src="{{asset('../theme/img/logo/logo.png')}}"
@@ -62,22 +57,53 @@
                     <td colspan="3">{{$end->created_at->toDateString()}}</td>
                 </tr>
                 <tr>
-                    <td colspan="12" class="text-left" style="height: 200px">
-                        <strong>Description :</strong> {{$work_order->workRequest->description}} </td>
+                    <td colspan="12" class="text-left" style="height: 100px">
+                        <strong>Description Problème :</strong> {{$work_order->workRequest->description}} </td>
+                </tr>
+                <tr>
+                    <td colspan="3"><strong>Nature :</strong></td>
+                    <td colspan="9">{{$work_order->interventionReport->nature}}</td>
+                </tr>
+                <tr>
+                    <td colspan="12" class="text-left" style="height: 100px">
+                        <strong>Détails Intervention
+                            :</strong> {{$work_order->interventionReport->observation}} </td>
                 </tr>
                 <tr>
                     <td colspan="12" class="text-left" style="height: 200px">
-                        <strong>Observation
-                            :</strong> {{$work_order->interventionReport->observation}} </td>
+                        <div class="basic-tb-hd">
+                            <h4>Piéces de Rechange utilisées</h4>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Designation</th>
+                                    <th>Catégories</th>
+                                    <th>Quantité</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($work_order->interventionReport->spareParts as $sparePart)
+                                    <tr>
+                                        <td>{{$sparePart->code}}</td>
+                                        <td>{{$sparePart->designation}}</td>
+                                        <td>{{$sparePart->sparePartCategory->tag}}</td>
+                                        <td>{{$sparePart->pivot->quantity}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
             <br>
-            <br>
-            <br>
-            <h4 class="text-left">
+            <h5 class="text-left">
                 Visa
-            </h4>
+            </h5>
         </div>
     </div>
 </div>

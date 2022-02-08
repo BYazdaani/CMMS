@@ -18,6 +18,7 @@ class WorkOrder extends Model
         'description',
         'date',
         'hour',
+        'reason'
     ];
 
     public function workRequest()

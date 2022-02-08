@@ -6,6 +6,7 @@ use App\Http\Requests\EquipmentRequest;
 use App\Imports\EquipmentImport;
 use App\Models\Department;
 use App\Models\Equipment;
+use App\Models\sparePart;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -124,8 +125,11 @@ class EquipmentController extends Controller
     {
         abort_if(Gate::denies("equipment_show"), 403);
 
+        $spare_parts = sparePart::where('code','like',$equipment->name.'%')->get();
+
         $data = [
-            "equipment" => $equipment
+            "equipment" => $equipment,
+            "spare_parts"=>$spare_parts
         ];
 
         return view('equipments.show', $data);
@@ -232,8 +236,14 @@ class EquipmentController extends Controller
      * @param \App\Models\Equipment $equipment
      * @return \Illuminate\Http\Response
      */
-    public function print(Equipment $equipment)
+    public function print(Equipment $equipment) : View
     {
-        //
+        abort_if(Gate::denies("equipment_show"), 403);
+
+        $data = [
+            "equipment" => $equipment,
+        ];
+
+        return view('equipments.print', $data);
     }
 }

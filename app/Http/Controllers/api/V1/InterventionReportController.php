@@ -50,13 +50,7 @@ InterventionReportController extends Controller
 
         $data = $request->validated();
 
-        $nature = "";
-
-        foreach ($data['nature'] as $sparPart) {
-            $nature = $sparPart . " - " . $nature;
-        }
-
-        $data['nature'] = $nature;
+        $data['nature'] = implode(" - ",$data['nature']);
 
         $interventionReport = InterventionReport::create($data);
 
@@ -114,7 +108,7 @@ InterventionReportController extends Controller
      */
     public function update(Request $request, InterventionReport $interventionReport)
     {
-        //
+        abort_if(Gate::denies('intervention_report_update'), 403);
     }
 
     /**

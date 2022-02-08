@@ -83,8 +83,11 @@ class OrderController extends Controller
         ]);
 
         if ($request['status'] == "canceled") {
-            $workOrder->workRequest->status = 3;
-            $workOrder->workRequest->save();
+            $workOrder->reason = $request['reason'];
+            $workOrder->save();
+
+            /*$workOrder->workRequest->status = 3;
+            $workOrder->workRequest->save();*/
         }
 
         return response($workOrderLog, 200);

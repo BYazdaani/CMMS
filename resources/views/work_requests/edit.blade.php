@@ -42,7 +42,6 @@
                                     <div class="breadcomb-report">
 
                                         @if($workRequest->status !=3)
-
                                             <a href="#" data-toggle="modal" data-target="#addOrder"
                                                class="btn btn-success notika-btn-success"><i
                                                     class="notika-icon notika-settings"></i> Ajouter OT</a>
@@ -180,7 +179,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-element-list mg-t-10">
                         <div class="cmp-tb-hd bcs-hd">
-                            <h2>Création du compte</h2>
+                            <h2>Dértail Demande de travail</h2>
                             <p><strong>NB: </strong>thank you for being careful </p>
                         </div>
                         <form method="post" action="{{route("work_requests.update",['work_request'=>$workRequest])}}"

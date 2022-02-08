@@ -22,6 +22,7 @@ class CreateWorkOrdersTable extends Migration
             $table->string("date");
             $table->string("hour");
             $table->text("description");
+            $table->text("reason")->nullable();
             $table->foreign('work_request_id')->on("work_requests")->references("id")->onDelete("cascade");
             $table->foreign('admin_id')->on("admins")->references("id")->onDelete("set null");
             $table->foreign('maintenance_technician_id')->on("maintenance_technicians")->references("id")->onDelete("set null");

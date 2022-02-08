@@ -45,7 +45,7 @@ Route::middleware(['banned', 'auth'])->group(function () {
     Route::resource('zones', ZoneController::class);
 
     Route::post("equipments/initializeData", [EquipmentController::class, 'initializeData'])->name('equipments.initializeData');
-    Route::post("equipments/print/{equipment}", [EquipmentController::class, 'print'])->name('equipments.print');
+    Route::get("equipments/print/{equipment}", [EquipmentController::class, 'print'])->name('equipments.print');
     Route::resource('equipments', EquipmentController::class);
 
     Route::resource('work_requests', WorkRequestController::class);
@@ -60,6 +60,10 @@ Route::middleware(['banned', 'auth'])->group(function () {
         Route::resource('categories', SparePartCategoryController::class);
         Route::resource('stock_sites', StockSiteController::class);
         Route::resource('invoices', InvoiceController::class);
+    });
+
+    Route::get("send", function (){
+        \Illuminate\Support\Facades\Auth::user()->notify(new \App\Notifications\witalcareNotification());
     });
 
 });

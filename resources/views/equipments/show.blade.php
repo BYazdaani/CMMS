@@ -19,7 +19,8 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="breadcomb-wp">
                                     <div class="breadcomb-icon">
-                                        <i class="notika-icon notika-house"></i>
+                                        <a href="{{route("equipments.print",["equipment"=>$equipment])}}" target="_blank"><i
+                                                class="notika-icon notika-print"></i></a>
                                     </div>
                                     <div class="breadcomb-ctn">
                                         <h2>{{$equipment->name}}</h2>
@@ -53,7 +54,14 @@
                         <div class="widget-tabs-list">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#information">Informations</a></li>
+                                @can("spare_part_edit")
+                                <li><a data-toggle="tab" href="#spares">Piéces de Rechange</a></li>
+                                @endcan
+
+                                @if(!auth()->user()->hasRole('Client'))
                                 <li><a data-toggle="tab" href="#history">Historique</a></li>
+                                @endcan
+
                                 <li><a data-toggle="tab" href="#preventif">Fiche d'entretien préventif</a></li>
                             </ul>
                             <div class="tab-content tab-custom-st">
@@ -89,10 +97,10 @@
                                                                     <td colspan="2">{{$equipment->code}}</td>
                                                                     <td colspan="2">{{$equipment->zone->room}}</td>
                                                                 </tr>
-                                                                <tr>
+                                                                <tr >
                                                                     <td colspan="4" rowspan="14"><img
                                                                             src="{{asset($equipment->technicalFile->picture)}}"
-                                                                            style="object-fit: cover; max-width: 600px"
+                                                                            style="object-fit: cover; max-width: 450px"
                                                                             alt=""/></td>
                                                                     <td colspan="2"><strong>Caractéristique
                                                                             technique</strong></td>
@@ -219,7 +227,7 @@
                                                                     <td colspan="2"
                                                                         style="color: #0d4c92">{{$equipment->technicalFile->cost}} </td>
                                                                     <td colspan="2"
-                                                                        rowspan="4">{{$equipment->technicalFile->special_tools}}</td>
+                                                                        rowspan="5">{{$equipment->technicalFile->special_tools}}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td colspan="2"><strong>Date de Fabrication</strong>
@@ -243,14 +251,11 @@
                                                                             Service</strong></td>
                                                                     <td colspan="2"
                                                                         style="color: #0d4c92">{{$equipment->technicalFile->commissioning_date}} </td>
-                                                                    <td colspan="2"><strong>Description</strong></td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td colspan="4"><strong>Lien</strong></td>
-                                                                    <td colspan="2" rowspan="4"
-                                                                        style="color: #0d4c92">{{$equipment->technicalFile->installation_date}} </td>
+                                                                <tr class="text-left">
+                                                                    <td colspan="6"><strong>Description: </strong> {{$equipment->technicalFile->description}}</td>
                                                                 </tr>
-                                                                <tr>
+<!--                                                                <tr>
                                                                     <td colspan="4"><a><i
                                                                                 class="notika-icon notika-next"></i></a>
                                                                         <u> Pièce de rechange</u></td>
@@ -259,7 +264,7 @@
                                                                     <td colspan="4"><a><i
                                                                                 class="notika-icon notika-next"></i></a>
                                                                         <u> Fiche d'entretien préventif</u></td>
-                                                                </tr>
+                                                                </tr>-->
 
                                                                 </tbody>
                                                             </table>
@@ -271,6 +276,53 @@
                                         <!-- Data Table area End-->
                                     </div>
                                 </div>
+
+                                @can("spare_part_edit")
+                                <div id="spares" class="tab-pane fade">
+                                    <div class="data-table-list">
+                                        <div class="table-responsive">
+                                            <table id="data-table-basic" class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Catégorie</th>
+                                                    <th>Stock initial</th>
+                                                    <th>Stock actuel</th>
+                                                    <th>Seuil d'alerte</th>
+                                                    <th>Prix Unitaire</th>
+                                                    <th>Stockage</th>
+                                                    <th>Entrées</th>
+                                                    <th>Sorties</th>
+                                                    <th class="text-center justify-content-center">Detail</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($spare_parts as $spare_part)
+                                                    <tr>
+                                                        <td>{{$spare_part->code}}</td>
+                                                        <td>{{$spare_part->sparePartCategory->tag}}</td>
+                                                        <td>{{$spare_part->init_stock}}</td>
+                                                        <td
+                                                            @if($spare_part->actual_stock< $spare_part->alert_threshold)
+                                                            style="background-color: #ffbbbb"
+                                                            @endif
+                                                        >{{$spare_part->actual_stock}}</td>
+                                                        <td>{{$spare_part->alert_threshold}}</td>
+                                                        <td>{{$spare_part->unite_price}}DA</td>
+                                                        <td>{{$spare_part->stockSite->designation}}</td>
+                                                        <td>{{$spare_part->in_stock}}</td>
+                                                        <td>{{$spare_part->out_stock}}</td>
+                                                        <td class="text-center justify-content-center">
+                                                            <a href="{{route("spare_parts.edit", ["spare_part"=>$spare_part])}}">Consulter</a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endcan
 
                                 <div id="history" class="tab-pane fade">
                                     <div class="contact-inner">
