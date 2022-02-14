@@ -26,6 +26,10 @@ use App\Http\Controllers\{
 |
 */
 
+Route::get('/link', function () {
+    \Illuminate\Support\Facades\Artisan::call("storage:link");
+});
+
 Route::get('/', function () {
     return redirect()->route("login");
 })->name('gmao');
