@@ -27,7 +27,7 @@ use App\Http\Controllers\{
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route("login");
 })->name('gmao');
 
 Route::middleware(['banned', 'auth'])->group(function () {
