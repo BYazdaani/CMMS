@@ -110,7 +110,7 @@
                                                                     @foreach($roles as $role)
                                                                         <option
                                                                             @if($user->hasRole($role)) selected
-                                                                            @endif value="{{$role}}">{{$role}}</option>
+                                                                            @endif value="{{$role}}">@if($role == "Client") Demandeur @else {{$role}} @endif</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>

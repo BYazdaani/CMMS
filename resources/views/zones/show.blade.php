@@ -23,7 +23,7 @@
                                     </div>
                                     <div class="breadcomb-ctn">
                                         <h2>{{$zone->room}}</h2>
-                                        <p>Code de la salle <span class="bread-ntd">{{$zone->room_code}}</span></p>
+                                        <p>Code de la zone <span class="bread-ntd">{{$zone->room_code}}</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="data-table-list">
                         <div class="basic-tb-hd">
-                            <h4>Liste des utilisateurs du système</h4>
+                            <h4>Liste des équipements</h4>
                         </div>
                         <div class="table-responsive">
                             <table id="data-table-basic" class="table table-striped">

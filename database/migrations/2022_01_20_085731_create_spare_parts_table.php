@@ -18,6 +18,7 @@ class CreateSparePartsTable extends Migration
             $table->unsignedBigInteger("stock_site_id");
             $table->unsignedBigInteger("spare_part_category_id");
             $table->string("code");
+            $table->string("emplacement");
             $table->string("designation");
             $table->integer("init_stock");
             $table->integer("actual_stock");

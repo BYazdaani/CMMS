@@ -16,8 +16,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-element-list">
                         <div class="cmp-tb-hd bcs-hd">
-                            <h2>Création d'un OT</h2>
-                            <p><strong>NB: </strong>thank you for being careful</p>
+                            <h2>Création d'un DT</h2>
                         </div>
                         <form method="post" action="{{route("work_requests.store")}}" onsubmit="return confirm('Êtes-vous sûr de vouloir soumettre ce formulaire ?');">
                             @csrf
@@ -30,7 +29,7 @@
                                         <div class="nk-int-st ">
                                             <select class="selectpicker form-control" data-live-search="true" name="equipment_id">
                                                 @foreach($equipments as $equipment)
-                                                    <option value="{{$equipment->id}}">{{$equipment->name}} - {{$equipment->code}}</option>
+                                                    <option value="{{$equipment->id}}">{{$equipment->name}} / {{$equipment->code}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

@@ -26,7 +26,6 @@
                                     <th>Name</th>
                                     <th>Mail</th>
                                     <th>Numéro téléphone</th>
-                                    <th>Fonction</th>
                                     <th>Role</th>
                                     <th>Compte</th>
                                 </tr>
@@ -39,8 +38,8 @@
                                             </td>
                                             <td>{{$user->email}}</td>
                                             <td>{{$user->phone_number}}</td>
-                                            <td>{{$user->function}}</td>
-                                            <td>{{$user->roles[0]->name}}</td>
+                                            <td>@if($user->roles[0]->name == "Client")
+                                                    Demandeur @else {{$user->roles[0]->name}} @endif</td>
                                             <td>{{$user->account_state ? "Activé" : "Bloqué"}}</td>
                                         </tr>
                                     @endif

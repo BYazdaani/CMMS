@@ -265,7 +265,7 @@
                                             <td>{{$workOrder->nature}}</td>
                                             <td>{{$workOrder->date}}</td>
                                             <td>{{$workOrder->hour}}</td>
-                                            <th>@switch($work_order->workOrderLogs->last()->status)
+                                            <th>@switch($workOrder->workOrderLogs->last()->status)
                                                     @case("created") en attente @break
                                                     @case("opened") ouvert @break
                                                     @case("started") débuté @break

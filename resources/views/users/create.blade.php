@@ -82,7 +82,7 @@
                                         <div class="nk-int-st ">
                                             <select class="selectpicker form-control" data-live-search="true" name="role">
                                                 @foreach($roles as $role)
-                                                    <option value="{{$role}}">{{$role}}</option>
+                                                    <option value="{{$role}}">@if($role == "Client") Demandeur @else {{$role}} @endif</option>
                                                 @endforeach
                                             </select>
                                         </div>
