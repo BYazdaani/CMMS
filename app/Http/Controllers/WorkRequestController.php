@@ -104,7 +104,7 @@ class WorkRequestController extends Controller
             $admins = Admin::all();
             $technicians = MaintenanceTechnician::all();
 
-            if (now()->gt(now()->toDateString() . ' 07:30:00') && now()->lt(now()->toDateString() . ' 10:30:00')) {
+            if (now()->gt(now()->toDateString() . ' 07:30:00') && now()->lt(now()->toDateString() . ' 17:30:00')) {
                 //here the admins will make decision
                 foreach ($admins as $admin)
                 {
