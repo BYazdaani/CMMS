@@ -160,7 +160,7 @@
                                 <li><a href="{{route('spare_parts.index')}}">Liste PDR</a>
                                 </li>
                                 @can("invoice_access")
-                                    <li><a href="{{route('invoices.index')}}">Sorties</a>
+                                    <li><a href="{{route('invoices.index')}}">Entrées</a>
                                     </li>
                                 @endcan
                                 @can("stock_access")
@@ -169,6 +169,10 @@
                                     </li>
                                     <li>
                                         <a href="{{route('categories.index')}}">PDR Catégoties</a>
+                                    </li>
+                                @endcan
+                                @can("invoice_access")
+                                    <li><a href="{{route('providers.index')}}">Fournisseur</a>
                                     </li>
                                 @endcan
                             </ul>

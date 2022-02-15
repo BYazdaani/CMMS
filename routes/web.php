@@ -12,7 +12,8 @@ use App\Http\Controllers\{
     SparePartController,
     SparePartCategoryController,
     StockSiteController,
-    InvoiceController
+    InvoiceController,
+    ProviderController
 };
 
 /*
@@ -64,10 +65,7 @@ Route::middleware(['banned', 'auth'])->group(function () {
         Route::resource('categories', SparePartCategoryController::class);
         Route::resource('stock_sites', StockSiteController::class);
         Route::resource('invoices', InvoiceController::class);
-    });
-
-    Route::get("send", function (){
-        \Illuminate\Support\Facades\Auth::user()->notify(new \App\Notifications\witalcareNotification());
+        Route::resource('providers', ProviderController::class);
     });
 
 });

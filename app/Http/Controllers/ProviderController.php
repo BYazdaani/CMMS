@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProviderRequest;
 use App\Models\provider;
+use App\Models\stockSite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Contracts\View\View;
 
 class ProviderController extends Controller
 {
@@ -12,9 +16,17 @@ class ProviderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() : View
     {
-        //
+        abort_if(Gate::denies('stock_access'), 403);
+
+        $providers = provider::all();
+
+        $data = [
+            'providers' => $providers
+        ];
+
+        return view('provider.index',$data);
     }
 
     /**
@@ -31,11 +43,17 @@ class ProviderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ProviderRequest $request)
     {
-        //
+        abort_if(Gate::denies('stock_create'), 403);
+
+        $data=$request->validated();
+
+        provider::create($data);
+
+        return redirect()->route('providers.index');
     }
 
     /**

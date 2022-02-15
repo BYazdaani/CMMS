@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class SiteRequest extends FormRequest
+class ProviderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,10 @@ class SiteRequest extends FormRequest
     public function rules()
     {
         return [
-            'designation' => ['required', 'string'],
-            'code' => ['required', 'string'],
+            'name' => ['required', 'string'],
+            'phone_number' => ['required', 'string'],
+            'email' => ['required', 'string'],
+            'information' => ['required', 'string'],
         ];
     }
 
