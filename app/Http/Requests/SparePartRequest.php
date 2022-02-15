@@ -35,6 +35,7 @@ class SparePartRequest extends FormRequest
             'unite_price' => ['required', 'numeric'],
             'description' => ['required', 'string'],
             'observation' => ['required', 'string'],
+            'emplacement' => ['required', 'string'],
         ];
     }
 

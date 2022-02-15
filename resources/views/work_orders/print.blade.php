@@ -66,6 +66,15 @@
                         <strong>Description anomalie
                             :</strong> {{$work_order->workRequest->description}} </td>
                 </tr>
+                @if($work_order->workOrderLogs->last()->status == "canceled")
+
+                    <tr>
+                        <td colspan="12" class="text-left" style="height: 200px">
+                            <strong>Motif d'annulation
+                                :</strong> {{$work_order->reason}} </td>
+                    </tr>
+
+                @endif
                 </tbody>
             </table>
         </div>

@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-sm-4 col-xs-12">
                                     <div class="form-group ic-cmp-int">
                                         <div class="form-ic-cmp">
                                             <i class="notika-icon notika-edit"></i>
@@ -89,7 +89,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                     <div class="form-group ic-cmp-int">
                                         <div class="form-ic-cmp">
                                             <i class="notika-icon notika-promos"></i>
@@ -113,13 +113,14 @@
                                             <i class="notika-icon notika-edit"></i>
                                         </div>
                                         <div class="nk-int-st">
+                                            <label for="unite_price">Emplacement</label>
                                             <input type="text" class="form-control"
-                                                   placeholder="emplacement" name="emplacement"
-                                                   required value="{{$site->emplacement}}">
+                                                   placeholder="Emplacement" name="emplacement"
+                                                   required value="{{$sparePart->emplacement}}">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                     <div class="form-group ic-cmp-int">
                                         <div class="form-ic-cmp">
                                             <i class="notika-icon notika-promos"></i>
