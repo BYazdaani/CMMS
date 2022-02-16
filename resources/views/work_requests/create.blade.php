@@ -41,7 +41,7 @@
                                             <i class="notika-icon notika-edit"></i>
                                         </div>
                                         <div class="nk-int-st">
-                                            <input required type="number" class="form-control" placeholder="Lot N:" name="lot">
+                                            <input required type="text" class="form-control" placeholder="Lot N:" name="lot">
                                         </div>
                                     </div>
                                 </div>
