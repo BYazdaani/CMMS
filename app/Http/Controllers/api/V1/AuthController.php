@@ -33,7 +33,7 @@ class AuthController extends Controller
         }
 
         $user->device_token = $data['device_token'];
-        $user->account_state = 1;
+        $user->maintenanceTechnician->status = 1;
         $user->save();
 
         $token = $user->createToken('GMAO_App')->plainTextToken;
@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         auth()->user()->tokens()->delete();
 
-        auth()->user()->account_state = 0;
+        auth()->user()->maintenanceTechnician->status = 0;
         auth()->user()->save();
 
         return [
