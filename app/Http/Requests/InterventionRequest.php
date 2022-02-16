@@ -29,7 +29,7 @@ class InterventionRequest extends FormRequest
         return [
             'work_order_id' => ['required', 'string', 'exists:work_orders,id'],
             'nature' => ['required'],
-            'spare_parts' => ['required'],
+           // 'spare_parts' => ['required'],
             'observation' => ['required', 'string'],
         ];
     }

@@ -61,15 +61,17 @@ InterventionReportController extends Controller
         $interventionReport->workOrder->workRequest->status = 2;
         $interventionReport->workOrder->workRequest->save();
 
-        foreach ($request['spare_parts'] as $key => $value) {
+        if (isset($request['spare_parts'])){
+            foreach ($request['spare_parts'] as $key => $value) {
 
-            $interventionReport->spareParts()->attach($key, ['quantity' => $value]);
+                $interventionReport->spareParts()->attach($key, ['quantity' => $value]);
 
-            $sparePart = sparePart::find($key);
-            $sparePart->actual_stock -= $value;
-            $sparePart->out_stock += $value;
-            $sparePart->save();
+                $sparePart = sparePart::find($key);
+                $sparePart->actual_stock -= $value;
+                $sparePart->out_stock += $value;
+                $sparePart->save();
 
+            }
         }
 
 
