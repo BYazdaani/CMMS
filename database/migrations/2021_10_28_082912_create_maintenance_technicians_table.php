@@ -16,7 +16,7 @@ class CreateMaintenanceTechniciansTable extends Migration
         Schema::create('maintenance_technicians', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->integer('status')->default(1);
+            $table->integer('status')->default(0);
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
